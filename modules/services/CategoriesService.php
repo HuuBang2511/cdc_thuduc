@@ -27,6 +27,14 @@ class CategoriesService
         $categories['truonghoc'] = Truonghoc::find()->select(['gid', 'ten_dv'])->orderBy('ten_dv')->asArray()->all();
         $categories['khupho'] = Khupho::find()->select(['id', 'ten_dvhc'])->orderBy('ten_dvhc')->asArray()->all();
         $categories['benhvien'] = BenhVien::find()->select(['id', 'tenbenhvien'])->orderBy('tenbenhvien')->asArray()->all();
+        $categories['hinhthuc_dieutri'] = [
+            'Nội trú' => 'Nội trú', 
+            'Ngoại trú' => 'Ngoại trú',
+        ];
+        $categories['chon'] = [
+            0 => 'Không',
+            1 => 'Có'
+        ];
         return $categories;
     }
 }

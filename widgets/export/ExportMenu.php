@@ -1041,19 +1041,19 @@ class ExportMenu extends GridView
             /**
              * @var Widget $class
              */
-            $class = $isBs4 ? 'kartik\bs4dropdown\ButtonDropdown' : 'yii\bootstrap\ButtonDropdown';
+            $class = $isBs4 ? 'kartik\bs4dropdown\ButtonDropdown' : 'kartik\bs5dropdown\ButtonDropdown';
             if (!class_exists($class)) {
                 throw new InvalidConfigException("The '{$class}' does not exist and must be installed for dropdown rendering when 'ExportMenu::asDropdown' is set to 'true'.");
             }
-            if ($isBs4) {
+//            if ($isBs4) {
                 $opts['buttonOptions'] = $this->dropdownOptions;
                 $opts['renderContainer'] = false;
                 $out = Html::tag('div', $class::widget($opts), $this->exportContainer);
-            } else {
-                $opts['options'] = $this->dropdownOptions;
-                $opts['containerOptions'] = $this->exportContainer;
-                $out = $class::widget($opts);
-            }
+//            } else {
+//                $opts['options'] = $this->dropdownOptions;
+//                $opts['containerOptions'] = $this->exportContainer;
+//                $out = $class::widget($opts);
+//            }
             $replacePairs = ['{menu}' => $out, '{columns}' => $this->renderColumnSelector()];
             $content = strtr($this->template, $replacePairs);
             return Html::tag('div', $content, $this->container);
@@ -1743,7 +1743,7 @@ class ExportMenu extends GridView
                 'icon' => $this->isBs4() ? '<i class="fas fa-list"></i>' : '<i class="glyphicon glyphicon-list"></i>',
                 'title' => Yii::t('kvexport', 'Select columns to export'),
                 'type' => 'button',
-                'data-toggle' => 'dropdown',
+                'data-bs-toggle' => 'dropdown',
                 'aria-haspopup' => 'true',
                 'aria-expanded' => 'false',
             ],

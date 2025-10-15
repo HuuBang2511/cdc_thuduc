@@ -404,7 +404,7 @@ class Generator extends \yii\gii\Generator
                     $hashConditions[] = "'{$column}' => \$this->{$column},";
                     break;
                 default:
-                    $likeConditions[] = "->andFilterWhere(['like', 'upper({$column})', mb_strtoupper(\$this->{$column})])";
+                    $likeConditions[] = "->andFilterWhere(['ilike', '{$column}', mb_strtoupper(\$this->{$column})])";
                     break;
             }
         }

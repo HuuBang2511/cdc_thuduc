@@ -42,6 +42,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
@@ -92,8 +93,8 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel(<?= $actionParams ?>),
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"]).
-                            Html::a('Cập nhật',['update','<?= substr($actionParams,1) ?>'=><?= $actionParams ?>],['class'=>'btn btn-primary float-left','role'=>'modal-remote'])
+                    'footer'=> Html::a('Cập nhật',['update','<?= substr($actionParams,1) ?>'=><?= $actionParams ?>],['class'=>'btn btn-primary float-start','role'=>'modal-remote']).
+                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
                 ];
         }else{
             return $this->render('view', [
@@ -124,25 +125,25 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Lưu',['class'=>'btn btn-primary float-left','type'=>"submit"]).
-                            Html::button('Đóng',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"])
+                    'footer'=> Html::button('Lưu',['class'=>'btn btn-primary float-start','type'=>"submit"]).
+                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
                 ];
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Thêm mới <?= $title ?>",
                     'content'=>'<span class="text-success">Thêm mới <?= $title ?> thành công</span>',
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm mới',['create'],['class'=>'btn btn-primary float-left','role'=>'modal-remote'])
+                    'footer'=> Html::a('Tiếp tục thêm mới',['create'],['class'=>'btn btn-primary float-start','role'=>'modal-remote']).
+                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
                 ];
             }else{
                 return [
-                    'title'=> "Create new <?= $title ?>",
+                    'title'=> "Thêm mới <?= $title ?>",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu',['class'=>'btn btn-primary float-left','type'=>"submit"])
+                    'footer'=> Html::button('Lưu',['class'=>'btn btn-primary float-start','type'=>"submit"]).
+                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
 
                 ];
             }
@@ -184,8 +185,8 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu',['class'=>'btn btn-primary float-left','type'=>"submit"])
+                    'footer'=> Html::button('Lưu',['class'=>'btn btn-primary float-start','type'=>"submit"]).
+                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
                 ];
             }else if($model->load($request->post()) && $model->save()){
                 return [
@@ -194,8 +195,8 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"]).
-                            Html::a('Lưu',['update','<?= substr($actionParams,1) ?>'=><?= $actionParams ?>],['class'=>'btn btn-primary float-left','role'=>'modal-remote'])
+                    'footer'=> Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"]).
+                            Html::a('Cập nhật',['update','<?= substr($actionParams,1) ?>'=><?= $actionParams ?>],['class'=>'btn btn-primary float-start','role'=>'modal-remote'])
                 ];
             }else{
                  return [
@@ -203,8 +204,8 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu',['class'=>'btn btn-primary float-left','type'=>"submit"])
+                    'footer'=> Html::button('Lưu',['class'=>'btn btn-primary float-start','type'=>"submit"]).
+                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
                 ];
             }
         }else{
@@ -232,54 +233,28 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         $request = Yii::$app->request;
         $model = $this->findModel(<?= $actionParams ?>);
-        $model->status = 0;
 
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
+        if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isPost) {
+                $model->status = 0;
+                $model->save();
                 return [
-                    'title'=> "Xóa <?= $title ?> #".<?= $actionParams ?>,
-                    'content'=>$this->renderAjax('delete', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"]).
-                        Html::button('Xóa',['class'=>'btn btn-danger float-left','type'=>"submit"])
+                    'forcedClose' => true,
+                    'redirect' => Url::to(['index'])
                 ];
-            }else if($request->isPost && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "<?= $modelClass ?> #".<?= $actionParams ?>,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"]).
-                        Html::a('Edit',['update','<?= substr($actionParams,1) ?>'=><?= $actionParams ?>],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];
-            }else{
-                return [
-                    'title'=> "Update <?= $modelClass ?> #".<?= $actionParams ?>,
-                    'content'=>$this->renderAjax('delete', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-light float-right','data-bs-dismiss'=>"modal"]).
-                        Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-                ];
-            }
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', <?= $urlParams ?>]);
             } else {
-                return $this->render('delete', [
-                    'model' => $model,
-                    'const' => $this->const,
-                ]);
+                return [
+                    'title' => "Xoá <?= $title ?> #" . <?= $actionParams ?>,
+                    'content' => $this->renderAjax('delete', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Xóa',['class'=>'btn btn-danger float-start','type'=>"submit"]).
+                        Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
+                ];
             }
+        } else {
+            return $this->redirect(['index']);
         }
     }
 

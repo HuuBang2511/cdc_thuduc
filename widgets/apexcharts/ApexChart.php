@@ -5,6 +5,7 @@ namespace app\widgets\apexcharts;
 use app\services\DebugService;
 use yii\base\Widget;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\web\JsExpression;
 
 class ApexChart extends Widget
@@ -19,7 +20,6 @@ class ApexChart extends Widget
     const SIMPLE_BAR = 'simple_bar';
     const STACKED_BAR = 'stacked_bar';
     const STACKED_100_BAR = 'stacked_100_bar';
-
     private $optionsInit = [
         'simple_column' => [
             'chart' => [
@@ -51,10 +51,18 @@ class ApexChart extends Widget
         ],
         'simple_bar' => [
             'chart' => [
-                'type' => 'bar'
+                'type' => 'bar',
+                //'height' => 350,
             ],
             'plotOptions' => [
-                'horizontal' => true,
+                'bar' => [
+                    'horizontal' => true,
+                    'borderRadius' => 4,
+                ],
+                'dataLabels' => [
+                    'hideOverflowingLabels' => true,
+                ],
+
             ],
         ],
         'stacked_bar' => [
@@ -89,12 +97,12 @@ class ApexChart extends Widget
 
     public function registerScript()
     {
-//        DebugService::dumpdie(json_encode($this->series));
-//        DebugService::dumpdie($this);
+        //        DebugService::dumpdie(json_encode($this->series));
+        //        DebugService::dumpdie($this);
 
         $view = $this->getView();
 
-        $options = $this->optionsInit[$this->type];
+        $options = array_merge($this->optionsInit[$this->type], $this->options);
 
         $options['chart'] = array_merge($this->optionsInit[$this->type]['chart'], $this->chartOptions);
 
@@ -102,7 +110,7 @@ class ApexChart extends Widget
 
         if ($this->optionsInit[$this->type]['chart']['type'] == 'bar') {
             $options['xaxis'] = ['categories' => $this->label];
-
+            $options['yaxis'] = ['labels' => ['maxWidth' => 600]];
         }
 
         if ($this->optionsInit[$this->type]['chart']['type'] == 'pie' || $this->optionsInit[$this->type]['chart']['type'] == 'donut') {
@@ -128,14 +136,13 @@ class ApexChart extends Widget
         ];
         $options['colors'] = $this->colors;
 
-//        DebugService::dumpdie($options);
-        $options = json_encode($options);
+        //        DebugService::dumpdie($options);
+        $options = Json::encode($options);
         $js[] = "var options$this->id = $options;";
         $js[] = "options$this->id.tooltip.y.formatter= function(val){return val + ' $this->unit';};";
         $js[] = "var $this->id = new ApexCharts(document.querySelector('#$this->id'), options$this->id);";
         $js[] = "$this->id.render();";
 
         $view->registerJs(implode("\n", $js));
-
     }
 }

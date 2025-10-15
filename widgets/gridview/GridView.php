@@ -19,10 +19,9 @@ use yii\grid\GridView as YiiGridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
-class GridView extends YiiGridView implements BootstrapInterface, GridViewInterface
+class GridView extends \kartik\grid\GridView
 {
-    use GridViewTrait;
-    use BootstrapTrait;
+
 
     /**
      * @var string the default data column class if the class name is not explicitly specified when configuring a data
@@ -74,7 +73,7 @@ class GridView extends YiiGridView implements BootstrapInterface, GridViewInterf
         if ($this->showPageSummary) {
             $summary = $this->renderPageSummary();
 
-            return $this->pageSummaryPosition === self::POS_TOP ? ($summary.$content) : ($content.$summary);
+            return $this->pageSummaryPosition === self::POS_TOP ? ($summary . $content) : ($content . $summary);
         }
 
         return $content;
@@ -162,7 +161,8 @@ class GridView extends YiiGridView implements BootstrapInterface, GridViewInterf
                 'pageCount' => $pageCount,
             ];
             if (($summaryContent = $this->summary) === null) {
-                return Html::tag($tag, Yii::t('kvgrid',
+                return Html::tag($tag, Yii::t(
+                    'kvgrid',
                     'Hiển thị <b>{begin, number}-{end, number}</b> của <b>{totalCount, number}</b> {totalCount, plural, one{đối tượng} other{đối tượng}}.',
                     $configSummary + $configItems
                 ), $summaryOptions);
@@ -179,10 +179,15 @@ class GridView extends YiiGridView implements BootstrapInterface, GridViewInterf
                 'pageCount' => $pageCount,
             ];
             if (($summaryContent = $this->summary) === null) {
-                return Html::tag($tag,
-                    Yii::t('kvgrid', 'Tổng <b>{count, number}</b> {count, plural, one{{item}} other{{items}}}.',
+                return Html::tag(
+                    $tag,
+                    Yii::t(
+                        'kvgrid',
+                        'Tổng <b>{count, number}</b> {count, plural, one{{item}} other{{items}}}.',
                         $configSummary + $configItems
-                    ), $summaryOptions);
+                    ),
+                    $summaryOptions
+                );
             }
         }
 

@@ -10,5 +10,6 @@ use yii\helpers\Html;
 <div class="ca-benh-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'categories' => $categories,
     ]) ?>
 </div>

@@ -1,280 +1,366 @@
 <?php
+
+use kartik\editors\Summernote;
+use yii\helpers\Url;
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
+use kartik\select2\Select2;
+use yii\web\JsExpression;
+use yii\helpers\ArrayHelper;
+use kartik\depdrop\DepDrop;
+
+use app\widgets\maskedinput\MaskedInput;
+
+/* @var $this yii\web\View */
+/* @var $model app\modules\dost\models\Congviec */
+/* @var $form yii\widgets\ActiveForm */
+
+$requestedAction = Yii::$app->requestedAction;
+$controller = $requestedAction->controller;
+$label = $controller->label;
+
+$this->title = Yii::t('app', $label[$requestedAction->id] . ' ' . $controller->title);
+$this->params['breadcrumbs'][] = ['label' => $label['index'], 'url' => Url::to(['index'])];
+$this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<div class="ca-benh-form">
+<?php
+$this->registerCss("
+    #thongtin-benhnoikhac {
+        display: none;
+    }
+    #cabenh-benhvien {
+        display: none;
+    }
+");
+?>
+
+<?php
+$script = <<<JS
+    function toggleThongTinBenhNoiKhac() {
+        var value = $('#cabenh_benhnoikhac').val();
+        if (value == '1' || value.toLowerCase() === 'có') {
+            $('#thongtin-benhnoikhac').slideDown();
+            $('#thongtin-benhnoikhac').css('display', 'flex');
+        } else {
+            $('#thongtin-benhnoikhac').slideUp();
+        }
+    }
+
+    function toggleThanhphobaove() {
+        var value = $('#cabenh_tpbv').val();
+        if (value == '1' || value.toLowerCase() === 'có') {
+            $('#cabenh-benhvien').slideDown();
+            //$('#cabenh-benhvien').css('display', 'flex');
+        } else {
+            $('#cabenh-benhvien').slideUp();
+        }
+    }
 
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'loaibenh_id')->textInput() ?>
-
-    <?= $form->field($model, 'mabenhnhan')->textInput() ?>
-
-    <?= $form->field($model, 'hoten')->textInput() ?>
-
-    <?= $form->field($model, 'ngaysinh')->textInput() ?>
-
-    <?= $form->field($model, 'gioitinh_id')->textInput() ?>
-
-    <?= $form->field($model, 'madinhdanh')->textInput() ?>
-
-    <?= $form->field($model, 'ten_nguoibaoho')->textInput() ?>
-
-    <?= $form->field($model, 'cothai')->checkbox() ?>
-
-    <?= $form->field($model, 'sodienthoai')->textInput() ?>
-
-    <?= $form->field($model, 'tuanthai')->textInput() ?>
-
-    <?= $form->field($model, 'nghenghiep')->textInput() ?>
-
-    <?= $form->field($model, 'noilamviec')->textInput() ?>
-
-    <?= $form->field($model, 'diachi_noilamviec')->textInput() ?>
-
-    <?= $form->field($model, 'khupho_noilamviec_id')->textInput() ?>
-
-    <?= $form->field($model, 'diachi_noiohientai')->textInput() ?>
-
-    <?= $form->field($model, 'khupho_noiohientai_id')->textInput() ?>
-
-    <?= $form->field($model, 'so_hsba')->textInput() ?>
-
-    <?= $form->field($model, 'coso_dieutri')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'hinhthuc_dieutri')->textInput() ?>
-
-    <?= $form->field($model, 'chandoanchinh_id')->textInput() ?>
-
-    <?= $form->field($model, 'phandobenh')->textInput() ?>
-
-    <?= $form->field($model, 'chandoan_bienchung')->textInput() ?>
-
-    <?= $form->field($model, 'doanbenhkem')->textInput() ?>
-
-    <?= $form->field($model, 'benhnen')->textInput() ?>
-
-    <?= $form->field($model, 'ngaykhoiphat')->textInput() ?>
-
-    <?= $form->field($model, 'ngaynhapvien')->textInput() ?>
-
-    <?= $form->field($model, 'ngay_xuatvien_chuyenvien_tuvong')->textInput() ?>
-
-    <?= $form->field($model, 'phanloai_chandoan')->textInput() ?>
-
-    <?= $form->field($model, 'laymau_xetnghiem')->checkbox() ?>
-
-    <?= $form->field($model, 'loaibenhpham')->textInput() ?>
-
-    <?= $form->field($model, 'ngaylaymau')->textInput() ?>
-
-    <?= $form->field($model, 'loaixetnghiem')->textInput() ?>
-
-    <?= $form->field($model, 'ketqua_xetnghiem')->textInput() ?>
-
-    <?= $form->field($model, 'tinhtrang_tiemchung')->textInput() ?>
-
-    <?= $form->field($model, 'somuitiem')->textInput() ?>
-
-    <?= $form->field($model, 'tiensu_dichte')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'nguoi_dieutra_dichte')->textInput() ?>
-
-    <?= $form->field($model, 'sdt_nguoi_dieutra_dichte')->textInput() ?>
-
-    <?= $form->field($model, 'donvi_dieutra')->textInput() ?>
-
-    <?= $form->field($model, 'ngay_dieutra_dichte')->textInput() ?>
-
-    <?= $form->field($model, 'email_donvidieutra')->textInput() ?>
-
-    <?= $form->field($model, 'donvi_baocao')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'tinhthanh_donvibaocao_id')->textInput() ?>
-
-    <?= $form->field($model, 'ngaybaocao')->textInput() ?>
-
-    <?= $form->field($model, 'nguoibaocao')->textInput() ?>
-
-    <?= $form->field($model, 'sdt_nguoibaocao')->textInput() ?>
-
-    <?= $form->field($model, 'email_nguoibaocao')->textInput() ?>
-
-    <?= $form->field($model, 'trangthai_baocao')->textInput() ?>
-
-    <?= $form->field($model, 'danhsach_coso_dieutri')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'ngay_chinhsua_gannhat')->textInput() ?>
-
-    <?= $form->field($model, 'ngaycapnhat')->textInput() ?>
-
-    <?= $form->field($model, 'phanloai_cabenh')->textInput() ?>
-
-    <?= $form->field($model, 'ngaygop_trung_cabenh')->textInput() ?>
-
-    <?= $form->field($model, 'so_nha')->textInput() ?>
-
-    <?= $form->field($model, 'ten_duong')->textInput() ?>
-
-    <?= $form->field($model, 'tenduong_id')->textInput() ?>
-
-    <?= $form->field($model, 'truonghoc_id')->textInput() ?>
-
-    <?= $form->field($model, 'truonghoc_khupho_id')->textInput() ?>
-
-    <?= $form->field($model, 'ngaymacbenh')->textInput() ?>
-
-    <?= $form->field($model, 'cabenhtrung_id')->textInput() ?>
-
-    <?= $form->field($model, 'thangbaocao')->textInput() ?>
-
-    <?= $form->field($model, 'loai_ca_benh')->textInput() ?>
-
-    <?= $form->field($model, 'stt')->textInput() ?>
-
-    <?= $form->field($model, 'dantoc_id')->textInput() ?>
-
-    <?= $form->field($model, 'tinhthanh_noilamviec_id')->textInput() ?>
-
-    <?= $form->field($model, 'tinhthanh_noiohientai_id')->textInput() ?>
-
-    <?= $form->field($model, 'tinhthanh_cosodieutri_id')->textInput() ?>
-
-    <?= $form->field($model, 'thongtin_dieutri')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'ghichu')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'tinhtrang_hiennay')->textInput() ?>
-
-    <?= $form->field($model, 'ngaynhanve')->textInput() ?>
-
-    <?= $form->field($model, 'namnhapvien')->textInput() ?>
-
-    <?= $form->field($model, 'xacminh_cabenh')->textInput() ?>
-
-    <?= $form->field($model, 'diachi_xacminh_cabenh')->textInput() ?>
-
-    <?= $form->field($model, 'tinhthanh_xacminh_cabenh_id')->textInput() ?>
-
-    <?= $form->field($model, 'phuongxa_xacminh_cabenh_id')->textInput() ?>
-
-    <?= $form->field($model, 'khupho_xacminh_cabenh_id')->textInput() ?>
-
-    <?= $form->field($model, 'noikhac_xacminh_cabenh')->textInput() ?>
-
-    <?= $form->field($model, 'tinhtrang_xuatvien')->checkbox() ?>
-
-    <?= $form->field($model, 'loaicabenh_id')->textInput() ?>
-
-    <?= $form->field($model, 'ngaykhoibenh')->textInput() ?>
-
-    <?= $form->field($model, 'lophoc_id')->textInput() ?>
-
-    <?= $form->field($model, 'ngaythongbao_cabenh')->textInput() ?>
-
-    <?= $form->field($model, 'cutru_tainha')->checkbox() ?>
-
-    <?= $form->field($model, 'nha_cabenh')->checkbox() ?>
-
-    <?= $form->field($model, 'songuoi_tronggiadinh_sxh')->textInput() ?>
-
-    <?= $form->field($model, 'songuoi_duoi15_sxh')->textInput() ?>
-
-    <?= $form->field($model, 'nhaco_benhnhan_sxh')->checkbox() ?>
-
-    <?= $form->field($model, 'nhaco_nguoibenh')->checkbox() ?>
-
-    <?= $form->field($model, 'benhvien_phongkham')->checkbox() ?>
-
-    <?= $form->field($model, 'nhatho')->checkbox() ?>
-
-    <?= $form->field($model, 'dinhchua')->checkbox() ?>
-
-    <?= $form->field($model, 'congvien')->checkbox() ?>
-
-    <?= $form->field($model, 'noihoihop')->checkbox() ?>
-
-    <?= $form->field($model, 'noixaydung')->checkbox() ?>
-
-    <?= $form->field($model, 'quancaphe')->checkbox() ?>
-
-    <?= $form->field($model, 'noichannuoi')->checkbox() ?>
-
-    <?= $form->field($model, 'noibancaycanh')->checkbox() ?>
-
-    <?= $form->field($model, 'vuaphelieu')->checkbox() ?>
-
-    <?= $form->field($model, 'noikhac')->checkbox() ?>
-
-    <?= $form->field($model, 'cabenhchidiem')->checkbox() ?>
-
-    <?= $form->field($model, 'dietlangquang')->checkbox() ?>
-
-    <?= $form->field($model, 'giamsat_theodoi')->checkbox() ?>
-
-    <?= $form->field($model, 'xuly_odich_nho')->checkbox() ?>
-
-    <?= $form->field($model, 'cabenhthuphat')->checkbox() ?>
-
-    <?= $form->field($model, 'odichmoi')->checkbox() ?>
-
-    <?= $form->field($model, 'noichandoan')->textInput() ?>
-
-    <?= $form->field($model, 'phuongxa_noiohientai')->textInput() ?>
-
-    <?= $form->field($model, 'phuongxa_noilamviec')->textInput() ?>
-
-    <?= $form->field($model, 'phuongxa_sausapnhap')->textInput() ?>
-
-    <?= $form->field($model, 'phuongxa')->textInput() ?>
-
-    <?= $form->field($model, 'truonghoc_phuongxa')->textInput() ?>
-
-    <?= $form->field($model, 'bi_bandau')->textInput() ?>
-
-    <?= $form->field($model, 'ci_bandau')->textInput() ?>
-
-    <?= $form->field($model, 'songuoi_giadinh_macbenh')->textInput() ?>
-
-    <?= $form->field($model, 'songuoi_giadinh_macbenh_duoi15')->textInput() ?>
-
-    <?= $form->field($model, 'ketluan_tinhtrang')->textInput() ?>
-
-    <?= $form->field($model, 'ketluan_chandoan')->textInput() ?>
-
-    <?= $form->field($model, 'ketluan_ngayxuatvien')->textInput() ?>
-
-    <?= $form->field($model, 'ketluan_benhkhac')->textInput() ?>
-
-    <?= $form->field($model, 'px_daden')->checkbox() ?>
-
-    <?= $form->field($model, 'pxkhac_daden')->checkbox() ?>
-
-    <?= $form->field($model, 'phuongxa_truonghoc')->textInput() ?>
-
-    <?= $form->field($model, 'phuongxa_xacminhcabenh')->textInput() ?>
-
-    <?= $form->field($model, 'donvi_thuchien_xetnghiem')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-    <?= $form->field($model, 'benhvien_id')->textInput() ?>
-
-  
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	    </div>
-	<?php } ?>
-
-    <?php ActiveForm::end(); ?>
     
+    toggleThongTinBenhNoiKhac();
+    toggleThanhphobaove();
+
+    $('#cabenh_benhnoikhac').on('change', function() {
+        toggleThongTinBenhNoiKhac();
+    });
+
+    $('#cabenh_tpbv').on('change', function() {
+        toggleThanhphobaove();
+    });
+JS;
+$this->registerJs($script);
+?>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="block block-themed">
+            <div class="block-header">
+                <h3 class="block-title"><i class="fa fa-search"></i> <?= $this->title ?></h3>
+            </div>
+            <div class="block-content">
+                <div class="baocao_hangtuan-form">
+
+                    <?php $form = ActiveForm::begin(); ?>
+    
+                    
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'hoten')->textInput() ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'ngaysinh')->widget(MaskedInput::className(), [
+                                'clientOptions' => [
+                                    'alias' => 'date'
+                                ],
+                            ]); ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'gioitinh_id')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['dm_gioitinh'], 'id', 'ten'),
+                                'options' => ['prompt' => 'Chọn giới tính'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ])->label('Giới tính') ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'dantoc_id')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['dm_dantoc'], 'id', 'ten'),
+                                'options' => ['prompt' => 'Chọn dân tộc'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ])->label('Dân tộc') ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'loaibenh_id')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['dm_loaichandoan'], 'id', 'ten'),
+                                'options' => ['prompt' => 'Chọn loại bệnh'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'ten_nguoibaoho')->textInput() ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'ngaybaocao')->widget(MaskedInput::className(), [
+                                'clientOptions' => [
+                                    'alias' => 'date'
+                                ],
+                            ]); ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'ngaythongbao_cabenh')->widget(MaskedInput::className(), [
+                                'clientOptions' => [
+                                    'alias' => 'date'
+                                ],
+                            ]); ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'so_hsba')->textInput() ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'hinhthuc_dieutri')->widget(Select2::className(), [
+                                'data' => $categories['hinhthuc_dieutri'],
+                                'options' => ['prompt' => 'Chọn hình thức điều trị'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div>
+                    
+                    <h4 class="content-heading">Xác minh ca bệnh</h4>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <?= $form->field($model, 'diachi_noiohientai')->textInput() ?>    
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'phuongxa_noiohientai')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
+                                'options' => ['prompt' => 'Phường nơi ở hiện tại', 'id' => 'phuongxa-hientai-id'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'khupho_noiohientai_id')->widget(DepDrop::class, [
+                                    'options'=>['id'=>'khupho-hientai-id'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
+                                    'pluginOptions'=>[
+                                        'depends'=>['phuongxa-hientai-id'],
+                                        'initialize' => true,
+                                        'placeholder'=>'Chọn khu phố',
+                                        'url'=>Url::to(['../quanly/categories/get-khupho']),
+                                        'allowClear' => true
+                                                
+                                    ]
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'so_nha')->textInput() ?>    
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'tenduong_id')->widget(DepDrop::class, [
+                                    'options' => ['id' => 'tenduong-hientai-id'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                    'pluginOptions' => [
+                                        'depends' => ['khupho-hientai-id'],          
+                                        'placeholder' => 'Chọn tên đường',
+                                        'url' => Url::to(['/quanly/categories/get-tenduong']),
+                                        'initialize' => false,
+                                        'allowClear' => true,
+                                    ],
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'benhnoikhac')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => 'Bệnh nơi khác', 'id' => 'cabenh_benhnoikhac'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div>  
+
+                    <div class="row" id="thongtin-benhnoikhac">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'sonha_benhnoikhac')->textInput() ?>    
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'phuongxa_benhnoikhac')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
+                                'options' => ['prompt' => 'Phường bệnh nơi khác', 'id' => 'phuongxa-benhnoikhac-id'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'khupho_benhnoikhac_id')->widget(DepDrop::class, [
+                                    'options'=>['id'=>'khupho-benhnoikhac-id'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
+                                    'pluginOptions'=>[
+                                        'depends'=>['phuongxa-benhnoikhac-id'],
+                                        'initialize' => true,
+                                        'placeholder'=>'Chọn khu phố',
+                                        'url'=>Url::to(['../quanly/categories/get-khupho']),
+                                        'allowClear' => true
+                                                
+                                    ]
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'tenduong_benhnoikhac_id')->widget(DepDrop::class, [
+                                    'options' => ['id' => 'tenduong-benhnoikhac-id'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                    'pluginOptions' => [
+                                        'depends' => ['khupho-benhnoikhac-id'],          
+                                        'placeholder' => 'Chọn tên đường',
+                                        'url' => Url::to(['/quanly/categories/get-tenduong']),
+                                        'initialize' => false,
+                                        'allowClear' => true,
+                                    ],
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <?= $form->field($model, 'songuoi_cutrru_giadinh')->textInput() ?>    
+                        </div>
+                        <div class="col-lg-6">
+                            <?= $form->field($model, 'songuoi_cutru_giadinh_duoi15')->textInput() ?>    
+                        </div>
+                    </div>
+
+                    <h4 class="content-heading">Điều tra dịch tể</h4>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'thanhpho_baove')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => 'Thành phố báo về', 'id' => 'cabenh_tpbv'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-9" id="cabenh-benhvien">
+                            <?= $form->field($model, 'benhvien_id')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['benhvien'], 'id', 'tenbenhvien'),
+                                'options' => ['prompt' => 'Bệnh viện'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div> 
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'ngaymacbenh')->widget(MaskedInput::className(), [
+                                'clientOptions' => [
+                                    'alias' => 'date'
+                                ],
+                            ]); ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'ngaynhapvien')->widget(MaskedInput::className(), [
+                                'clientOptions' => [
+                                    'alias' => 'date'
+                                ],
+                            ]); ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <?= $form->field($model, 'nghenghiep')->textInput() ?>    
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <?= $form->field($model, 'diachi_noilamviec')->textInput() ?>    
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'phuongxa_noilamviec')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
+                                'options' => ['prompt' => 'Phường nơi ở hiện tại', 'id' => 'phuongxa-noilamviec-id'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'khupho_noilamviec_id')->widget(DepDrop::class, [
+                                    'options'=>['id'=>'khupho-noilamviec-id'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
+                                    'pluginOptions'=>[
+                                        'depends'=>['phuongxa-noilamviec-id'],
+                                        'initialize' => true,
+                                        'placeholder'=>'Chọn khu phố',
+                                        'url'=>Url::to(['../quanly/categories/get-khupho']),
+                                        'allowClear' => true
+                                                
+                                    ]
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 pb-3">
+                            <?= Html::submitButton('Lưu', ['class' => 'btn btn-primary']) ?>
+
+                            <a href="javascript:window.history.back()" class="btn btn-light float-end">
+                                <i class="fa fa-fw fa-angle-left"></i> Quay lại
+                            </a>
+                        </div>
+                    </div>
+
+                    <?php ActiveForm::end(); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -24,6 +24,6 @@ class LeafletMapAsset extends AssetBundle
     ];
 
     public $depends = [
-        // 'app\modules\contrib\appassets\GxBootstrapAsset',
+        // 'hcmgis\contrib\appassets\GxBootstrapAsset',
     ];
 }

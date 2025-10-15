@@ -21,6 +21,14 @@ class CaBenhController extends QuanlyBaseController
 
     public $title = "Ca bệnh";
 
+    public $label = [
+        'index' => 'Danh sách',
+        'create' => 'Thêm mới',
+        'update' => 'Cập nhật',
+        'view' => 'Chi tiết',
+        'delete' => 'Xóa',
+    ];
+
     /**
      * Lists all CaBenh models.
      * @return mixed

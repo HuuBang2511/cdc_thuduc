@@ -16,10 +16,11 @@ echo "<?php\n";
 ?>
 use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\bootstrap4\Modal;
+use yii\bootstrap5\Modal;
 use app\widgets\crud\CrudAsset;
-use app\widgets\gridview\GridView;
-use app\widgets\export\ExportMenu;
+use kartik\export\ExportMenu;
+use kartik\grid\GridView;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
@@ -39,7 +40,7 @@ CrudAsset::register($this);
             'target' => ExportMenu::TARGET_BLANK,
             'pjaxContainerId' => 'kv-pjax-container',
             'exportContainer' => [
-                'class' => 'btn-group mr-2'
+                'class' => 'btn-group me-2'
             ],
             'exportConfig' => [
                 ExportMenu::FORMAT_TEXT => false,
@@ -61,6 +62,7 @@ CrudAsset::register($this);
             'filterModel' => $searchModel,
             'pjax'=>true,
             'columns' => require(__DIR__.'/_columns.php'),
+            'export' => false,
             'toolbar'=> [
                 $fullExportMenu,
                 ['content'=>
@@ -72,20 +74,19 @@ CrudAsset::register($this);
             'condensed' => true,
             'responsive' => false,
             'panelPrefix' => 'block ',
-            'toolbarContainerOptions' => ['class' => 'float-right'],
-            'summaryOptions' => ['class' => 'float-right'],
             'panel' => [
-                'type' => 'block-themed',
-                'headingOptions' => ['class' => 'block-header'] ,
-                'summaryOptions' => ['class' => 'block-options'],
-                'titleOptions' => ['class' => 'block-title'] ,
-                'heading' => '<i class="fa fa-list"></i> ' .  $this->title ,
+                'type' => ' block-themed',
+                'headingOptions' => ['class' => 'block-header d-block'],
+                'heading' => '<i class="fa fa-list"></i> ' .  $this->title,
+                'footerOptions' => ['class' => 'ps-4 pb-3']
             ]
         ])<?="?>\n"?>
     </div>
 </div>
 <?='<?php Modal::begin([
     "id"=>"ajaxCrudModal",
+    "size" => Modal::SIZE_LARGE,
+    "footerOptions" => ["class" => "d-block"],
     "footer"=>"",// always need it for jquery plugin
 ])?>'."\n"?>
 <?='<?php Modal::end(); ?>'?>

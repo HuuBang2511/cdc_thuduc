@@ -84,6 +84,11 @@ class LeafletMap extends Component
         return $this->_center;
     }
 
+    public function getZoom()
+    {
+        return $this->zoom;
+    }
+
     /**
      * Sets the center of the map.
      *
