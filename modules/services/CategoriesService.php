@@ -35,6 +35,21 @@ class CategoriesService
             0 => 'Không',
             1 => 'Có'
         ];
+        $categories['chonchuaxacdinh'] = [
+            'Không' => 'Không',
+            'Có' => 'Có',
+            'Chưa rõ' => 'Chưa rõ',
+        ];
+        $categories['ketluan'] = [
+            'Đã xuất viện' => 'Đã xuất viện',
+            'Chưa xuất viện' => 'Chưa xuất viện',
+            'Đã xuất viện/ tử vong' => 'Đã xuất viện/ tử vong',
+        ];
+        $categories['phanloaicabenh'] = [
+            'CA MỚI' => 'CA MỚI',
+            'CA CẬP NHẬT' => 'CA CẬP NHẬT',
+        ];
+        
         return $categories;
     }
 }

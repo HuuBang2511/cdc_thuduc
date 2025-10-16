@@ -191,7 +191,7 @@ $config['modules']['quanly'] = [
     'class' => 'app\modules\quanly\Module'
 ];
 $config['modules']['gridview'] = [
-    'class' => 'app\widgets\gridview\Module',
+    'class' => '\kartik\grid\Module',
 ];
 
 $config['modules']['gii'] = [

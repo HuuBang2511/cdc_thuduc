@@ -169,6 +169,7 @@ use Yii;
  * @property bool|null $thanhpho_baove
  * @property bool|null $phathien_congdong
  * @property bool|null $conhapvien
+ * @property bool|null $xuly_odich_dienrong
  *
  * @property BenhVien $benhvien
  * @property DmDantoc $dantoc
@@ -206,7 +207,7 @@ class CaBenh extends QuanlyBaseModel
             [['loaibenh_id', 'gioitinh_id', 'tuanthai', 'khupho_noilamviec_id', 'khupho_noiohientai_id', 'chandoanchinh_id', 'somuitiem', 'tinhthanh_donvibaocao_id', 'tenduong_id', 'truonghoc_id', 'truonghoc_khupho_id', 'cabenhtrung_id', 'thangbaocao', 'stt', 'dantoc_id', 'tinhthanh_noilamviec_id', 'tinhthanh_noiohientai_id', 'tinhthanh_cosodieutri_id', 'namnhapvien', 'tinhthanh_xacminh_cabenh_id', 'phuongxa_xacminh_cabenh_id', 'khupho_xacminh_cabenh_id', 'loaicabenh_id', 'lophoc_id', 'songuoi_tronggiadinh_sxh', 'songuoi_duoi15_sxh', 'songuoi_giadinh_macbenh', 'songuoi_giadinh_macbenh_duoi15', 'status', 'created_by', 'updated_by', 'benhvien_id', 'chandoan_bandau_id', 'cachidiem_id', 'namnhanve', 'songuoi_cutrru_giadinh', 'songuoi_cutru_giadinh_duoi15', 'tenduong_benhnoikhac_id', 'khupho_benhnoikhac_id'], 'integer'],
             [['mabenhnhan', 'hoten', 'madinhdanh', 'ten_nguoibaoho', 'sodienthoai', 'nghenghiep', 'noilamviec', 'diachi_noilamviec', 'diachi_noiohientai', 'so_hsba', 'coso_dieutri', 'hinhthuc_dieutri', 'phandobenh', 'chandoan_bienchung', 'doanbenhkem', 'benhnen', 'phanloai_chandoan', 'loaibenhpham', 'ngaylaymau', 'loaixetnghiem', 'ketqua_xetnghiem', 'tinhtrang_tiemchung', 'tiensu_dichte', 'nguoi_dieutra_dichte', 'sdt_nguoi_dieutra_dichte', 'donvi_dieutra', 'email_donvidieutra', 'donvi_baocao', 'sdt_nguoibaocao', 'email_nguoibaocao', 'trangthai_baocao', 'danhsach_coso_dieutri', 'phanloai_cabenh', 'so_nha', 'ten_duong', 'loai_ca_benh', 'thongtin_dieutri', 'ghichu', 'tinhtrang_hiennay', 'xacminh_cabenh', 'diachi_xacminh_cabenh', 'noikhac_xacminh_cabenh', 'noichandoan', 'phuongxa_noiohientai', 'phuongxa_noilamviec', 'phuongxa_sausapnhap', 'phuongxa', 'truonghoc_phuongxa', 'ketluan_tinhtrang', 'ketluan_chandoan', 'ketluan_benhkhac', 'phuongxa_truonghoc', 'phuongxa_xacminhcabenh', 'donvi_thuchien_xetnghiem', 'xacminh_chandoan', 'xacminh_xuly', 'sonha_benhnoikhac', 'phuongxa_benhnoikhac', 'noikhac_chitiet', 'trong_haituan_bisxh'], 'string'],
             [['ngaysinh', 'ngaykhoiphat', 'ngaynhapvien', 'ngay_xuatvien_chuyenvien_tuvong', 'ngay_dieutra_dichte', 'ngaybaocao', 'nguoibaocao', 'ngay_chinhsua_gannhat', 'ngaycapnhat', 'ngaygop_trung_cabenh', 'ngaymacbenh', 'ngaynhanve', 'ngaykhoibenh', 'ngaythongbao_cabenh', 'ketluan_ngayxuatvien', 'created_at', 'updated_at'], 'safe'],
-            [['cothai', 'laymau_xetnghiem', 'tinhtrang_xuatvien', 'cutru_tainha', 'nha_cabenh', 'nhaco_benhnhan_sxh', 'nhaco_nguoibenh', 'benhvien_phongkham', 'nhatho', 'dinhchua', 'congvien', 'noihoihop', 'noixaydung', 'quancaphe', 'noichannuoi', 'noibancaycanh', 'vuaphelieu', 'noikhac', 'cabenhchidiem', 'dietlangquang', 'giamsat_theodoi', 'xuly_odich_nho', 'cabenhthuphat', 'odichmoi', 'px_daden', 'pxkhac_daden', 'tinhtrangxuatvien', 'tamtru', 'benhnoikhac', 'thanhpho_baove', 'phathien_congdong', 'conhapvien'], 'boolean'],
+            [['cothai', 'laymau_xetnghiem', 'tinhtrang_xuatvien', 'cutru_tainha', 'nha_cabenh', 'nhaco_benhnhan_sxh', 'nhaco_nguoibenh', 'benhvien_phongkham', 'nhatho', 'dinhchua', 'congvien', 'noihoihop', 'noixaydung', 'quancaphe', 'noichannuoi', 'noibancaycanh', 'vuaphelieu', 'noikhac', 'cabenhchidiem', 'dietlangquang', 'giamsat_theodoi', 'xuly_odich_nho', 'cabenhthuphat', 'odichmoi', 'px_daden', 'pxkhac_daden', 'tinhtrangxuatvien', 'tamtru', 'benhnoikhac', 'thanhpho_baove', 'phathien_congdong', 'conhapvien', 'xuly_odich_dienrong'], 'boolean'],
             [['bi_bandau', 'ci_bandau'], 'number'],
             [['benhvien_id'], 'exist', 'skipOnError' => true, 'targetClass' => BenhVien::className(), 'targetAttribute' => ['benhvien_id' => 'id']],
             [['dantoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmDantoc::className(), 'targetAttribute' => ['dantoc_id' => 'id']],
@@ -383,14 +384,9 @@ class CaBenh extends QuanlyBaseModel
             'thanhpho_baove' => 'Thành phố báo về',
             'phathien_congdong' => 'Phát hiện cộng đồng',
             'conhapvien' => 'Có nhập viện',
+            'xuly_odich_dienrong' => 'Xử lý ổ dịch diện rộng',
         ];
     }
-
-    /**
-     * Gets query for [[Benhvien]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
 
     public function getPhuongxachinh()
     {
@@ -402,6 +398,11 @@ class CaBenh extends QuanlyBaseModel
         return $this->hasOne(Phuongxa::className(), ['ma_dvhc' => 'phuongxa_noiohientai']);
     }
 
+    /**
+     * Gets query for [[Benhvien]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getBenhvien()
     {
         return $this->hasOne(BenhVien::className(), ['id' => 'benhvien_id']);

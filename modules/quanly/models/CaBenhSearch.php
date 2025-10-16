@@ -75,7 +75,7 @@ class CaBenhSearch extends CaBenh
             'ngay_dieutra_dichte' => $this->ngay_dieutra_dichte,
             'tinhthanh_donvibaocao_id' => $this->tinhthanh_donvibaocao_id,
             'ngaybaocao' => $this->ngaybaocao,
-            'nguoibaocao' => $this->nguoibaocao,
+            //'nguoibaocao' => $this->nguoibaocao,
             'ngay_chinhsua_gannhat' => $this->ngay_chinhsua_gannhat,
             'ngaycapnhat' => $this->ngaycapnhat,
             'ngaygop_trung_cabenh' => $this->ngaygop_trung_cabenh,
@@ -171,6 +171,7 @@ class CaBenhSearch extends CaBenh
             ->andFilterWhere(['like', 'upper(donvi_dieutra)', mb_strtoupper($this->donvi_dieutra)])
             ->andFilterWhere(['like', 'upper(email_donvidieutra)', mb_strtoupper($this->email_donvidieutra)])
             ->andFilterWhere(['like', 'upper(donvi_baocao)', mb_strtoupper($this->donvi_baocao)])
+            ->andFilterWhere(['like', 'upper(nguoibaocao)', mb_strtoupper($this->nguoibaocao)])
             ->andFilterWhere(['like', 'upper(sdt_nguoibaocao)', mb_strtoupper($this->sdt_nguoibaocao)])
             ->andFilterWhere(['like', 'upper(email_nguoibaocao)', mb_strtoupper($this->email_nguoibaocao)])
             ->andFilterWhere(['like', 'upper(trangthai_baocao)', mb_strtoupper($this->trangthai_baocao)])

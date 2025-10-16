@@ -93,4 +93,29 @@ class CategoriesController extends Controller
 
         return ['output' => [], 'selected' => ''];
     }
+
+    public function actionGetLophoc(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if (!empty($parents[0])) {
+                $truonghoc_id = $parents[0];
+
+                $query = new \yii\db\Query();
+                $data = $query->select([
+                        'id AS id',
+                        'tenlop AS name'   
+                    ])
+                    ->from('lophoc')
+                    ->where(['truonghoc_id' => $truonghoc_id])  
+                    ->orderBy('name')
+                    ->all();
+
+                return ['output' => array_values($data), 'selected' => ''];
+            }
+        }
+
+        return ['output' => [], 'selected' => ''];
+    }
 }
