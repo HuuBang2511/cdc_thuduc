@@ -27,7 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 $this->registerCss("
-    #thongtin-benhnoikhac, #thongtin-xetnghiem, #cabenh_noikhacchitiet, #cabenh_ngayxuatvien, #thongtin_truonghoc {
+    #thongtin-benhnoikhac, #thongtin-xetnghiem, #cabenh_noikhacchitiet, #cabenh_ngayxuatvien, #thongtin_truonghoc
+    , #cabenh_songuoitronggiadinhsxh, #cabenh_songuoitronggiadinhsxhduoi15, #cabenh_songuoitronggiadinh, #cabenh_songuoitronggiadinhduoi15
+    {
         display: none;
     }
     
@@ -86,13 +88,37 @@ $script = <<<JS
         }
     }
 
+    function toggleNhacobenhSxh() {
+        var value = $('#cabenh_nhacobenhnhansxh').val();
+        if (value == '1')  {
+            $('#cabenh_songuoitronggiadinhsxh').slideDown();
+            $('#cabenh_songuoitronggiadinhsxhduoi15').slideDown();
+            //$('#cabenh_noikhacchitiet').css('display', 'flex');
+        } else {
+            $('#cabenh_songuoitronggiadinhsxh').slideUp();
+            $('#cabenh_songuoitronggiadinhsxhduoi15').slideUp();
+        }
+    }
+
+    function toggleNhacobenh() {
+        var value = $('#cabenh_nhacobenhnhan').val();
+        if (value == '1')  {
+            $('#cabenh_songuoitronggiadinh').slideDown();
+            $('#cabenh_songuoitronggiadinhduoi15').slideDown();
+            //$('#cabenh_noikhacchitiet').css('display', 'flex');
+        } else {
+            $('#cabenh_songuoitronggiadinh').slideUp();
+            $('#cabenh_songuoitronggiadinhduoi15').slideUp();
+        }
+    }
     
     toggleThongTinxetnghiem();   
     toggleThongTinBenhNoiKhac();
     toggleNoikhac();
     toggleTinhtrangKetluan();
     toggleLoaicabenh();
-   
+    toggleNhacobenhSxh();
+    toggleNhacobenh();
     
 
     $('#cabenh_benhnoikhac').on('change', function() {
@@ -111,12 +137,21 @@ $script = <<<JS
 
     $('#cabenh_tinhtrangketluan').on('change', function() {
         toggleTinhtrangKetluan();
-        
     });
 
     $('#cabenh-loaicabenh_id').on('change', function() {
         toggleLoaicabenh();
-        console.log($('#cabenh-loaicabenh_id').val());
+        //console.log($('#cabenh-loaicabenh_id').val());
+    });
+
+    $('#cabenh_nhacobenhnhansxh').on('change', function() {
+        toggleNhacobenhSxh();
+        //console.log($('#cabenh_nhacobenhnhansxh').val());
+    });
+
+    $('#cabenh_nhacobenhnhan').on('change', function() {
+        toggleNhacobenh();
+        //console.log($('#cabenh_nhacobenhnhansxh').val());
     });
 JS;
 $this->registerJs($script);
@@ -241,6 +276,30 @@ $this->registerJs($script);
                                         'initialize' => true,
                                         'placeholder'=>'Chọn lớp học',
                                         'url'=>Url::to(['../quanly/categories/get-lophoc']),
+                                        'allowClear' => true
+                                                
+                                    ]
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'truonghoc_phuongxa')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
+                                'options' => ['prompt' => 'Phường nơi ở hiện tại', 'id' => 'truonghoc-phuongxa-id'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'truonghoc_khupho_id')->widget(DepDrop::class, [
+                                    'options'=>['id'=>'truonghoc-khupho-id'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
+                                    'pluginOptions'=>[
+                                        'depends'=>['truonghoc-phuongxa-id'],
+                                        'initialize' => true,
+                                        'placeholder'=>'Chọn khu phố',
+                                        'url'=>Url::to(['../quanly/categories/get-khupho']),
                                         'allowClear' => true
                                                 
                                     ]
