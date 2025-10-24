@@ -174,6 +174,9 @@ $this->registerJs($script);
                             <?= $form->field($model, 'hoten')->textInput() ?>
                         </div>
                         <div class="col-lg-3">
+                            <?= $form->field($model, 'madinhdanh')->textInput() ?>
+                        </div>
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'ngaysinh')->widget(MaskedInput::className(), [
                                 'clientOptions' => [
                                     'alias' => 'date'
@@ -189,6 +192,10 @@ $this->registerJs($script);
                                 ],
                             ])->label('Giới tính') ?>
                         </div>
+                        
+                    </div>
+
+                    <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'dantoc_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['dm_dantoc'], 'id', 'ten'),
@@ -198,9 +205,6 @@ $this->registerJs($script);
                                 ],
                             ])->label('Dân tộc') ?>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'loaibenh_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['dm_loaichandoan'], 'id', 'ten'),
@@ -220,6 +224,10 @@ $this->registerJs($script);
                                 ],
                             ]); ?>
                         </div>
+                        
+                    </div>
+
+                    <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngaythongbao_cabenh')->widget(MaskedInput::className(), [
                                 'clientOptions' => [
@@ -227,9 +235,6 @@ $this->registerJs($script);
                                 ],
                             ]); ?>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'so_hsba')->textInput() ?>
                         </div>

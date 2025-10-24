@@ -398,6 +398,16 @@ class CaBenh extends QuanlyBaseModel
         return $this->hasOne(Phuongxa::className(), ['ma_dvhc' => 'phuongxa_noiohientai']);
     }
 
+    public function getPhuongxaNoilamviec()
+    {
+        return $this->hasOne(Phuongxa::className(), ['ma_dvhc' => 'phuongxa_noilamviec']);
+    }
+
+    public function getPhuongxaBenhnoikhac()
+    {
+        return $this->hasOne(Phuongxa::className(), ['ma_dvhc' => 'phuongxa_benhnoikhac']);
+    }
+
     /**
      * Gets query for [[Benhvien]].
      *
