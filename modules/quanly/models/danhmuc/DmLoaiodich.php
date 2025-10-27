@@ -15,6 +15,8 @@ use Yii;
  * @property string|null $updated_at
  * @property int|null $created_by
  * @property int|null $updated_by
+ *
+ * @property CaBenh[] $caBenhs
  */
 class DmLoaiodich extends \yii\db\ActiveRecord
 {
@@ -54,5 +56,15 @@ class DmLoaiodich extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    /**
+     * Gets query for [[CaBenhs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCaBenhs()
+    {
+        return $this->hasMany(CaBenh::className(), ['loaiodich__id' => 'id']);
     }
 }

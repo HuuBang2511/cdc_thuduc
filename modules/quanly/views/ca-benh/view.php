@@ -21,19 +21,22 @@ $this->params['breadcrumbs'][] = $this->title;
 // Hàm lấy giá trị từ quan hệ (relation name phải là tên hàm get...() bỏ đi 'get')
 $relationFormat = function ($attribute, $relationName) use ($model) {
     $relation = $model->$relationName;
-    $value = $relation ? $relation->ten : null;
+    
     if($attribute == 'truonghoc_id'){
         $value = $relation ? $relation->ten_dv : null;
     }
-    if($attribute == 'lophoc_id'){
+    elseif($attribute == 'lophoc_id'){
         $value = $relation ? $relation->tenlop : null;
     }
-    if($attribute == 'benhvien_id'){
+    elseif($attribute == 'benhvien_id'){
         $value = $relation ? $relation->tenbenhvien : null;
+    }else{
+        $value = $relation->ten;
     }
+    
     return [
         'attribute' => $attribute,
-        'value' => $value, 
+        'value' =>  $value, 
         'label' => $model->getAttributeLabel($attribute),
     ];
 };
@@ -122,6 +125,30 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
         </div>
     </div>
     <div class="card shadow-sm mb-4">
+        <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0"><i class="fas fa-school me-2"></i> Thông tin học tập</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="text-warning border-bottom pb-2 mb-3">Thông tin Học tập</h6>
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            $relationFormat('truonghoc_id', 'truonghoc'),
+                            $relationFormat('lophoc_id', 'lophoc'),
+                            $relationPhuongFormat('truonghoc_phuongxa', 'truonghocPhuongxa'),
+                            $relationPhuongFormat('truonghoc_khupho_id', 'truonghocKhupho'),
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
+                    ]) ?>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <div class="card shadow-sm mb-4">
         <div class="card-header bg-info text-white">
             <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i> Thông tin xác minh ca bệnh</h5>
         </div>
@@ -178,6 +205,28 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                         'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
                     ]) ?>
                 </div>
+                <div class="col-md-6">
+                    <h6 class="text-info border-bottom pb-2 mb-3">Thông tin xác minh ca bệnh</h6>
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'loai_ca_benh',
+                            'xacminh_cabenh',
+                            'diachi_xacminh_cabenh',
+                            $relationPhuongFormat('phuongxa_xacminhcabenh', 'phuongxaXacminhCabenh'),
+                            $relationPhuongFormat('khupho_xacminh_cabenh_id', 'khuphoXacminhCabenh'),
+                            'ngaymacbenh',
+                            [
+                                'attribute' => 'tinhtrang_xuatvien',
+                                'value' => $model->tinhtrang_xuatvien ? '<span class="badge bg-success">Có</span>' : '<span class="badge bg-danger">Chưa</span>',
+                                'format' => 'raw',
+                            ],
+                            $relationFormat('chandoanchinh_id', 'chandoanchinh'),
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
+                    ]) ?>
+                </div>
             </div>
         </div>
     </div>
@@ -208,7 +257,7 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                                 'format' => 'raw',
                             ],
                             $relationFormat('benhvien_id', 'benhvien'),
-                            'ngaymacbenh',
+                            
                             'ngaynhapvien',
                             'nghenghiep'
                         ],
@@ -237,6 +286,107 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                     ]) ?>
                 </div>
                 
+                
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h6 class="text-success border-bottom pb-2 mb-3">Thông tin tiếp xúc trong 2 tuần</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'trong_haituan_bisxh',
+                            [
+                                'attribute' => 'laymau_xetnghiem',
+                                'value' => $model->laymau_xetnghiem ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'nhaco_benhnhan_sxh',
+                                'value' => $model->nhaco_benhnhan_sxh ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'nhaco_nguoibenh',
+                                'value' => $model->nhaco_nguoibenh ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'benhvien_phongkham',
+                                'value' => $model->benhvien_phongkham ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'nhatho',
+                                'value' => $model->nhatho ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'dinhchua',
+                                'value' => $model->dinhchua ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'congvien',
+                                'value' => $model->congvien ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
+                    ]) ?>
+                </div>
+                <div class="col-md-6">
+                    
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            [
+                                'attribute' => 'noihoihop',
+                                'value' => $model->noihoihop ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'noixaydung',
+                                'value' => $model->noixaydung ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'quancaphe',
+                                'value' => $model->quancaphe ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'noichannuoi',
+                                'value' => $model->noichannuoi ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'noibancaycanh',
+                                'value' => $model->noibancaycanh ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'vuaphelieu',
+                                'value' => $model->vuaphelieu ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'noikhac',
+                                'value' => $model->noikhac ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            'noikhac_chitiet'
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
+                    ]) ?>
+                </div>  
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -252,67 +402,125 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                         'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
                     ]) ?>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="card shadow-sm mb-4">
-        <div class="card-header bg-warning text-dark">
-            <h5 class="mb-0"><i class="fas fa-school me-2"></i> Thông tin học tập và lịch sử bệnh</h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
                 <div class="col-md-6">
-                    <h6 class="text-warning border-bottom pb-2 mb-3">Thông tin Học tập</h6>
-                    <?= DetailView::widget([
+                    <h6 class="text-success border-bottom pb-2 mb-3">Khảo sát lăng quăng</h6>
+                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            $relationFormat('truonghoc_id', 'truonghoc'),
-                            $relationFormat('lophoc_id', 'lophoc'),
-                            $relationFormat('truonghoc_khupho_id', 'truonghocKhupho'),
+                            'bi_bandau',
+                            'ci_bandau'
                         ],
                         'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
                         'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
                     ]) ?>
                 </div>
-               
             </div>
         </div>
     </div>
+    
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-secondary text-white">
-            <h5 class="mb-0"><i class="fas fa-home me-2"></i> Thông tin gia đình và ghi chú</h5>
+            <h5 class="mb-0"> Hướng xử lý</h5>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <h6 class="text-secondary border-bottom pb-2 mb-3">Thông tin Gia đình</h6>
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            'songuoitronggiadinh',
-                            'songuoitronggiadinhduoi15',
-                            'songuoitronggiadinhsxh',
-                            'songuoitronggiadinhsxhduoi15',
+                            [
+                                'attribute' => 'cabenhchidiem',
+                                'value' => $model->cabenhchidiem ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'cabenhthuphat',
+                                'value' => $model->cabenhthuphat ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'dietlangquang',
+                                'value' => $model->dietlangquang ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
                         ],
                         'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
                         'template' => '<tr><th class="col-7">{label}</th><td class="col-5">{value}</td></tr>',
                     ]) ?>
                 </div>
                 <div class="col-md-6">
-                    <h6 class="text-secondary border-bottom pb-2 mb-3">Ghi chú</h6>
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            'ghichu:ntext',
+                            [
+                                'attribute' => 'giamsat_theodoi',
+                                'value' => $model->giamsat_theodoi ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'xuly_odich_nho',
+                                'value' => $model->xuly_odich_nho ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'xuly_odich_dienrong',
+                                'value' => $model->xuly_odich_dienrong ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
                         ],
                         'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
-                        'template' => '<tr><th class="col-3">{label}</th><td class="col-9">{value}</td></tr>',
+                        'template' => '<tr><th class="col-7">{label}</th><td class="col-5">{value}</td></tr>',
                     ]) ?>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0"> Kết luận</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                           'ketluan_tinhtrang',
+                           
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-7">{label}</th><td class="col-5">{value}</td></tr>',
+                    ]) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            [
+                                'attribute' => 'giamsat_theodoi',
+                                'value' => $model->giamsat_theodoi ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'xuly_odich_nho',
+                                'value' => $model->xuly_odich_nho ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'xuly_odich_dienrong',
+                                'value' => $model->xuly_odich_dienrong ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-7">{label}</th><td class="col-5">{value}</td></tr>',
+                    ]) ?>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
 <?php
 // CSS tùy chỉnh cho view

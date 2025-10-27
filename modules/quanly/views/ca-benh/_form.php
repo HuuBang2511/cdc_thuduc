@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $this->registerCss("
     #thongtin-benhnoikhac, #thongtin-xetnghiem, #cabenh_noikhacchitiet, #cabenh_ngayxuatvien, #thongtin_truonghoc
-    , #cabenh_songuoitronggiadinhsxh, #cabenh_songuoitronggiadinhsxhduoi15, #cabenh_songuoitronggiadinh, #cabenh_songuoitronggiadinhduoi15
+    , #cabenh_songuoitronggiadinhsxh, #cabenh_songuoitronggiadinhsxhduoi15, #cabenh_songuoitronggiadinh, #cabenh_songuoitronggiadinhduoi15,
+    #cabenh-codiachi
     {
         display: none;
     }
@@ -111,6 +112,16 @@ $script = <<<JS
             $('#cabenh_songuoitronggiadinhduoi15').slideUp();
         }
     }
+
+    function toggleCodiachi() {
+        var value = $('#cb_codiachi').val();
+        if (value == '1')  {
+            $('#cabenh-codiachi').slideDown();
+            $('#cabenh-codiachi').css('display', 'flex');
+        } else {
+            $('#cabenh-codiachi').slideUp();
+        }
+    }
     
     toggleThongTinxetnghiem();   
     toggleThongTinBenhNoiKhac();
@@ -119,6 +130,7 @@ $script = <<<JS
     toggleLoaicabenh();
     toggleNhacobenhSxh();
     toggleNhacobenh();
+    toggleCodiachi();
     
 
     $('#cabenh_benhnoikhac').on('change', function() {
@@ -133,6 +145,11 @@ $script = <<<JS
     $('#cabenh_noikhac').on('change', function() {
         toggleNoikhac();
         
+    });
+
+    $('#cb_codiachi').on('change', function() {
+        toggleCodiachi();
+        console.log($('#cb_codiachi').val())
     });
 
     $('#cabenh_tinhtrangketluan').on('change', function() {
@@ -315,6 +332,18 @@ $this->registerJs($script);
                     <h4 class="content-heading">Xác minh ca bệnh</h4>
 
                     <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'codiachi')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => 'Có địa chỉ', 'id' => 'cb_codiachi'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="row" id = "cabenh-codiachi">
                         <div class="col-lg-12">
                             <?= $form->field($model, 'diachi_noiohientai')->textInput() ?>
                         </div>
@@ -360,6 +389,87 @@ $this->registerJs($script);
                             ]) ?>
                         </div>
                         
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'loai_ca_benh')->textInput() ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'xacminh_cabenh')->textInput() ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <?= $form->field($model, 'diachi_xacminh_cabenh')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'phuongxa_xacminhcabenh')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
+                                'options' => ['prompt' => 'Phường xã xác minh ca bệnh', 'id' => 'phuongxa-xacminhcabenh-id'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'khupho_xacminh_cabenh_id')->widget(DepDrop::class, [
+                                    'options'=>['id'=>'khupho-xacminhcabenh-id'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
+                                    'pluginOptions'=>[
+                                        'depends'=>['phuongxa-xacminhcabenh-id'],
+                                        'initialize' => true,
+                                        'placeholder'=>'Chọn khu phố',
+                                        'url'=>Url::to(['../quanly/categories/get-khupho']),
+                                        'allowClear' => true
+                                                
+                                    ]
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'chandoanchinh_id')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['dm_loaichandoan'], 'id', 'ten'),
+                                'options' => ['prompt' => 'Chọn chẩn đoán'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'ngaymacbenh')->widget(MaskedInput::className(), [
+                                'clientOptions' => [
+                                    'alias' => 'date'
+                                ],
+                            ]); ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'tinhtrang_xuatvien')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => 'Tình trạng xuất viện'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'tamtru')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => 'Tạm trú'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <?= $form->field($model, 'xacminh_xuly')->textInput() ?>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -469,14 +579,8 @@ $this->registerJs($script);
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-3">
-                            <?= $form->field($model, 'ngaymacbenh')->widget(MaskedInput::className(), [
-                                'clientOptions' => [
-                                    'alias' => 'date'
-                                ],
-                            ]); ?>
-                        </div>
-                        <div class="col-lg-3">
+                        
+                        <div class="col-lg-6">
                             <?= $form->field($model, 'ngaynhapvien')->widget(MaskedInput::className(), [
                                 'clientOptions' => [
                                     'alias' => 'date'
@@ -771,6 +875,15 @@ $this->registerJs($script);
                                 ],
                             ]) ?>
                         </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'cadautien')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhdautien'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -832,14 +945,8 @@ $this->registerJs($script);
                                 ],
                             ]); ?>
                         </div>
-                        <div class="col-lg-3">
-                            <?= $form->field($model, 'chandoanchinh_id')->widget(Select2::className(), [
-                                'data' => ArrayHelper::map($categories['dm_loaichandoan'], 'id', 'ten'),
-                                'options' => ['prompt' => 'Chọn chẩn đoán'],
-                                'pluginOptions' => [
-                                    'allowClear' => true
-                                ],
-                            ]) ?>
+                        <div class="col-lg-6" >
+                            <?= $form->field($model, 'ketluan_chandoan')->textInput() ?>
                         </div>
                     </div>
                             
@@ -978,6 +1085,22 @@ $this->registerJs($script);
                             ]) ?>
                         </div>
                     </div>
+
+                    <h4 class="content-heading">Nhận về</h4>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'ngaynhanve')->widget(MaskedInput::className(), [
+                                'clientOptions' => [
+                                    'alias' => 'date'
+                                ],
+                            ]); ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'namnhanve')->textInput() ?>
+                        </div>
+                    </div>
+
 
                     <div class="row">
                         <div class="col-lg-12 pb-3">
