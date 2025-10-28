@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerCss("
     #thongtin-benhnoikhac, #thongtin-xetnghiem, #cabenh_noikhacchitiet, #cabenh_ngayxuatvien, #thongtin_truonghoc
     , #cabenh_songuoitronggiadinhsxh, #cabenh_songuoitronggiadinhsxhduoi15, #cabenh_songuoitronggiadinh, #cabenh_songuoitronggiadinhduoi15,
-    #cabenh-codiachi
+    #cabenh-codiachi, #cabenh_dieutra_tcm_truonghoc, #khaosat_sxh, #khaosat_tcm, #cabenh_tcm_chitiet_denkhudongnguoi
     {
         display: none;
     }
@@ -71,7 +71,7 @@ $script = <<<JS
 
     function toggleTinhtrangKetluan() {
         var value = $('#cabenh_tinhtrangketluan').val();
-        if (value == 'Đã xuất viện')  {
+        if (value == 'Đã xuất viện' || value == 'Đã xuất viện/ tử vong')  {
             $('#cabenh_ngayxuatvien').slideDown();
             //$('#cabenh_noikhacchitiet').css('display', 'flex');
         } else {
@@ -113,6 +113,15 @@ $script = <<<JS
         }
     }
 
+    function toggleTcmCodihoc() {
+        var value = $('#cabenh_dieutra_tcm_codihoc').val();
+        if (value == '1')  {
+            $('#cabenh_dieutra_tcm_truonghoc').slideDown();
+        } else {
+            $('#cabenh_dieutra_tcm_truonghoc').slideUp();
+        }
+    }
+
     function toggleCodiachi() {
         var value = $('#cb_codiachi').val();
         if (value == '1')  {
@@ -120,6 +129,32 @@ $script = <<<JS
             $('#cabenh-codiachi').css('display', 'flex');
         } else {
             $('#cabenh-codiachi').slideUp();
+        }
+    }
+
+    function toggleLoaibenh() {
+        var value = $('#cabenh_loaibenh').val();
+        if (value == '1')  {
+            $('#khaosat_sxh').slideDown();
+            $('#khaosat_sxh').css('display', 'block');
+            $('#khaosat_tcm').slideUp();
+        }else if(value == '2') {
+            $('#khaosat_tcm').slideDown();
+            $('#khaosat_tcm').css('display', 'block');
+            $('#khaosat_sxh').slideUp();
+        }else{
+            $('#khaosat_tcm').slideUp();
+            $('#khaosat_sxh').slideUp();
+        }
+    }
+
+    function toggleKhaosatTcmDenkhudongnguoi() {
+        var value = $('#cabenh_tcm_denkhudongnguoi').val();
+        if (value == '1')  {
+            $('#cabenh_tcm_chitiet_denkhudongnguoi').slideDown();
+            $('#cabenh_tcm_chitiet_denkhudongnguoi').css('display', 'flex');
+        } else {
+            $('#cabenh_tcm_chitiet_denkhudongnguoi').slideUp();
         }
     }
     
@@ -131,7 +166,9 @@ $script = <<<JS
     toggleNhacobenhSxh();
     toggleNhacobenh();
     toggleCodiachi();
-    
+    toggleTcmCodihoc();
+    toggleLoaibenh();
+
 
     $('#cabenh_benhnoikhac').on('change', function() {
         toggleThongTinBenhNoiKhac();
@@ -168,6 +205,16 @@ $script = <<<JS
 
     $('#cabenh_nhacobenhnhan').on('change', function() {
         toggleNhacobenh();
+
+    });
+
+    $('#cabenh_dieutra_tcm_codihoc').on('change', function() {
+        toggleTcmCodihoc();
+        //console.log($('#cabenh_nhacobenhnhansxh').val());
+    });
+
+    $('#cabenh_loaibenh').on('change', function() {
+        toggleLoaibenh();
         //console.log($('#cabenh_nhacobenhnhansxh').val());
     });
 JS;
@@ -225,7 +272,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'loaibenh_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['dm_loaichandoan'], 'id', 'ten'),
-                                'options' => ['prompt' => 'Chọn loại bệnh'],
+                                'options' => ['prompt' => 'Chọn loại bệnh', 'id' => 'cabenh_loaibenh'],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -655,6 +702,13 @@ $this->registerJs($script);
                         </div>
                     </div>
 
+                    <h4 class="content-heading">Thông tin khảo sát</h4>
+
+
+                    <div id = "khaosat_sxh">
+
+                    
+
                     <h7>Tại nơi làm việc, trong vòng 2 tuần qua có ai bị SXH / nghi ngờ SXH / sốt không?</h7>
 
                     <div class="row">
@@ -837,6 +891,198 @@ $this->registerJs($script);
                             <?= $form->field($model, 'songuoi_giadinh_macbenh_duoi15')->textInput() ?>
                         </div>
                     </div>
+                    
+                    </div>
+
+                    <div id="khaosat_tcm">
+                    
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'dieutra_tcm_codihoc')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_dieutra_tcm_codihoc'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3" id="cabenh_dieutra_tcm_truonghoc">
+                            <?= $form->field($model, 'dieutra_tcm_truonghoc_id')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['truonghoc'], 'gid', 'ten_dv'),
+                                'options' => ['prompt' => 'Trường học'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'trong1thang_tiepxuc_tcm_truonghoc')->widget(Select2::className(), [
+                                'data' => $categories['chonchuaxacdinh'],
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'tiepxuc_tcm')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'dinhatre_tcm')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'tiepxuc_nguoichamsoc_tcm')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'denkhudongnguoi_tcm')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_denkhudongnguoi'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-9" id="cabenh_tcm_chitiet_denkhudongnguoi">
+                            <?= $form->field($model, 'chitiet_denkhudongnguoi')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'tiepxuc_tacnhan_gaynhiem_tcm')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_tiepxuctacnhan'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-9" id="cabenh_tcm_chitiet_tiepxuctacnhan">
+                            <?= $form->field($model, 'chitiet_tacnhan_tiepxuc_tcm')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <?= $form->field($model, 'nguonnuoc_sudung_tcm')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'anchung_tre_nghingo_tcm')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_anchungtrenghingo'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-9" id="cabenh_tcm_chitiet_anchungtrenghingo">
+                            <?= $form->field($model, 'chitiet_anchung_tre_nghingo_tcm')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'dungdochoi_chung_tre_nghingo_tcm')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_dungdochoichungtrenghingo'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-9" id="cabenh_tcm_chitiet_dungdochoichungtrenghingo">
+                            <?= $form->field($model, 'chitiet_dungdochoichung_tre_nghingo_tcm')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'dungchung_vatdung_tre_nghingo_tcm')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_dungvatdungchungtrenghingo'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-9" id="cabenh_tcm_chitiet_dungvatdungchungtrenghingo">
+                            <?= $form->field($model, 'chitiet_dungchung_vatdung_tre_nghingo_tcm')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'trong1thang_tiepxuc_giadinh_tcm')->widget(Select2::className(), [
+                                'data' => $categories['chonchuaxacdinh'],
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'songuoi_bi_tcm_giadinh')->textInput() ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'songuoi_bi_tcm_giadinh_duoi15')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <?= $form->field($model, 'sotogiapranh_khaosat_tcm')->textInput() ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <?= $form->field($model, 'sotokhaosat_tcm')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'khaosat_tcm_cocabenh_sxh')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_khaosatcabenhsxh'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3" id="cabenh_tcm_socakhaosatsxh">
+                            <?= $form->field($model, 'soca_khaosat_tcm_benhsxh')->textInput() ?>
+                        </div>
+                    </div>
+                        
+                    </div>
 
                     <h4 class="content-heading">Khảo sát lăng quăng</h4>
                     <p>Khảo sát khi ca bệnh là ca chỉ điểm / ca đầu tiên.</p>
@@ -856,35 +1102,7 @@ $this->registerJs($script);
 
                     <h4 class="content-heading">Hướng xử lý</h4>
 
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <?= $form->field($model, 'cabenhchidiem')->widget(Select2::className(), [
-                                'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhchidiem'],
-                                'pluginOptions' => [
-                                    'allowClear' => true
-                                ],
-                            ]) ?>
-                        </div>
-                        <div class="col-lg-3">
-                            <?= $form->field($model, 'cabenhthuphat')->widget(Select2::className(), [
-                                'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhthuphat'],
-                                'pluginOptions' => [
-                                    'allowClear' => true
-                                ],
-                            ]) ?>
-                        </div>
-                        <div class="col-lg-3">
-                            <?= $form->field($model, 'cadautien')->widget(Select2::className(), [
-                                'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhdautien'],
-                                'pluginOptions' => [
-                                    'allowClear' => true
-                                ],
-                            ]) ?>
-                        </div>
-                    </div>
+                    
 
                     <div class="row">
                         <div class="col-lg-3">
@@ -929,6 +1147,36 @@ $this->registerJs($script);
 
                     <div class="row">
                         <div class="col-lg-3">
+                            <?= $form->field($model, 'cabenhchidiem')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhchidiem'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'cabenhthuphat')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhthuphat'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'cadautien')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhdautien'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'ketluan_tinhtrang')->widget(Select2::className(), [
                                 'data' => $categories['ketluan'],
                                 'options' => ['prompt' => 'Chọn tình trạng kết luận', 'id' => 'cabenh_tinhtrangketluan'],
@@ -947,6 +1195,18 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-6" >
                             <?= $form->field($model, 'ketluan_chandoan')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'loaiodich__id')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['dm_loaiodich'], 'id', 'ten'),
+                                'options' => ['prompt' => 'Chọn kết luận loại ổ dịch'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
                         </div>
                     </div>
                             

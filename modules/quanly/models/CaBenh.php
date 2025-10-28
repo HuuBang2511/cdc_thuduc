@@ -230,11 +230,11 @@ class CaBenh extends QuanlyBaseModel
     public function rules()
     {
         return [
-            [['loaibenh_id', 'gioitinh_id', 'tuanthai', 'khupho_noilamviec_id', 'khupho_noiohientai_id', 'chandoanchinh_id', 'somuitiem', 'tinhthanh_donvibaocao_id', 'tenduong_id', 'truonghoc_id', 'truonghoc_khupho_id', 'cabenhtrung_id', 'thangbaocao', 'stt', 'dantoc_id', 'tinhthanh_noilamviec_id', 'tinhthanh_noiohientai_id', 'tinhthanh_cosodieutri_id', 'namnhapvien', 'tinhthanh_xacminh_cabenh_id', 'phuongxa_xacminh_cabenh_id', 'khupho_xacminh_cabenh_id', 'loaicabenh_id', 'lophoc_id', 'songuoi_tronggiadinh_sxh', 'songuoi_duoi15_sxh', 'songuoi_giadinh_macbenh', 'songuoi_giadinh_macbenh_duoi15', 'status', 'created_by', 'updated_by', 'benhvien_id', 'chandoan_bandau_id', 'cachidiem_id', 'namnhanve', 'songuoi_cutrru_giadinh', 'songuoi_cutru_giadinh_duoi15', 'tenduong_benhnoikhac_id', 'khupho_benhnoikhac_id', 'songuoi_bi_tcm_giadinh', 'songuoi_bi_tcm_giadinh_duoi15', 'sotogiapranh_khaosat_tcm', 'sotokhaosat_tcm', 'loaiodich__id', 'soca_khaosat_tcm_benhsxh'], 'default', 'value' => null],
-            [['loaibenh_id', 'gioitinh_id', 'tuanthai', 'khupho_noilamviec_id', 'khupho_noiohientai_id', 'chandoanchinh_id', 'somuitiem', 'tinhthanh_donvibaocao_id', 'tenduong_id', 'truonghoc_id', 'truonghoc_khupho_id', 'cabenhtrung_id', 'thangbaocao', 'stt', 'dantoc_id', 'tinhthanh_noilamviec_id', 'tinhthanh_noiohientai_id', 'tinhthanh_cosodieutri_id', 'namnhapvien', 'tinhthanh_xacminh_cabenh_id', 'phuongxa_xacminh_cabenh_id', 'khupho_xacminh_cabenh_id', 'loaicabenh_id', 'lophoc_id', 'songuoi_tronggiadinh_sxh', 'songuoi_duoi15_sxh', 'songuoi_giadinh_macbenh', 'songuoi_giadinh_macbenh_duoi15', 'status', 'created_by', 'updated_by', 'benhvien_id', 'chandoan_bandau_id', 'cachidiem_id', 'namnhanve', 'songuoi_cutrru_giadinh', 'songuoi_cutru_giadinh_duoi15', 'tenduong_benhnoikhac_id', 'khupho_benhnoikhac_id', 'songuoi_bi_tcm_giadinh', 'songuoi_bi_tcm_giadinh_duoi15', 'sotogiapranh_khaosat_tcm', 'sotokhaosat_tcm', 'loaiodich__id', 'soca_khaosat_tcm_benhsxh'], 'integer'],
+            [['loaibenh_id', 'gioitinh_id', 'tuanthai', 'khupho_noilamviec_id', 'khupho_noiohientai_id', 'chandoanchinh_id', 'somuitiem', 'tinhthanh_donvibaocao_id', 'tenduong_id', 'truonghoc_id', 'truonghoc_khupho_id', 'cabenhtrung_id', 'thangbaocao', 'stt', 'dantoc_id', 'tinhthanh_noilamviec_id', 'tinhthanh_noiohientai_id', 'tinhthanh_cosodieutri_id', 'namnhapvien', 'tinhthanh_xacminh_cabenh_id', 'phuongxa_xacminh_cabenh_id', 'khupho_xacminh_cabenh_id', 'loaicabenh_id', 'lophoc_id', 'songuoi_tronggiadinh_sxh', 'songuoi_duoi15_sxh', 'songuoi_giadinh_macbenh', 'songuoi_giadinh_macbenh_duoi15', 'status', 'created_by', 'updated_by', 'benhvien_id', 'chandoan_bandau_id', 'cachidiem_id', 'namnhanve', 'songuoi_cutrru_giadinh', 'songuoi_cutru_giadinh_duoi15', 'tenduong_benhnoikhac_id', 'khupho_benhnoikhac_id', 'songuoi_bi_tcm_giadinh', 'songuoi_bi_tcm_giadinh_duoi15', 'sotogiapranh_khaosat_tcm', 'sotokhaosat_tcm', 'loaiodich__id', 'soca_khaosat_tcm_benhsxh', 'dieutra_tcm_truonghoc_id'], 'default', 'value' => null],
+            [['loaibenh_id', 'gioitinh_id', 'tuanthai', 'khupho_noilamviec_id', 'khupho_noiohientai_id', 'chandoanchinh_id', 'somuitiem', 'tinhthanh_donvibaocao_id', 'tenduong_id', 'truonghoc_id', 'truonghoc_khupho_id', 'cabenhtrung_id', 'thangbaocao', 'stt', 'dantoc_id', 'tinhthanh_noilamviec_id', 'tinhthanh_noiohientai_id', 'tinhthanh_cosodieutri_id', 'namnhapvien', 'tinhthanh_xacminh_cabenh_id', 'phuongxa_xacminh_cabenh_id', 'khupho_xacminh_cabenh_id', 'loaicabenh_id', 'lophoc_id', 'songuoi_tronggiadinh_sxh', 'songuoi_duoi15_sxh', 'songuoi_giadinh_macbenh', 'songuoi_giadinh_macbenh_duoi15', 'status', 'created_by', 'updated_by', 'benhvien_id', 'chandoan_bandau_id', 'cachidiem_id', 'namnhanve', 'songuoi_cutrru_giadinh', 'songuoi_cutru_giadinh_duoi15', 'tenduong_benhnoikhac_id', 'khupho_benhnoikhac_id', 'songuoi_bi_tcm_giadinh', 'songuoi_bi_tcm_giadinh_duoi15', 'sotogiapranh_khaosat_tcm', 'sotokhaosat_tcm', 'loaiodich__id', 'soca_khaosat_tcm_benhsxh', 'dieutra_tcm_truonghoc_id'], 'integer'],
             [['mabenhnhan', 'hoten', 'madinhdanh', 'ten_nguoibaoho', 'sodienthoai', 'nghenghiep', 'noilamviec', 'diachi_noilamviec', 'diachi_noiohientai', 'so_hsba', 'coso_dieutri', 'hinhthuc_dieutri', 'phandobenh', 'chandoan_bienchung', 'doanbenhkem', 'benhnen', 'phanloai_chandoan', 'loaibenhpham', 'ngaylaymau', 'loaixetnghiem', 'ketqua_xetnghiem', 'tinhtrang_tiemchung', 'tiensu_dichte', 'nguoi_dieutra_dichte', 'sdt_nguoi_dieutra_dichte', 'donvi_dieutra', 'email_donvidieutra', 'donvi_baocao', 'sdt_nguoibaocao', 'email_nguoibaocao', 'trangthai_baocao', 'danhsach_coso_dieutri', 'phanloai_cabenh', 'so_nha', 'ten_duong', 'loai_ca_benh', 'thongtin_dieutri', 'ghichu', 'tinhtrang_hiennay', 'xacminh_cabenh', 'diachi_xacminh_cabenh', 'noikhac_xacminh_cabenh', 'noichandoan', 'phuongxa_noiohientai', 'phuongxa_noilamviec', 'phuongxa_sausapnhap', 'phuongxa', 'truonghoc_phuongxa', 'ketluan_tinhtrang', 'ketluan_chandoan', 'ketluan_benhkhac', 'phuongxa_truonghoc', 'phuongxa_xacminhcabenh', 'donvi_thuchien_xetnghiem', 'xacminh_chandoan', 'xacminh_xuly', 'sonha_benhnoikhac', 'phuongxa_benhnoikhac', 'noikhac_chitiet', 'trong_haituan_bisxh', 'trong1thang_tiepxuc_tcm_truonghoc', 'chitiet_denkhudongnguoi', 'chitiet_tacnhan_tiepxuc_tcm', 'nguonnuoc_sudung_tcm', 'chitiet_anchung_tre_nghingo_tcm', 'chitiet_dungdochoichung_tre_nghingo_tcm', 'chitiet_dungchung_vatdung_tre_nghingo_tcm', 'trong1thang_tiepxuc_giadinh_tcm'], 'string'],
             [['ngaysinh', 'ngaykhoiphat', 'ngaynhapvien', 'ngay_xuatvien_chuyenvien_tuvong', 'ngay_dieutra_dichte', 'ngaybaocao', 'ngay_chinhsua_gannhat', 'ngaycapnhat', 'ngaygop_trung_cabenh', 'ngaymacbenh', 'ngaynhanve', 'ngaykhoibenh', 'ngaythongbao_cabenh', 'ketluan_ngayxuatvien', 'created_at', 'updated_at'], 'safe'],
-            [['cothai', 'laymau_xetnghiem', 'tinhtrang_xuatvien', 'cutru_tainha', 'nha_cabenh', 'nhaco_benhnhan_sxh', 'nhaco_nguoibenh', 'benhvien_phongkham', 'nhatho', 'dinhchua', 'congvien', 'noihoihop', 'noixaydung', 'quancaphe', 'noichannuoi', 'noibancaycanh', 'vuaphelieu', 'noikhac', 'cabenhchidiem', 'dietlangquang', 'giamsat_theodoi', 'xuly_odich_nho', 'cabenhthuphat', 'odichmoi', 'px_daden', 'pxkhac_daden', 'tinhtrangxuatvien', 'tamtru', 'benhnoikhac', 'thanhpho_baove', 'phathien_congdong', 'conhapvien', 'xuly_odich_dienrong', 'cadautien', 'codiachi', 'tiepxuc_tcm', 'dinhatre_tcm', 'tiepxuc_nguoichamsoc_tcm', 'denkhudongnguoi_tcm', 'tiepxuc_tacnhan_gaynhiem_tcm', 'anchung_tre_nghingo_tcm', 'dungdochoi_chung_tre_nghingo_tcm', 'dungchung_vatdung_tre_nghingo_tcm', 'khaosat_tcm_cocabenh_sxh'], 'boolean'],
+            [['cothai', 'laymau_xetnghiem', 'tinhtrang_xuatvien', 'cutru_tainha', 'nha_cabenh', 'nhaco_benhnhan_sxh', 'nhaco_nguoibenh', 'benhvien_phongkham', 'nhatho', 'dinhchua', 'congvien', 'noihoihop', 'noixaydung', 'quancaphe', 'noichannuoi', 'noibancaycanh', 'vuaphelieu', 'noikhac', 'cabenhchidiem', 'dietlangquang', 'giamsat_theodoi', 'xuly_odich_nho', 'cabenhthuphat', 'odichmoi', 'px_daden', 'pxkhac_daden', 'tinhtrangxuatvien', 'tamtru', 'benhnoikhac', 'thanhpho_baove', 'phathien_congdong', 'conhapvien', 'xuly_odich_dienrong', 'cadautien', 'codiachi', 'tiepxuc_tcm', 'dinhatre_tcm', 'tiepxuc_nguoichamsoc_tcm', 'denkhudongnguoi_tcm', 'tiepxuc_tacnhan_gaynhiem_tcm', 'anchung_tre_nghingo_tcm', 'dungdochoi_chung_tre_nghingo_tcm', 'dungchung_vatdung_tre_nghingo_tcm', 'khaosat_tcm_cocabenh_sxh', 'dieutra_tcm_codihoc'], 'boolean'],
             [['bi_bandau', 'ci_bandau'], 'number'],
             [['nguoibaocao'], 'string', 'max' => 225],
             [['benhvien_id'], 'exist', 'skipOnError' => true, 'targetClass' => BenhVien::className(), 'targetAttribute' => ['benhvien_id' => 'id']],
@@ -253,6 +253,7 @@ class CaBenh extends QuanlyBaseModel
             [['khupho_benhnoikhac_id'], 'exist', 'skipOnError' => true, 'targetClass' => Khupho::className(), 'targetAttribute' => ['khupho_benhnoikhac_id' => 'id']],
             [['lophoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lophoc::className(), 'targetAttribute' => ['lophoc_id' => 'id']],
             [['truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['truonghoc_id' => 'gid']],
+            [['dieutra_tcm_truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['dieutra_tcm_truonghoc_id' => 'gid']]
         ];
     }
 
@@ -424,7 +425,7 @@ class CaBenh extends QuanlyBaseModel
             'chitiet_denkhudongnguoi' => 'Chi tiết đến khu đông người',
             'tiepxuc_tacnhan_gaynhiem_tcm' => 'Tiếp xúc tác nhân gây nhiễm TCM',
             'chitiet_tacnhan_tiepxuc_tcm' => 'Chi tiết tác nhân tiếp xúc TCM',
-            'nguonnuoc_sudung_tcm' => 'Nguồn nước sử dụng TCM',
+            'nguonnuoc_sudung_tcm' => 'Nguồn nước sử dụng',
             'anchung_tre_nghingo_tcm' => 'Ăn chung trẻ nghi ngờ TCM',
             'chitiet_anchung_tre_nghingo_tcm' => 'Chi tiết ăn chung trẻ nghi ngờ TCM',
             'dungdochoi_chung_tre_nghingo_tcm' => 'Dùng đồ chơi chung với trẻ nghi ngờ TCM',
@@ -439,6 +440,8 @@ class CaBenh extends QuanlyBaseModel
             'loaiodich__id' => 'Loại ổ dịch',
             'khaosat_tcm_cocabenh_sxh' => 'Khảo sát TCM có ca bệnh SXH',
             'soca_khaosat_tcm_benhsxh' => 'Số ca khảo sát TCM bệnh SXH',
+            'dieutra_tcm_codihoc' => 'Điều tra bệnh TCM có đi học',
+            'dieutra_tcm_truonghoc_id' => 'Trường học'
         ];
     }
 
@@ -636,4 +639,10 @@ class CaBenh extends QuanlyBaseModel
     {
         return $this->hasOne(Truonghoc::className(), ['gid' => 'truonghoc_id']);
     }
+
+    public function getDieutraTcmTruonghoc()
+    {
+        return $this->hasOne(Truonghoc::className(), ['gid' => 'dieutra_tcm_truonghoc_id']);
+    }
 }
+ 
