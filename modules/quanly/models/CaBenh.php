@@ -253,7 +253,8 @@ class CaBenh extends QuanlyBaseModel
             [['khupho_benhnoikhac_id'], 'exist', 'skipOnError' => true, 'targetClass' => Khupho::className(), 'targetAttribute' => ['khupho_benhnoikhac_id' => 'id']],
             [['lophoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lophoc::className(), 'targetAttribute' => ['lophoc_id' => 'id']],
             [['truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['truonghoc_id' => 'gid']],
-            [['dieutra_tcm_truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['dieutra_tcm_truonghoc_id' => 'gid']]
+            [['dieutra_tcm_truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['dieutra_tcm_truonghoc_id' => 'gid']],
+            [['loaibenh_id'], 'required']
         ];
     }
 

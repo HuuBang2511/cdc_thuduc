@@ -31,7 +31,7 @@ $relationFormat = function ($attribute, $relationName) use ($model) {
     elseif($attribute == 'benhvien_id'){
         $value = $relation ? $relation->tenbenhvien : null;
     }else{
-        $value = $relation->ten;
+        $value = $relation ? $relation->ten : null;
     }
     
     return [
@@ -65,19 +65,7 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 text-primary mb-0"><?= Html::encode($this->title) ?>: <span class="fw-normal text-secondary"><?= Html::encode($model->hoten) ?></span></h1>
-        <div>
-            <?= Html::a('<i class="fas fa-edit me-1"></i> ' . Yii::t('app', 'Cập nhật'), ['update', 'id' => $model->id], ['class' => 'btn btn-warning me-2']) ?>
-            <?= Html::a('<i class="fas fa-trash-alt me-1"></i> ' . Yii::t('app', 'Xóa'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => Yii::t('app', 'Bạn có chắc chắn muốn xóa mục này?'),
-                    'method' => 'post',
-                ],
-            ]) ?>
-             <a href="javascript:window.history.back()" class="btn btn-light float-end ms-2">
-                <i class="fa fa-fw fa-angle-left me-1"></i> <?= Yii::t('app', 'Quay lại') ?>
-            </a>
-        </div>
+        
     </div>
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-primary text-white">
@@ -285,17 +273,95 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                         'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
                     ]) ?>
                 </div>
-                
-                
             </div>
+            <?php if($model->loaibenh_id != null && $model->loaibenh_id == 2): ?>
             <div class="row">
                 <div class="col-lg-12">
-                    <h6 class="text-success border-bottom pb-2 mb-3">Thông tin tiếp xúc trong 2 tuần</h6>
+                    <h6 class="text-success border-bottom pb-2 mb-3">Thông tin khảo sát TCM</h6>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'trong1thang_tiepxuc_tcm_truonghoc',
+                            [
+                                'attribute' => 'tiepxuc_tcm',
+                                'value' => $model->tiepxuc_tcm ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'dinhatre_tcm',
+                                'value' => $model->dinhatre_tcm ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'tiepxuc_nguoichamsoc_tcm',
+                                'value' => $model->tiepxuc_nguoichamsoc_tcm ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'denkhudongnguoi_tcm',
+                                'value' => $model->denkhudongnguoi_tcm ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            'chitiet_denkhudongnguoi',
+                            [
+                                'attribute' => 'tiepxuc_tacnhan_gaynhiem_tcm',
+                                'value' => $model->tiepxuc_tacnhan_gaynhiem_tcm ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            'chitiet_tacnhan_tiepxuc_tcm',
+                            [
+                                'attribute' => 'anchung_tre_nghingo_tcm',
+                                'value' => $model->anchung_tre_nghingo_tcm ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            'chitiet_anchung_tre_nghingo_tcm',                            
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
+                    ]) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'nguonnuoc_sudung_tcm',
+                            [
+                                'attribute' => 'dungdochoi_chung_tre_nghingo_tcm',
+                                'value' => $model->dungdochoi_chung_tre_nghingo_tcm ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            'chitiet_dungdochoichung_tre_nghingo_tcm',
+                            [
+                                'attribute' => 'dungchung_vatdung_tre_nghingo_tcm',
+                                'value' => $model->tiepxuc_tacnhan_gaynhiem_tcm ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            'chitiet_dungchung_vatdung_tre_nghingo_tcm',
+                            [
+                                'attribute' => 'trong1thang_tiepxuc_giadinh_tcm',
+                                'value' => $model->trong1thang_tiepxuc_giadinh_tcm ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            'songuoi_bi_tcm_giadinh',     
+                            'songuoi_bi_tcm_giadinh_duoi15' ,                      
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-4">{label}</th><td class="col-8">{value}</td></tr>',
+                    ]) ?>
+                </div>
+            </div>
+            <?php else: ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h6 class="text-success border-bottom pb-2 mb-3">Thông khảo sát SXH</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
@@ -388,6 +454,7 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                     ]) ?>
                 </div>  
             </div>
+            <?php endif; ?>
             <div class="row">
                 <div class="col-md-6">
                     <h6 class="text-success border-bottom pb-2 mb-3">Thông tin nơi làm việc</h6>
@@ -428,19 +495,15 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            [
-                                'attribute' => 'cabenhchidiem',
-                                'value' => $model->cabenhchidiem ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
-                                'format' => 'raw',
-                            ],
-                            [
-                                'attribute' => 'cabenhthuphat',
-                                'value' => $model->cabenhthuphat ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
-                                'format' => 'raw',
-                            ],
+                           
                             [
                                 'attribute' => 'dietlangquang',
                                 'value' => $model->dietlangquang ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'giamsat_theodoi',
+                                'value' => $model->giamsat_theodoi ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
                                 'format' => 'raw',
                             ],
                         ],
@@ -452,11 +515,7 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            [
-                                'attribute' => 'giamsat_theodoi',
-                                'value' => $model->giamsat_theodoi ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
-                                'format' => 'raw',
-                            ],
+                            
                             [
                                 'attribute' => 'xuly_odich_nho',
                                 'value' => $model->xuly_odich_nho ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
@@ -487,7 +546,22 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                         'model' => $model,
                         'attributes' => [
                            'ketluan_tinhtrang',
-                           
+                            [
+                                'attribute' => 'cabenhchidiem',
+                                'value' => $model->cabenhchidiem ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'cabenhthuphat',
+                                'value' => $model->cabenhthuphat ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'cadautien',
+                                'value' => $model->cadautien ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
+                                'format' => 'raw',
+                            ],
+                            $relationFormat('loaiodich__id', 'loaiodich'),
                         ],
                         'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
                         'template' => '<tr><th class="col-7">{label}</th><td class="col-5">{value}</td></tr>',
@@ -497,21 +571,59 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            [
-                                'attribute' => 'giamsat_theodoi',
-                                'value' => $model->giamsat_theodoi ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
-                                'format' => 'raw',
-                            ],
-                            [
-                                'attribute' => 'xuly_odich_nho',
-                                'value' => $model->xuly_odich_nho ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
-                                'format' => 'raw',
-                            ],
-                            [
-                                'attribute' => 'xuly_odich_dienrong',
-                                'value' => $model->xuly_odich_dienrong ? '<span class="badge bg-danger">Có</span>' : '<span class="badge bg-success">Không</span>',
-                                'format' => 'raw',
-                            ],
+                            'nguoi_dieutra_dichte',
+                            'sdt_nguoi_dieutra_dichte',
+                            'donvi_dieutra',
+                            'email_donvidieutra',
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-7">{label}</th><td class="col-5">{value}</td></tr>',
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0"> Thông tin thêm</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'phandobenh',
+                            'chandoan_bienchung',
+                            'doanbenhkem',
+                            'benhnen',
+                            'ngaykhoiphat',
+                            'ngay_xuatvien_chuyenvien_tuvong',
+                            'phanloai_chandoan',
+                            'tinhtrang_tiemchung',
+                            'somuitiem',
+                            'tiensu_dichte'
+                        ],
+                        'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
+                        'template' => '<tr><th class="col-7">{label}</th><td class="col-5">{value}</td></tr>',
+                    ]) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'donvi_baocao',
+                            'nguoibaocao',
+                            'sdt_nguoibaocao',
+                            'email_nguoibaocao',
+                            'trangthai_baocao',
+                            'danhsach_coso_dieutri',
+                            'ngay_chinhsua_gannhat',
+                            'ngaycapnhat',
+                            'phanloai_cabenh',
+                            'ngaynhanve',
+                            'namnhanve',
                         ],
                         'options' => ['class' => 'table table-sm table-borderless detail-view-compact'],
                         'template' => '<tr><th class="col-7">{label}</th><td class="col-5">{value}</td></tr>',

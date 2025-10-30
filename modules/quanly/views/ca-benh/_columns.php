@@ -547,7 +547,7 @@ return [
         'dropdown' => false,
         'vAlign'=>'middle',
         'width' => '180px',
-        'template' => '{view} {update}',
+        'template' => '{view} {update} {delete}',
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },

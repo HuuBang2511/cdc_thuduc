@@ -29,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerCss("
     #thongtin-benhnoikhac, #thongtin-xetnghiem, #cabenh_noikhacchitiet, #cabenh_ngayxuatvien, #thongtin_truonghoc
     , #cabenh_songuoitronggiadinhsxh, #cabenh_songuoitronggiadinhsxhduoi15, #cabenh_songuoitronggiadinh, #cabenh_songuoitronggiadinhduoi15,
-    #cabenh-codiachi, #cabenh_dieutra_tcm_truonghoc, #khaosat_sxh, #khaosat_tcm, #cabenh_tcm_chitiet_denkhudongnguoi
+    #cabenh-codiachi, #cabenh_dieutra_tcm_truonghoc, #khaosat_sxh, #khaosat_tcm, #cabenh_tcm_chitiet_denkhudongnguoi,#cabenh_tcm_chitiet_tiepxuctacnhan,
+    #cabenh_tcm_chitiet_anchungtrenghingo, #cabenh_tcm_chitiet_dungdochoichungtrenghingo, #cabenh_tcm_chitiet_dungvatdungchungtrenghingo
     {
         display: none;
     }
@@ -152,9 +153,49 @@ $script = <<<JS
         var value = $('#cabenh_tcm_denkhudongnguoi').val();
         if (value == '1')  {
             $('#cabenh_tcm_chitiet_denkhudongnguoi').slideDown();
-            $('#cabenh_tcm_chitiet_denkhudongnguoi').css('display', 'flex');
+            //$('#cabenh_tcm_chitiet_denkhudongnguoi').css('display', 'flex');
         } else {
             $('#cabenh_tcm_chitiet_denkhudongnguoi').slideUp();
+        }
+    }
+
+    function toggleKhaosatTcmTiepxuctacnhan() {
+        var value = $('#cabenh_tcm_tiepxuctacnhan').val();
+        if (value == '1')  {
+            $('#cabenh_tcm_chitiet_tiepxuctacnhan').slideDown();
+            //$('#cabenh_tcm_chitiet_denkhudongnguoi').css('display', 'flex');
+        } else {
+            $('#cabenh_tcm_chitiet_tiepxuctacnhan').slideUp();
+        }
+    }
+
+    function toggleKhaosatTcmAnchungtrenghingo() {
+        var value = $('#cabenh_tcm_anchungtrenghingo').val();
+        if (value == '1')  {
+            $('#cabenh_tcm_chitiet_anchungtrenghingo').slideDown();
+            //$('#cabenh_tcm_chitiet_denkhudongnguoi').css('display', 'flex');
+        } else {
+            $('#cabenh_tcm_chitiet_anchungtrenghingo').slideUp();
+        }
+    }
+
+    function toggleKhaosatTcmDungdochoichungtrenghingo() {
+        var value = $('#cabenh_tcm_dungdochoichungtrenghingo').val();
+        if (value == '1')  {
+            $('#cabenh_tcm_chitiet_dungdochoichungtrenghingo').slideDown();
+            //$('#cabenh_tcm_chitiet_denkhudongnguoi').css('display', 'flex');
+        } else {
+            $('#cabenh_tcm_chitiet_dungdochoichungtrenghingo').slideUp();
+        }
+    }
+
+    function toggleKhaosatTcmDungvatdungchungtrenghingo() {
+        var value = $('#cabenh_tcm_dungvatdungchungtrenghingo').val();
+        if (value == '1')  {
+            $('#cabenh_tcm_chitiet_dungvatdungchungtrenghingo').slideDown();
+            //$('#cabenh_tcm_chitiet_denkhudongnguoi').css('display', 'flex');
+        } else {
+            $('#cabenh_tcm_chitiet_dungvatdungchungtrenghingo').slideUp();
         }
     }
     
@@ -168,7 +209,31 @@ $script = <<<JS
     toggleCodiachi();
     toggleTcmCodihoc();
     toggleLoaibenh();
+    toggleKhaosatTcmDenkhudongnguoi();
+    toggleKhaosatTcmTiepxuctacnhan();
+    toggleKhaosatTcmAnchungtrenghingo();
+    toggleKhaosatTcmDungdochoichungtrenghingo();
+    toggleKhaosatTcmDungvatdungchungtrenghingo();
 
+    $('#cabenh_tcm_denkhudongnguoi').on('change', function() {
+        toggleKhaosatTcmDenkhudongnguoi();
+    });
+
+    $('#cabenh_tcm_tiepxuctacnhan').on('change', function() {
+        toggleKhaosatTcmTiepxuctacnhan();
+    });
+
+    $('#cabenh_tcm_anchungtrenghingo').on('change', function() {
+        toggleKhaosatTcmAnchungtrenghingo();
+    });
+
+    $('#cabenh_tcm_dungdochoichungtrenghingo').on('change', function() {
+        toggleKhaosatTcmDungdochoichungtrenghingo();
+    });
+
+    $('#cabenh_tcm_dungvatdungchungtrenghingo').on('change', function() {
+        toggleKhaosatTcmDungvatdungchungtrenghingo();
+    });
 
     $('#cabenh_benhnoikhac').on('change', function() {
         toggleThongTinBenhNoiKhac();
@@ -180,8 +245,7 @@ $script = <<<JS
     });
 
     $('#cabenh_noikhac').on('change', function() {
-        toggleNoikhac();
-        
+        toggleNoikhac(); 
     });
 
     $('#cb_codiachi').on('change', function() {
