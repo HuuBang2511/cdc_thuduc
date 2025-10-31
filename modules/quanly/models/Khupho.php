@@ -97,4 +97,9 @@ class Khupho extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CaBenh::className(), ['truonghoc_khupho_id' => 'id']);
     }
+
+    public function getPhuongxa()
+    {
+        return $this->hasOne(Phuongxa::className(), ['id' => 'phuongxa_id']);
+    }
 }
