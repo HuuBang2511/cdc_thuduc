@@ -37,6 +37,10 @@ class CategoriesService
             0 => 'Không',
             1 => 'Có'
         ];
+        $categories['chondieutra'] = [
+            0 => 'Chưa điều tra',
+            1 => 'Điền thông tin điều tra'
+        ];
         $categories['chonchuaxacdinh'] = [
             'Không' => 'Không',
             'Có' => 'Có',
@@ -50,6 +54,14 @@ class CategoriesService
         $categories['phanloaicabenh'] = [
             'CA MỚI' => 'CA MỚI',
             'CA CẬP NHẬT' => 'CA CẬP NHẬT',
+        ];
+        $categories['tinhtrangdieutra'] = [
+            'CHƯA ĐIỀU TRA' => 'CHƯA ĐIỀU TRA',
+            'ĐÃ ĐIỀU TRA' => 'ĐÃ ĐIỀU TRA',
+        ];
+        $categories['tiendodieutra'] = [
+            'ĐÚNG HẠN' => 'ĐÚNG HẠN',
+            'QUÁ HẠN' => 'QUÁ HẠN', 
         ];
         
         return $categories;

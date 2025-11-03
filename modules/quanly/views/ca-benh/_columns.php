@@ -13,6 +13,30 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'tinhtrang_dieutra',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'tiendo_dieutra',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngaybaocao',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngay_dieutra_dichte',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngayhandieutra',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'xacminh_cabenh',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'loaibenh_id',
         'value' => 'loaibenh.ten'
     ],
@@ -21,6 +45,7 @@ return [
         'attribute'=>'loaicabenh_id',
         'value' => 'loaicabenh.ten'
     ],
+   
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'mabenhnhan',
@@ -29,15 +54,8 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hoten',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngaysinh',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'gioitinh_id',
-        'value' => 'gioitinh.ten'
-    ],
+    
+    
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'madinhdanh',

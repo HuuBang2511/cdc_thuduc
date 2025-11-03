@@ -245,7 +245,7 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                                 'format' => 'raw',
                             ],
                             $relationFormat('benhvien_id', 'benhvien'),
-                            
+                            'ngay_dieutra_dichte',
                             'ngaynhapvien',
                             'nghenghiep'
                         ],

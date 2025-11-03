@@ -30,7 +30,7 @@ $this->registerCss("
     #thongtin-benhnoikhac, #thongtin-xetnghiem, #cabenh_noikhacchitiet, #cabenh_ngayxuatvien, #thongtin_truonghoc
     , #cabenh_songuoitronggiadinhsxh, #cabenh_songuoitronggiadinhsxhduoi15, #cabenh_songuoitronggiadinh, #cabenh_songuoitronggiadinhduoi15,
     #cabenh-codiachi, #cabenh_dieutra_tcm_truonghoc, #khaosat_sxh, #khaosat_tcm, #cabenh_tcm_chitiet_denkhudongnguoi,#cabenh_tcm_chitiet_tiepxuctacnhan,
-    #cabenh_tcm_chitiet_anchungtrenghingo, #cabenh_tcm_chitiet_dungdochoichungtrenghingo, #cabenh_tcm_chitiet_dungvatdungchungtrenghingo
+    #cabenh_tcm_chitiet_anchungtrenghingo, #cabenh_tcm_chitiet_dungdochoichungtrenghingo, #cabenh_tcm_chitiet_dungvatdungchungtrenghingo, #dieutra_cabenh
     {
         display: none;
     }
@@ -198,6 +198,17 @@ $script = <<<JS
             $('#cabenh_tcm_chitiet_dungvatdungchungtrenghingo').slideUp();
         }
     }
+
+    function toggleDieutra() {
+        var value = $('#cabenh_isdieutra').val();
+        if (value == '1')  {
+            $('#dieutra_cabenh').slideDown();
+            $('#dieutra_cabenh').css('display', 'block');
+            
+        }else{
+            $('#dieutra_cabenh').slideUp();
+        }
+    }
     
     toggleThongTinxetnghiem();   
     toggleThongTinBenhNoiKhac();
@@ -214,6 +225,12 @@ $script = <<<JS
     toggleKhaosatTcmAnchungtrenghingo();
     toggleKhaosatTcmDungdochoichungtrenghingo();
     toggleKhaosatTcmDungvatdungchungtrenghingo();
+    toggleDieutra();
+
+    $('#cabenh_isdieutra').on('change', function() {
+        toggleDieutra();
+        console.log($('#cabenh_isdieutra').val());
+    });
 
     $('#cabenh_tcm_denkhudongnguoi').on('change', function() {
         toggleKhaosatTcmDenkhudongnguoi();
@@ -440,6 +457,8 @@ $this->registerJs($script);
                         </div>
                     </div>
 
+                    
+
                     <h4 class="content-heading">Xác minh ca bệnh</h4>
 
                     <div class="row">
@@ -648,6 +667,20 @@ $this->registerJs($script);
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'is_dieutra')->widget(Select2::className(), [
+                                'data' => $categories['chondieutra'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_isdieutra'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div id = "dieutra_cabenh">
+
                     <h4 class="content-heading">Điều tra dịch tể</h4>
 
                     <div class="row">
@@ -704,6 +737,13 @@ $this->registerJs($script);
                     </div>
 
                     <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'ngay_dieutra_dichte')->widget(MaskedInput::className(), [
+                                'clientOptions' => [
+                                    'alias' => 'date'
+                                ],
+                            ]); ?>
+                        </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'laymau_xetnghiem')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
@@ -1205,6 +1245,8 @@ $this->registerJs($script);
                                 ],
                             ]) ?>
                         </div>
+                    </div>
+
                     </div>
 
                     <h4 class="content-heading">Kết luận</h4>

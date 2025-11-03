@@ -12,6 +12,7 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use app\modules\quanly\base\QuanlyBaseController;
 use app\modules\services\CategoriesService;
+use DateTime;
 
 /**
  * CaBenhController implements the CRUD actions for CaBenh model.
@@ -85,6 +86,7 @@ class CaBenhController extends QuanlyBaseController
         $model = new CaBenh();
 
         if($model->load($request->post())){
+            
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -108,6 +110,19 @@ class CaBenhController extends QuanlyBaseController
         $model = $this->findModel($id);
 
         if($model->load($request->post())){
+
+            if($model->is_dieutra == 1){
+                $model->tinhtrang_dieutra = 'ĐÃ ĐIỀU TRA';
+            }else{
+                $model->tinhtrang_dieutra = 'CHƯA ĐIỀU TRA';
+            }
+
+            if($model->ngaybaocao != null){
+                $date = new DateTime($model->ngaybaocao); 
+                $date->modify('+7 days'); 
+                $model->ngayhandieutra = $date->format('d/m/Y'); 
+                //dd($model->ngayhandieutra);
+            }
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
