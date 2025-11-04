@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\quanly\models\CaBenh;
+use app\modules\services\UtilityService;
+use yii\helpers\ArrayHelper;
 
 /**
  * CaBenhSearch represents the model behind the search form about `app\modules\quanly\models\CaBenh`.
@@ -15,6 +17,10 @@ class CaBenhSearch extends CaBenh
     /**
      * @inheritdoc
      */
+
+    public $date_from;
+    public $date_to;
+
     public function rules()
     {
         return [
@@ -22,6 +28,7 @@ class CaBenhSearch extends CaBenh
             [['mabenhnhan', 'hoten', 'ngaysinh', 'madinhdanh', 'ten_nguoibaoho', 'sodienthoai', 'nghenghiep', 'noilamviec', 'diachi_noilamviec', 'diachi_noiohientai', 'so_hsba', 'coso_dieutri', 'hinhthuc_dieutri', 'phandobenh', 'chandoan_bienchung', 'doanbenhkem', 'benhnen', 'ngaykhoiphat', 'ngaynhapvien', 'ngay_xuatvien_chuyenvien_tuvong', 'phanloai_chandoan', 'loaibenhpham', 'ngaylaymau', 'loaixetnghiem', 'ketqua_xetnghiem', 'tinhtrang_tiemchung', 'tiensu_dichte', 'nguoi_dieutra_dichte', 'sdt_nguoi_dieutra_dichte', 'donvi_dieutra', 'ngay_dieutra_dichte', 'email_donvidieutra', 'donvi_baocao', 'ngaybaocao', 'nguoibaocao', 'sdt_nguoibaocao', 'email_nguoibaocao', 'trangthai_baocao', 'danhsach_coso_dieutri', 'ngay_chinhsua_gannhat', 'ngaycapnhat', 'phanloai_cabenh', 'ngaygop_trung_cabenh', 'so_nha', 'ten_duong', 'ngaymacbenh', 'loai_ca_benh', 'thongtin_dieutri', 'ghichu', 'tinhtrang_hiennay', 'ngaynhanve', 'xacminh_cabenh', 'diachi_xacminh_cabenh', 'noikhac_xacminh_cabenh', 'ngaykhoibenh', 'ngaythongbao_cabenh', 'noichandoan', 'phuongxa_noiohientai', 'phuongxa_noilamviec', 'phuongxa_sausapnhap', 'phuongxa', 'truonghoc_phuongxa', 'ketluan_tinhtrang', 'ketluan_chandoan', 'ketluan_ngayxuatvien', 'ketluan_benhkhac', 'phuongxa_truonghoc', 'phuongxa_xacminhcabenh', 'donvi_thuchien_xetnghiem', 'created_at', 'updated_at', 'xacminh_chandoan', 'xacminh_xuly', 'sonha_benhnoikhac', 'phuongxa_benhnoikhac', 'noikhac_chitiet', 'trong_haituan_bisxh', 'trong1thang_tiepxuc_tcm_truonghoc', 'chitiet_denkhudongnguoi', 'chitiet_tacnhan_tiepxuc_tcm', 'nguonnuoc_sudung_tcm', 'chitiet_anchung_tre_nghingo_tcm', 'chitiet_dungdochoichung_tre_nghingo_tcm', 'chitiet_dungchung_vatdung_tre_nghingo_tcm', 'trong1thang_tiepxuc_giadinh_tcm', 'tinhtrang_dieutra', 'ngayhandieutra', 'tiendo_dieutra'], 'safe'],
             [['cothai', 'laymau_xetnghiem', 'tinhtrang_xuatvien', 'cutru_tainha', 'nha_cabenh', 'nhaco_benhnhan_sxh', 'nhaco_nguoibenh', 'benhvien_phongkham', 'nhatho', 'dinhchua', 'congvien', 'noihoihop', 'noixaydung', 'quancaphe', 'noichannuoi', 'noibancaycanh', 'vuaphelieu', 'noikhac', 'cabenhchidiem', 'dietlangquang', 'giamsat_theodoi', 'xuly_odich_nho', 'cabenhthuphat', 'odichmoi', 'px_daden', 'pxkhac_daden', 'tinhtrangxuatvien', 'tamtru', 'benhnoikhac', 'thanhpho_baove', 'phathien_congdong', 'conhapvien', 'xuly_odich_dienrong', 'cadautien', 'codiachi', 'tiepxuc_tcm', 'dinhatre_tcm', 'tiepxuc_nguoichamsoc_tcm', 'denkhudongnguoi_tcm', 'tiepxuc_tacnhan_gaynhiem_tcm', 'anchung_tre_nghingo_tcm', 'dungdochoi_chung_tre_nghingo_tcm', 'dungchung_vatdung_tre_nghingo_tcm', 'khaosat_tcm_cocabenh_sxh', 'dieutra_tcm_codihoc'], 'boolean'],
             [['bi_bandau', 'ci_bandau'], 'number'],
+            [['date_from', 'date_to'], 'safe'],
         ];
     }
 
@@ -242,6 +249,10 @@ class CaBenhSearch extends CaBenh
             ->andFilterWhere(['ilike', 'trong1thang_tiepxuc_giadinh_tcm', mb_strtoupper($this->trong1thang_tiepxuc_giadinh_tcm)])
             ->andFilterWhere(['ilike', 'tinhtrang_dieutra', mb_strtoupper($this->tinhtrang_dieutra)])
             ->andFilterWhere(['ilike', 'tiendo_dieutra', mb_strtoupper($this->tiendo_dieutra)]);
+        
+        if($this->date_from != null && $this->date_to != null){
+            $query->andFilterWhere(['between', 'ngaybaocao', UtilityService::convertDateFromMaskedInput($this->date_from), UtilityService::convertDateFromMaskedInput($this->date_to)]);
+        }
 
         return $dataProvider;
     }

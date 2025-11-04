@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
+use kartik\date\DatePicker;
 
 ?>
 
@@ -97,6 +98,50 @@ use yii\helpers\ArrayHelper;
                         $form->field($searchModel, 'phuongxa')->widget(Select2::className(), [
                             'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
                             'options' => ['prompt' => 'Chọn phường'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <?= $form->field($searchModel, 'date_from')->widget(DatePicker::className(), [
+                            'pluginOptions' => [
+                                'format' => 'dd/mm/yyyy',
+                                'autoclose' => true,
+                            ],
+    //                        'language' => 'vn',
+                            'options' => ['placeholder' => 'Ngày báo cáo từ'],
+                        ]) ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?= $form->field($searchModel, 'date_to')->widget(DatePicker::className(), [
+                            'pluginOptions' => [
+                                'format' => 'dd/mm/yyyy',
+                                'autoclose' => true,
+                            ],
+    //                        'language' => 'vn',
+                            'options' => ['placeholder' => 'Ngày báo cáo đến'],
+                        ]) ?>
+                    </div>
+                    <div class="col-lg-3">
+                        <?=
+                        $form->field($searchModel, 'tinhtrang_dieutra')->widget(Select2::className(), [
+                            'data' => $categories['tinhtrangdieutra'],
+                            'options' => ['prompt' => 'Chọn tình trạng điều tra'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]);
+                        ?>
+                    </div>
+                    <div class="col-lg-3">
+                        <?=
+                        $form->field($searchModel, 'tiendo_dieutra')->widget(Select2::className(), [
+                            'data' => $categories['tiendodieutra'],
+                            'options' => ['prompt' => 'Chọn tiến độ điều tra'],
                             'pluginOptions' => [
                                 'allowClear' => true
                             ],

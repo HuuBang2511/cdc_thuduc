@@ -87,6 +87,19 @@ class CaBenhController extends QuanlyBaseController
 
         if($model->load($request->post())){
             
+            if($model->is_dieutra == 1){
+                $model->tinhtrang_dieutra = 'ĐÃ ĐIỀU TRA';
+            }else{
+                $model->tinhtrang_dieutra = 'CHƯA ĐIỀU TRA';
+            }
+
+            if($model->ngaybaocao != null){
+                $date = new DateTime($model->ngaybaocao); 
+                $date->modify('+7 days'); 
+                $model->ngayhandieutra = $date->format('d/m/Y'); 
+                //dd($model->ngayhandieutra);
+            }
+
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -111,18 +124,28 @@ class CaBenhController extends QuanlyBaseController
 
         if($model->load($request->post())){
 
-            if($model->is_dieutra == 1){
-                $model->tinhtrang_dieutra = 'ĐÃ ĐIỀU TRA';
-            }else{
-                $model->tinhtrang_dieutra = 'CHƯA ĐIỀU TRA';
-            }
-
             if($model->ngaybaocao != null){
                 $date = new DateTime($model->ngaybaocao); 
                 $date->modify('+7 days'); 
                 $model->ngayhandieutra = $date->format('d/m/Y'); 
                 //dd($model->ngayhandieutra);
             }
+
+            if($model->is_dieutra == 1){
+                $model->tinhtrang_dieutra = 'ĐÃ ĐIỀU TRA';
+
+                if($model->ngay_dieutra_dichte != null){
+                    if($model->ngay_dieutra_dichte <= $model->ngayhandieutra){
+                        $model->tiendo_dieutra = 'ĐÚNG HẠN';
+                    }else{
+                        $model->tiendo_dieutra = 'QUÁ HẠN';
+                    }
+                }
+
+            }else{
+                $model->tinhtrang_dieutra = 'CHƯA ĐIỀU TRA';
+            }
+
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
