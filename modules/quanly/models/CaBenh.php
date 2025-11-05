@@ -15,6 +15,7 @@ use app\modules\quanly\models\Tinhthanh;
 use app\modules\quanly\models\BenhVien;
 use app\modules\quanly\models\Lophoc;
 use Yii;
+use Yii\helpers\Html;
 
 /**
  * This is the model class for table "ca_benh".
@@ -254,7 +255,17 @@ class CaBenh extends QuanlyBaseModel
             [['lophoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lophoc::className(), 'targetAttribute' => ['lophoc_id' => 'id']],
             [['truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['truonghoc_id' => 'gid']],
             [['dieutra_tcm_truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['dieutra_tcm_truonghoc_id' => 'gid']],
-            [['loaibenh_id'], 'required']
+            [['loaibenh_id', 'is_dieutra', 'ngaybaocao'], 'required'],
+            [['ngay_dieutra_dichte'], 'required',
+                'when' => function($model) {
+                    return in_array($model->is_dieutra, [1, '1', true], true);
+                },
+                'whenClient' => "function (attribute, value) {
+                    var val = $('#cabenh_isdieutra').val();
+                    return val == 1 || val == '1';
+                }",
+                'message' => 'Ngày điều tra bắt buộc nhập.'
+            ],
         ];
     }
 

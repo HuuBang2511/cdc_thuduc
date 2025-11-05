@@ -114,7 +114,7 @@ use kartik\date\DatePicker;
                             ],
     //                        'language' => 'vn',
                             'options' => ['placeholder' => 'Ngày báo cáo từ'],
-                        ]) ?>
+                        ])->label('Ngày báo cáo từ') ?>
                     </div>
                     <div class="col-md-3">
                         <?= $form->field($searchModel, 'date_to')->widget(DatePicker::className(), [
@@ -124,7 +124,7 @@ use kartik\date\DatePicker;
                             ],
     //                        'language' => 'vn',
                             'options' => ['placeholder' => 'Ngày báo cáo đến'],
-                        ]) ?>
+                        ])->label('Ngày báo cáo từ') ?>
                     </div>
                     <div class="col-lg-3">
                         <?=
