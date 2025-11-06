@@ -962,7 +962,7 @@ $this->registerJs($script);
 
                     <div class="row">
                         <div class="col-lg-2">
-                            <?= $form->field($model, 'nhaco_benhnhan_sxh')->widget(Select2::className(), [
+                            <?= $form->field($model, 'nha_cabenh')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
                                 'options' => ['prompt' => '', 'id' => 'cabenh_nhacobenhnhansxh'],
                                 'pluginOptions' => [
@@ -980,7 +980,7 @@ $this->registerJs($script);
 
                     <div class="row">
                         <div class="col-lg-2">
-                            <?= $form->field($model, 'nhaco_nguoibenh')->widget(Select2::className(), [
+                            <?= $form->field($model, 'nha_couongthuoc_sxh')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
                                 'options' => ['prompt' => '', 'id' => 'cabenh_nhacobenhnhan'],
                                 'pluginOptions' => [
@@ -1244,6 +1244,52 @@ $this->registerJs($script);
                                     'allowClear' => true
                                 ],
                             ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'odichmoi')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'odichcu')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'odichcu_xuly')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'xuly')->widget(Select2::className(), [
+                                'data' => $categories['chon'],
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'xuly_ngay')->widget(MaskedInput::className(), [
+                                'clientOptions' => [
+                                    'alias' => 'date'
+                                ],
+                            ]); ?>
                         </div>
                     </div>
 

@@ -165,6 +165,10 @@ class CaBenhController extends QuanlyBaseController
         ]);
     }
 
+    public function actionImportSxhCongdong(){
+        
+    }
+
     /**
      * Delete an existing CaBenh model.
      * For ajax request will return json object
