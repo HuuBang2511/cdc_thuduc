@@ -404,6 +404,9 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'coso_dieutri')->textInput() ?>
                         </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'mabenhnhan')->textInput() ?>
+                        </div>
                     </div>
 
                     <div class="row" id="thongtin_truonghoc">
