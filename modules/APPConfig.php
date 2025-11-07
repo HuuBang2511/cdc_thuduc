@@ -116,19 +116,19 @@ class APPConfig
                 'name' => 'Ca bệnh',
                 'icon' => 'fa fa-list',
                 'url' => 'quanly/ca-benh',
-                'key'=>'quanly.capnuocgd.index',
+                'key'=>'quanly.ca-benh.index',
                 'hasChild' => false,
             ],
-            
+            [
+                'name' => 'Import ca bệnh TCM',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/ca-benh/import-tcm-congdong',
+                'key'=>'quanly.ca-benh.import-tcm-congdong',
+                'hasChild' => false,
+            ],
         ],
         'map' => [
-            // [
-            //     'name' => 'Cấp nước Đức Trọng',
-            //     'icon' => 'fa fa-list',
-            //     'url' => 'quanly/map/ductrong',
-            //     'key'=>'quanly.map.ductrong',
-            //     'hasChild' => false,
-            // ],
+           
             [
                 'name' => 'Bản đồ hệ thống mạng lưới cấp nước',
                 'icon' => 'fa fa-list',

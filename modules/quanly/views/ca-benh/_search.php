@@ -7,6 +7,9 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 
+$requestedAction = Yii::$app->requestedAction;
+$action = $requestedAction->id;
+
 ?>
 
 <div class="row">
@@ -19,7 +22,10 @@ use kartik\date\DatePicker;
             </div>
             <div class="block-content">
                 <?php
-                $form = ActiveForm::begin([]);
+                $form = ActiveForm::begin([
+                    'action' => [$action],
+                    'method' => 'get',
+                ]);
                 ?>
                 <div class="row">
                     <div class="col-lg-3">

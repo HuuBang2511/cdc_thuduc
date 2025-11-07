@@ -13,6 +13,17 @@ use yii\helpers\Html;
 use app\modules\quanly\base\QuanlyBaseController;
 use app\modules\services\CategoriesService;
 use DateTime;
+use app\modules\quanly\models\ImportUpload;
+use yii\web\UploadedFile;
+use app\modules\quanly\models\PhuongXa;
+use app\modules\quanly\models\danhmuc\DmGioitinh;
+use app\modules\quanly\models\BenhVien;
+use app\modules\quanly\models\Khupho;
+use app\modules\quanly\models\Truonghoc;
+use app\modules\quanly\models\danhmuc\DmLoaicabenh;
+use app\modules\quanly\models\danhmuc\DmLoaiodich;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * CaBenhController implements the CRUD actions for CaBenh model.
@@ -39,15 +50,23 @@ class CaBenhController extends QuanlyBaseController
         $request = Yii::$app->request;
         $queryParams = $request->queryParams;
         $searchModel = new CaBenhSearch();
-        $dataProvider = $searchModel->search($queryParams);
 
-        if ($request->isPost && $searchModel->load($request->post())) {
-             $url = ['index'];
-            foreach ($request->post()['CaBenhSearch'] as $i => $item) {
-                $url = array_merge($url,["CaBenhSearch[$i]" => $item]);
-            }
-            return $this->redirect($url);
-        }
+        //dd($searchModel);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // if ($request->isPost && $searchModel->load($request->post())) {
+        //      $url = ['index'];
+        //     foreach ($request->post()['CaBenhSearch'] as $i => $item) {
+        //         $url = array_merge($url,["CaBenhSearch[$i]" => $item]);
+        //     }
+        //     return $this->redirect($url);
+        // }
+
+        // if (isset($request->post()['CaBenhSearch'])) {
+        //     foreach ($request->post()['CaBenhSearch'] as $i => $item) {
+        //         $url = array_merge($url, ["CaBenhSearch[$i]" => $item]);
+        //     }
+        // }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -165,8 +184,188 @@ class CaBenhController extends QuanlyBaseController
         ]);
     }
 
-    public function actionImportSxhCongdong(){
+    public function actionImportTcmCongdong(){
+        $request = Yii::$app->request;
+        $fileUpload = new ImportUpload();
+        $errorRow = null;
+        $notification = null;
+
+        $categories['truonghoc'] = Truonghoc::find()->select(['gid', 'ten_dv'])->indexBy('ten_dv')->asArray()->all();
+        $categories['benhvien'] = BenhVien::find()->select(['id', 'tenbenhvien'])->indexBy('tenbenhvien')->asArray()->all();
+        $categories['phuong'] = Phuongxa::find()->select(['ma_dvhc', 'ten_dvhc', 'ma_dvhc', 'id'])->where(['status'=>1])->indexBy('ten_dvhc')->asArray()->all();
+        $categories['dm_loaiodich'] = DmLoaiodich::find()->where(['status'=>1])->indexBy('ten')->asArray()->all();
+        $categories['dm_gioitinh'] = DmGioitinh::find()->where(['status'=>1])->indexBy('ten')->asArray()->all();
+        $categories['dm_loaicabenh'] = DmLoaicabenh::find()->where(['status'=>1])->indexBy('ten')->asArray()->all();
+
+        $cb = new CaBenh();
+        $attributes = $cb->attributeLabels();
         
+        if($request->isPost){
+            $highestRow = 0;
+            $newRecords = 0;
+            $notification = null;
+            $notification = [];
+            $fileUpload->file = UploadedFile::getInstance($fileUpload, 'file');
+
+            if($fileUpload->uploadFile()){
+                $spreadsheet = IOFactory::load($fileUpload->link);
+                $worksheet = $spreadsheet->getSheet(0);
+
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+
+                    if($worksheet->getHighestRow() < 2){
+                        Yii::$app->session->setFlash('noData', "Không có dữ liệu!");
+                        return $this->render('import-tcm-congdong', [
+                            'fileUpload' => $fileUpload,
+                            'notification' => $notification,
+                        ]);
+                    }
+                    else{
+                        $highestRow = $worksheet->getHighestRow();
+                        $highestColumn = $worksheet->getHighestColumn();
+                        $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
+
+                        $themmoi = 0;
+                        $capnhap = 0;
+
+                        for($row = 2; $row <= $highestRow; $row++){
+                            for($col = 2; $col <= 22; $col++){
+                                $dataCabenh[$row]['CaBenh'][array_search($worksheet->getCellByColumnAndRow($col, 1)->getValue(),$attributes)] = 
+                                $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                            }
+
+                            $dataInput = $dataCabenh[$row]["CaBenh"];
+
+                            //dd($dataInput);
+
+                            if($dataInput['mabenhnhan'] === null)
+                            {
+                                $notification[$row]['style'] = 'text-danger';
+                                $notification[$row]['data'] = 'Thiếu thông tin mã bệnh nhân dòng: '. $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                continue;
+                            }
+
+                            if($dataInput['phuongxa_noiohientai'] != null){
+                                if(!(array_key_exists($dataInput['phuongxa_noiohientai'],$categories['phuong']))){
+                                    $notification[$row]['style'] = 'text-danger';
+                                    $notification[$row]['data'] = 'Sai tên phường xã nơi ở hiện tại  dòng: '. $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                    continue;
+                                }   
+                                else{
+                                    $dataCabenh[$row]["CaBenh"]['phuongxa_noiohientai'] = $categories['phuong'][$dataInput['phuongxa_noiohientai']]['ma_dvhc'];
+
+                                    if($dataInput['khupho_noiohientai_id'] != null){
+                                        
+                                        $kp_noioht = Khupho::find()->select(['id', 'ten_dvhc'])
+                                        ->where(['phuongxa_id' => $categories['phuong'][$dataInput['phuongxa_noiohientai']]['id']])->indexBy('ten_dvhc')->asArray()->all();
+                                        //dd($kp_noioht);
+                                        if(!(array_key_exists($dataInput['khupho_noiohientai_id'],$kp_noioht))){
+                                            $notification[$row]['style'] = 'text-danger';
+                                            $notification[$row]['data'] = 'Sai tên khu phố nơi ở hiện tại  dòng: '. $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                            continue;
+                                        }else{
+                                            $dataCabenh[$row]["CaBenh"]['khupho_noiohientai_id'] = $kp_noioht[$dataInput['khupho_noiohientai_id']]['id'];
+                                        }
+                                    }
+                                }
+                            }
+
+                            if($dataInput['truonghoc_phuongxa'] != null){
+                                if(!(array_key_exists($dataInput['truonghoc_phuongxa'],$categories['phuong']))){
+                                    $notification[$row]['style'] = 'text-danger';
+                                    $notification[$row]['data'] = 'Sai tên phường xã trường học dòng: '. $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                    continue;
+                                }   
+                                else{
+                                    $dataCabenh[$row]["CaBenh"]['truonghoc_phuongxa'] = $categories['phuong'][$dataInput['truonghoc_phuongxa']]['ma_dvhc'];
+
+                                    if($dataInput['truonghoc_khupho_id'] != null){
+                                        
+                                        $kp_truong = Khupho::find()->select(['id', 'ten_dvhc'])
+                                        ->where(['phuongxa_id' => $categories['phuong'][$dataInput['truonghoc_phuongxa']]['id']])->indexBy('ten_dvhc')->asArray()->all();
+                                        if(!(array_key_exists($dataInput['truonghoc_khupho_id'],$kp_truong))){
+                                            $notification[$row]['style'] = 'text-danger';
+                                            $notification[$row]['data'] = 'Sai tên khu phố trường học dòng: '. $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                            continue;
+                                        }else{
+                                            $dataCabenh[$row]["CaBenh"]['truonghoc_khupho_id'] = $kp_truong[$dataInput['truonghoc_khupho_id']]['id'];
+                                        }
+                                    }
+                                }
+                            }
+
+                            if($dataInput['loaicabenh_id'] != null){
+                                if(!(array_key_exists(trim($dataInput['loaicabenh_id']),$categories['dm_loaicabenh']))){
+                                    $notification[$row]['style'] = 'text-danger';
+                                    $notification[$row]['data'] = 'Sai tên loại ca bênh dòng: '. $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                    continue;
+                                }else{
+                                    $dataCabenh[$row]["CaBenh"]['loaicabenh_id'] = $categories['dm_loaicabenh'][$dataInput['loaicabenh_id']]['id'];
+                                } 
+                            }
+
+                            if($dataInput['truonghoc_id'] != null){
+                                if(!(array_key_exists(trim($dataInput['truonghoc_id']),$categories['truonghoc']))){
+                                    $notification[$row]['style'] = 'text-danger';
+                                    $notification[$row]['data'] = 'Sai tên trường học dòng: '. $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                    continue;
+                                }else{
+                                    $dataCabenh[$row]["CaBenh"]['truonghoc_id'] = $categories['truonghoc'][$dataInput['truonghoc_id']]['gid'];
+                                } 
+                            }
+                            
+                            if($dataInput['gioitinh_id'] != null){
+                                if(!(array_key_exists(trim($dataInput['gioitinh_id']),$categories['dm_gioitinh']))){
+                                    $notification[$row]['style'] = 'text-danger';
+                                    $notification[$row]['data'] = 'Sai tên giới tính dòng: '. $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                    continue;
+                                }else{
+                                    $dataCabenh[$row]["CaBenh"]['gioitinh_id'] = $categories['dm_gioitinh'][$dataInput['gioitinh_id']]['id'];
+                                } 
+                            }
+
+                            if($dataCabenh[$row]["CaBenh"]['so_nha'] != null){
+                                $dataCabenh[$row]["CaBenh"]['so_nha'] = trim((string)$dataCabenh[$row]["CaBenh"]['so_nha']);
+                            }
+
+                            if($dataCabenh[$row]["CaBenh"]['ten_duong'] != null){
+                                $dataCabenh[$row]["CaBenh"]['ten_duong'] = trim((string)$dataCabenh[$row]["CaBenh"]['ten_duong']);
+                            }
+
+                            if($dataCabenh[$row]["CaBenh"]['madinhdanh'] != null){
+                                $dataCabenh[$row]["CaBenh"]['madinhdanh'] = trim((string)$dataCabenh[$row]["CaBenh"]['madinhdanh']);
+                            }
+
+                            //dd($dataCabenh[$row]);
+
+                            $cabenh = new CaBenh(['loaibenh_id' => 2, 'is_dieutra' => 0]);
+                            $cabenh->load($dataCabenh[$row]);
+                            $cabenh->save();
+                            $themmoi += 1;
+                        }
+                    }
+
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('uploadSuccess', "Đã thêm mới thành công ".$themmoi." dòng dữ liệu.");
+                }
+                catch (Exception $e){
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('uploadFail', "Lỗi dòng $errorRow!");
+                    return $this->render('import-tcm-congdong',[
+                        'fileUpload' => $fileUpload,
+                        'errorRow' => $errorRow,
+                        'notification' => $notification,
+                    ]);
+                }
+            }
+        }
+
+        return $this->render('import-tcm-congdong', [
+            'check' => null,
+            'fileUpload' => $fileUpload,
+            'notification' => $notification,
+        ]);
     }
 
     /**

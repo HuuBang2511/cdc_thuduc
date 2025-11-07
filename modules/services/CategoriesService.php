@@ -30,8 +30,8 @@ class CategoriesService
         $categories['khupho'] = Khupho::find()->select(['id', 'ten_dvhc'])->orderBy('ten_dvhc')->asArray()->all();
         $categories['benhvien'] = BenhVien::find()->select(['id', 'tenbenhvien'])->orderBy('tenbenhvien')->asArray()->all();
         $categories['hinhthuc_dieutri'] = [
-            'Nội trú' => 'Nội trú', 
-            'Ngoại trú' => 'Ngoại trú',
+            'NỘI TRÚ' => 'NỘI TRÚ', 
+            'NGOẠI TRÚ' => 'NGOẠI TRÚ',
         ];
         $categories['chon'] = [
             0 => 'Không',
