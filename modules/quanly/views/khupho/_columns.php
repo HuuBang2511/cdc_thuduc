@@ -78,6 +78,7 @@ return [
         'dropdown' => false,
         'vAlign'=>'middle',
         'width' => '180px',
+        'template' => '{view} {update}',
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },
