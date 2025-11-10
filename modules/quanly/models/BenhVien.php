@@ -51,11 +51,11 @@ class BenhVien extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tenbenhvien' => 'Tenbenhvien',
-            'maso' => 'Maso',
-            'tenvt' => 'Tenvt',
-            'diachi' => 'Diachi',
-            'ma_bv' => 'Ma Bv',
+            'tenbenhvien' => 'Tên bệnh viện',
+            'maso' => 'Mã số',
+            'tenvt' => 'Tên viết tắt',
+            'diachi' => 'Địa chỉ',
+            'ma_bv' => 'Mã bệnh viện',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

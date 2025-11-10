@@ -120,6 +120,20 @@ class APPConfig
                 'hasChild' => false,
             ],
             [
+                'name' => 'Bệnh viện',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/benh-vien',
+                'key'=>'quanly.benh-vien.index',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Khu phố',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/khupho',
+                'key'=>'quanly.khupho.index',
+                'hasChild' => false,
+            ],
+            [
                 'name' => 'Import ca bệnh TCM',
                 'icon' => 'fa fa-list',
                 'url' => 'quanly/ca-benh/import-tcm-congdong',

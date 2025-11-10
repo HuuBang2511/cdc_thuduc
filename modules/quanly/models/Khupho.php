@@ -54,8 +54,8 @@ class Khupho extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ten_dvhc' => 'Ten Dvhc',
-            'ma_dvhc' => 'Ma Dvhc',
+            'ten_dvhc' => 'Tên DVHC',
+            'ma_dvhc' => 'Mã DVHC',
             'geom' => 'Geom',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -63,7 +63,7 @@ class Khupho extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
             'maphuong' => 'Maphuong',
-            'phuongxa_id' => 'Phuongxa ID',
+            'phuongxa_id' => 'Phường xã',
             'id_khupho' => 'Id Khupho',
         ];
     }

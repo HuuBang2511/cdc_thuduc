@@ -1,0 +1,14 @@
+<?php
+
+use yii\helpers\Html;
+
+/* @var $this yii\web\View */
+/* @var $model app\modules\quanly\models\Khupho */
+?>
+<div class="khupho-update">
+
+    <?= $this->render('_form', [
+        'model' => $model,
+    ]) ?>
+
+</div>
