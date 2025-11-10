@@ -12,7 +12,7 @@ return [
     ],
     'siteName' => 'CDC THỦ ĐỨC',
     'loginPage' => [
-        'logoUrl' => 'https://cdn.thuvienphapluat.vn/phap-luat/2022/TD/220702/nuoc-sinh-hoat.png',
+        'logoUrl' => 'http://pcd-thuduc.vn/resources/images/logo_cdc.jpg',
         'backgroundUrl' => 'https://ytth.hcmgis.vn/resources/images/backgrounds/ythd.jpg'
     ],
     'adminSidebar' => [[
