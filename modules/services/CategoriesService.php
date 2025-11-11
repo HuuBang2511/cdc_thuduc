@@ -49,7 +49,7 @@ class CategoriesService
         $categories['ketluan'] = [
             'Đã xuất viện' => 'Đã xuất viện',
             'Chưa xuất viện' => 'Chưa xuất viện',
-            'Đã xuất viện/ tử vong' => 'Đã xuất viện/ tử vong',
+            'Đã xuất viện/ tử vong' => 'Tử vong',
         ];
         $categories['phanloaicabenh'] = [
             'CA MỚI' => 'CA MỚI',
@@ -62,6 +62,18 @@ class CategoriesService
         $categories['tiendodieutra'] = [
             'ĐÚNG HẠN' => 'ĐÚNG HẠN',
             'QUÁ HẠN' => 'QUÁ HẠN', 
+        ];
+
+        $categories['loaixetnghiem'] = [
+            'TEST NHANH' => 'TEST NHANH',
+            'PCR' => 'PCR',
+            'MAC-ELISA' => 'MAC-ELISA',
+            'KHAC' => 'KHAC',
+        ];
+
+        $categories['ketquaxetnghiem'] = [
+            'DƯƠNG TÍNH' => 'DƯƠNG TÍNH',
+            'ÂM TÍNH' => 'ÂM TÍNH',
         ];
         
         return $categories;

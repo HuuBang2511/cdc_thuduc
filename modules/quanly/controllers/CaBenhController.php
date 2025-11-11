@@ -108,7 +108,7 @@ class CaBenhController extends QuanlyBaseController
             
             if($model->ngaybaocao != null){
                 $date = new DateTime($model->ngaybaocao); 
-                $date->modify('+7 days'); 
+                $date->modify('+2 days'); 
                 $model->ngayhandieutra = $date->format('d/m/Y'); 
                 //dd($model->ngayhandieutra);
             }
@@ -154,7 +154,7 @@ class CaBenhController extends QuanlyBaseController
 
             if($model->ngaybaocao != null){
                 $date = new DateTime($model->ngaybaocao); 
-                $date->modify('+7 days'); 
+                $date->modify('+2 days'); 
                 $model->ngayhandieutra = $date->format('d/m/Y'); 
                 //dd($model->ngayhandieutra);
             }
@@ -230,7 +230,7 @@ class CaBenhController extends QuanlyBaseController
                         $capnhap = 0;
 
                         for($row = 2; $row <= $highestRow; $row++){
-                            for($col = 2; $col <= 22; $col++){
+                            for($col = 2; $col <= 24; $col++){
                                 $dataCabenh[$row]['CaBenh'][array_search($worksheet->getCellByColumnAndRow($col, 1)->getValue(),$attributes)] = 
                                 $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                             }
@@ -312,6 +312,16 @@ class CaBenhController extends QuanlyBaseController
                                     continue;
                                 }else{
                                     $dataCabenh[$row]["CaBenh"]['truonghoc_id'] = $categories['truonghoc'][$dataInput['truonghoc_id']]['gid'];
+                                } 
+                            }
+
+                            if($dataInput['benhvien_id'] != null){
+                                if(!(array_key_exists(trim($dataInput['benhvien_id']),$categories['benhvien']))){
+                                    $notification[$row]['style'] = 'text-danger';
+                                    $notification[$row]['data'] = 'Sai tên bệnh viện dòng: '. $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                    continue;
+                                }else{
+                                    $dataCabenh[$row]["CaBenh"]['benhvien_id'] = $categories['benhvien'][$dataInput['benhvien_id']]['id'];
                                 } 
                             }
                             

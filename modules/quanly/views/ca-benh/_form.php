@@ -715,7 +715,7 @@ $this->registerJs($script);
                             ]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'benhvien_id')->widget(Select2::className(), [
+                            <?= $form->field($model, 'benhviennhap_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['benhvien'], 'id', 'tenbenhvien'),
                                 'options' => ['prompt' => 'Bệnh viện'],
                                 'pluginOptions' => [
@@ -772,10 +772,23 @@ $this->registerJs($script);
                             ]); ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'loaixetnghiem')->textInput() ?>
+                           
+                            <?= $form->field($model, 'loaixetnghiem')->widget(Select2::className(), [
+                                'data' => $categories['loaixetnghiem'],
+                                'options' => ['prompt' => 'Loại xét nghiệm'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'ketqua_xetnghiem')->textInput() ?>
+                            <?= $form->field($model, 'ketqua_xetnghiem')->widget(Select2::className(), [
+                                'data' => $categories['ketquaxetnghiem'],
+                                'options' => ['prompt' => 'Kết quả xét nghiệm'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
                         </div>
                     </div>
 

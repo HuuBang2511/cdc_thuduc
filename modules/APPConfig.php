@@ -127,6 +127,13 @@ class APPConfig
                 'hasChild' => false,
             ],
             [
+                'name' => 'Trường học',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/truonghoc',
+                'key'=>'quanly/truonghoc.index',
+                'hasChild' => false,
+            ],
+            [
                 'name' => 'Khu phố',
                 'icon' => 'fa fa-list',
                 'url' => 'quanly/khupho',
