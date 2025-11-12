@@ -19,12 +19,12 @@ CrudAsset::register($this);
             <div class="block-header">
                 <h3 class="block-title">Import ca bệnh Tay chân miệng</h3>
                 <div class="block-options">
-                    <a class="btn btn-success" href="<?= Yii::$app->urlManager->createUrl('/uploads/files/form/CAPNHAT_CABENH_TCM.xlsx') ?>">
+                    <a class="btn btn-success" href="<?= Yii::$app->urlManager->createUrl('/uploads/files/mau/CAPNHAT_CABENH_TCM.xlsx') ?>">
                         <i class="fa fa-download"></i>
                         <span class="title"> File mẫu</span>
                     </a>
 
-                    <a class="btn btn-success" href="<?= Yii::$app->urlManager->createUrl('/uploads/files/form/CAPNHAT_CABENH_TCM_MAU.xlsx') ?>">
+                    <a class="btn btn-success" href="<?= Yii::$app->urlManager->createUrl('/uploads/files/mau/CAPNHAT_CABENH_TCM_MAU.xlsx') ?>">
                         <i class="fa fa-download"></i>
                         <span class="title"> File dữ liệu mẫu</span>
                     </a>
