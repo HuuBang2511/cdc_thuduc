@@ -407,6 +407,15 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'mabenhnhan')->textInput() ?>
                         </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'benhvien_id')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map($categories['benhvien'], 'id', 'tenbenhvien'),
+                                'options' => ['prompt' => 'Bệnh viện'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
+                        </div>
                     </div>
 
                     <div class="row" id="thongtin_truonghoc">
@@ -529,7 +538,13 @@ $this->registerJs($script);
                             <?= $form->field($model, 'loai_ca_benh')->textInput() ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'xacminh_cabenh')->textInput() ?>
+                            <?= $form->field($model, 'xacminh_cabenh')->widget(Select2::className(), [
+                                'data' => $categories['xacminhcabenh'],
+                                'options' => ['prompt' => 'Xác minh ca bệnh'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]) ?>
                         </div>
                         <div class="col-lg-6">
                             <?= $form->field($model, 'diachi_xacminh_cabenh')->textInput() ?>

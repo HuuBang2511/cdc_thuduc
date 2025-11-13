@@ -75,6 +75,12 @@ class CategoriesService
             'DƯƠNG TÍNH' => 'DƯƠNG TÍNH',
             'ÂM TÍNH' => 'ÂM TÍNH',
         ];
+
+        $categories['xacminhcabenh'] = [
+            'CDC_CBN' => 'CDC_CBN',
+            'CDC_KBN' => 'CDC_KBN',
+            'KDC' => 'KDC',
+        ];
         
         return $categories;
     }
