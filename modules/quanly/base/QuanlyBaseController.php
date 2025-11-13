@@ -23,6 +23,7 @@ class QuanlyBaseController extends BaseController
         'search' => 'Tìm kiếm',
         'create' => 'Thêm mới',
         'update' => 'Cập nhật',
+        'update-tramyte' => 'Cập nhật',
         'view' => 'Thông tin chi tiết',
         'delete' => 'Xóa',
         'position' => 'Sơ đồ',

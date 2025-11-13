@@ -316,22 +316,26 @@ $this->registerJs($script);
 
                     <div class="row">
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'hoten')->textInput() ?>
+                            <?= $form->field($model, 'hoten')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'madinhdanh')->textInput() ?>
+                            <?= $form->field($model, 'madinhdanh')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngaysinh')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
-                                    'alias' => 'date'
+                                    'alias' => 'date',
+                                    
                                 ],
                             ]); ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'gioitinh_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['dm_gioitinh'], 'id', 'ten'),
-                                'options' => ['prompt' => 'Chọn giới tính'],
+                                'options' => ['prompt' => 'Chọn giới tính', 'disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -344,7 +348,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'dantoc_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['dm_dantoc'], 'id', 'ten'),
-                                'options' => ['prompt' => 'Chọn dân tộc'],
+                                'options' => ['prompt' => 'Chọn dân tộc', 'disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -353,17 +357,20 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'loaibenh_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['dm_loaichandoan'], 'id', 'ten'),
-                                'options' => ['prompt' => 'Chọn loại bệnh', 'id' => 'cabenh_loaibenh'],
+                                'options' => ['prompt' => 'Chọn loại bệnh', 'id' => 'cabenh_loaibenh', 'disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'ten_nguoibaoho')->textInput() ?>
+                            <?= $form->field($model, 'ten_nguoibaoho')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngaybaocao')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
@@ -375,18 +382,21 @@ $this->registerJs($script);
                     <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngaythongbao_cabenh')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
                             ]); ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'so_hsba')->textInput() ?>
+                            <?= $form->field($model, 'so_hsba')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'hinhthuc_dieutri')->widget(Select2::className(), [
                                 'data' => $categories['hinhthuc_dieutri'],
-                                'options' => ['prompt' => 'Chọn hình thức điều trị'],
+                                'options' => ['prompt' => 'Chọn hình thức điều trị', 'disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -402,15 +412,15 @@ $this->registerJs($script);
                             ]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'coso_dieutri')->textInput() ?>
+                            <?= $form->field($model, 'coso_dieutri')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'mabenhnhan')->textInput() ?>
+                            <?= $form->field($model, 'mabenhnhan')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'benhvien_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['benhvien'], 'id', 'tenbenhvien'),
-                                'options' => ['prompt' => 'Bệnh viện'],
+                                'options' => ['prompt' => 'Bệnh viện','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -477,7 +487,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'codiachi')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => 'Có địa chỉ', 'id' => 'cb_codiachi'],
+                                'options' => ['prompt' => 'Có địa chỉ', 'id' => 'cb_codiachi', 'disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -487,12 +497,12 @@ $this->registerJs($script);
 
                     <div class="row" id = "cabenh-codiachi">
                         <div class="col-lg-12">
-                            <?= $form->field($model, 'diachi_noiohientai')->textInput() ?>
+                            <?= $form->field($model, 'diachi_noiohientai')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'phuongxa_noiohientai')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
-                                'options' => ['prompt' => 'Phường nơi ở hiện tại', 'id' => 'phuongxa-hientai-id'],
+                                'options' => ['prompt' => 'Phường nơi ở hiện tại', 'id' => 'phuongxa-hientai-id', 'disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -500,7 +510,7 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'khupho_noiohientai_id')->widget(DepDrop::class, [
-                                    'options'=>['id'=>'khupho-hientai-id'],
+                                    'options'=>['id'=>'khupho-hientai-id', 'disabled' => true,],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
                                     'pluginOptions'=>[
@@ -514,12 +524,11 @@ $this->registerJs($script);
                             ]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'so_nha')->textInput() ?>
+                            <?= $form->field($model, 'so_nha')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'ten_duong')->textInput() ?>
-                            <!-- <?= $form->field($model, 'tenduong_id')->widget(DepDrop::class, [
-                                    'options' => ['id' => 'tenduong-hientai-id'],
+                            <?= $form->field($model, 'tenduong_id')->widget(DepDrop::class, [
+                                    'options' => ['id' => 'tenduong-hientai-id', 'disabled' => true],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
@@ -529,26 +538,26 @@ $this->registerJs($script);
                                         'initialize' => false,
                                         'allowClear' => true,
                                     ],
-                            ]) ?> -->
+                            ]) ?>
                         </div>
                         
                     </div>
 
                     <div class="row">
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'loai_ca_benh')->textInput() ?>
+                            <?= $form->field($model, 'loai_ca_benh')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'xacminh_cabenh')->widget(Select2::className(), [
                                 'data' => $categories['xacminhcabenh'],
-                                'options' => ['prompt' => 'Xác minh ca bệnh'],
+                                'options' => ['prompt' => 'Xác minh ca bệnh', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'diachi_xacminh_cabenh')->textInput() ?>
+                            <?= $form->field($model, 'diachi_xacminh_cabenh')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -556,7 +565,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'phuongxa_xacminhcabenh')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
-                                'options' => ['prompt' => 'Phường xã xác minh ca bệnh', 'id' => 'phuongxa-xacminhcabenh-id'],
+                                'options' => ['prompt' => 'Phường xã xác minh ca bệnh', 'id' => 'phuongxa-xacminhcabenh-id', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -564,7 +573,7 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'khupho_xacminh_cabenh_id')->widget(DepDrop::class, [
-                                    'options'=>['id'=>'khupho-xacminhcabenh-id'],
+                                    'options'=>['id'=>'khupho-xacminhcabenh-id', 'disabled' => true],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
                                     'pluginOptions'=>[
@@ -580,7 +589,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'chandoanchinh_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['dm_loaichandoan'], 'id', 'ten'),
-                                'options' => ['prompt' => 'Chọn chẩn đoán'],
+                                'options' => ['prompt' => 'Chọn chẩn đoán', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -591,6 +600,9 @@ $this->registerJs($script);
                     <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngaymacbenh')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
@@ -599,7 +611,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'tinhtrang_xuatvien')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => 'Tình trạng xuất viện'],
+                                'options' => ['prompt' => 'Tình trạng xuất viện', 'disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -608,7 +620,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'tamtru')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => 'Tạm trú'],
+                                'options' => ['prompt' => 'Tạm trú', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -617,7 +629,7 @@ $this->registerJs($script);
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <?= $form->field($model, 'xacminh_xuly')->textInput() ?>
+                            <?= $form->field($model, 'xacminh_xuly')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -625,7 +637,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'benhnoikhac')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => 'Bệnh nơi khác', 'id' => 'cabenh_benhnoikhac'],
+                                'options' => ['prompt' => 'Bệnh nơi khác', 'id' => 'cabenh_benhnoikhac', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -635,12 +647,12 @@ $this->registerJs($script);
 
                     <div class="row" id="thongtin-benhnoikhac">
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'sonha_benhnoikhac')->textInput() ?>
+                            <?= $form->field($model, 'sonha_benhnoikhac')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'phuongxa_benhnoikhac')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
-                                'options' => ['prompt' => 'Phường bệnh nơi khác', 'id' => 'phuongxa-benhnoikhac-id'],
+                                'options' => ['prompt' => 'Phường bệnh nơi khác', 'id' => 'phuongxa-benhnoikhac-id', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -648,7 +660,7 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'khupho_benhnoikhac_id')->widget(DepDrop::class, [
-                                    'options'=>['id'=>'khupho-benhnoikhac-id'],
+                                    'options'=>['id'=>'khupho-benhnoikhac-id', 'disabled' => true],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
                                     'pluginOptions'=>[
@@ -663,7 +675,7 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'tenduong_benhnoikhac_id')->widget(DepDrop::class, [
-                                    'options' => ['id' => 'tenduong-benhnoikhac-id'],
+                                    'options' => ['id' => 'tenduong-benhnoikhac-id', 'disabled' => true],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
@@ -679,10 +691,10 @@ $this->registerJs($script);
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'songuoi_cutrru_giadinh')->textInput() ?>
+                            <?= $form->field($model, 'songuoi_cutrru_giadinh')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'songuoi_cutru_giadinh_duoi15')->textInput() ?>
+                            <?= $form->field($model, 'songuoi_cutru_giadinh_duoi15')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -690,7 +702,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'is_dieutra')->widget(Select2::className(), [
                                 'data' => $categories['chondieutra'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_isdieutra'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_isdieutra', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -706,7 +718,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'thanhpho_baove')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => 'Thành phố báo về'],
+                                'options' => ['prompt' => 'Thành phố báo về', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -715,7 +727,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'phathien_congdong')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => 'Phát hiện cộng đồng', 'id' => 'cabenh_phcd'],
+                                'options' => ['prompt' => 'Phát hiện cộng đồng', 'id' => 'cabenh_phcd', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -724,7 +736,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'conhapvien')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => 'Có nhập viện'],
+                                'options' => ['prompt' => 'Có nhập viện', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -733,7 +745,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'benhviennhap_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['benhvien'], 'id', 'tenbenhvien'),
-                                'options' => ['prompt' => 'Bệnh viện'],
+                                'options' => ['prompt' => 'Bệnh viện', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -745,19 +757,25 @@ $this->registerJs($script);
                         
                         <div class="col-lg-6">
                             <?= $form->field($model, 'ngaynhapvien')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
                             ]); ?>
                         </div>
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'nghenghiep')->textInput() ?>
+                            <?= $form->field($model, 'nghenghiep')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngay_dieutra_dichte')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
@@ -766,7 +784,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'laymau_xetnghiem')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => 'Có xét nghiệm', 'id' => 'laumau_xetnghiem'],
+                                'options' => ['prompt' => 'Có xét nghiệm', 'id' => 'laumau_xetnghiem', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -775,13 +793,16 @@ $this->registerJs($script);
                     </div>
                     <div class="row" id="thongtin-xetnghiem">
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'loaibenhpham')->textInput() ?>
+                            <?= $form->field($model, 'loaibenhpham')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'donvi_thuchien_xetnghiem')->textInput() ?>
+                            <?= $form->field($model, 'donvi_thuchien_xetnghiem')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngaylaymau')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
@@ -791,7 +812,7 @@ $this->registerJs($script);
                            
                             <?= $form->field($model, 'loaixetnghiem')->widget(Select2::className(), [
                                 'data' => $categories['loaixetnghiem'],
-                                'options' => ['prompt' => 'Loại xét nghiệm'],
+                                'options' => ['prompt' => 'Loại xét nghiệm', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -800,7 +821,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ketqua_xetnghiem')->widget(Select2::className(), [
                                 'data' => $categories['ketquaxetnghiem'],
-                                'options' => ['prompt' => 'Kết quả xét nghiệm'],
+                                'options' => ['prompt' => 'Kết quả xét nghiệm', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -810,12 +831,12 @@ $this->registerJs($script);
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'diachi_noilamviec')->textInput() ?>
+                            <?= $form->field($model, 'diachi_noilamviec')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'phuongxa_noilamviec')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['phuong'], 'ma_dvhc', 'ten_dvhc'),
-                                'options' => ['prompt' => 'Phường nơi ở hiện tại', 'id' => 'phuongxa-noilamviec-id'],
+                                'options' => ['prompt' => 'Phường nơi ở hiện tại', 'id' => 'phuongxa-noilamviec-id', 'disabled' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -823,7 +844,7 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'khupho_noilamviec_id')->widget(DepDrop::class, [
-                                    'options'=>['id'=>'khupho-noilamviec-id'],
+                                    'options'=>['id'=>'khupho-noilamviec-id', 'disabled' => true],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
                                     'pluginOptions'=>[
@@ -851,7 +872,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'trong_haituan_bisxh')->widget(Select2::className(), [
                                 'data' => $categories['chonchuaxacdinh'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -866,7 +887,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'nhaco_benhnhan_sxh')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -875,7 +896,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'nhaco_nguoibenh')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -884,7 +905,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'benhvien_phongkham')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -893,7 +914,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'nhatho')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -902,7 +923,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'dinhchua')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -911,7 +932,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'congvien')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -922,7 +943,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'noihoihop')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -931,7 +952,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'noixaydung')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -940,7 +961,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'quancaphe')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -949,7 +970,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'noichannuoi')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -958,7 +979,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'noibancaycanh')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -967,7 +988,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'vuaphelieu')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -979,7 +1000,7 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'noikhac')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_noikhac'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_noikhac','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -996,17 +1017,17 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'nha_cabenh')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_nhacobenhnhansxh'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_nhacobenhnhansxh','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-5" id="cabenh_songuoitronggiadinhsxh">
-                            <?= $form->field($model, 'songuoi_tronggiadinh_sxh')->textInput() ?>
+                            <?= $form->field($model, 'songuoi_tronggiadinh_sxh')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-5" id="cabenh_songuoitronggiadinhsxhduoi15">
-                            <?= $form->field($model, 'songuoi_duoi15_sxh')->textInput() ?>
+                            <?= $form->field($model, 'songuoi_duoi15_sxh')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1014,17 +1035,17 @@ $this->registerJs($script);
                         <div class="col-lg-2">
                             <?= $form->field($model, 'nha_couongthuoc_sxh')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_nhacobenhnhan'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_nhacobenhnhan','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-5" id="cabenh_songuoitronggiadinh">
-                            <?= $form->field($model, 'songuoi_giadinh_macbenh')->textInput() ?>
+                            <?= $form->field($model, 'songuoi_giadinh_macbenh')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-5" id="cabenh_songuoitronggiadinhduoi15">
-                            <?= $form->field($model, 'songuoi_giadinh_macbenh_duoi15')->textInput() ?>
+                            <?= $form->field($model, 'songuoi_giadinh_macbenh_duoi15')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
                     
@@ -1036,7 +1057,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'dieutra_tcm_codihoc')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_dieutra_tcm_codihoc'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_dieutra_tcm_codihoc','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1045,7 +1066,7 @@ $this->registerJs($script);
                         <div class="col-lg-3" id="cabenh_dieutra_tcm_truonghoc">
                             <?= $form->field($model, 'dieutra_tcm_truonghoc_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['truonghoc'], 'gid', 'ten_dv'),
-                                'options' => ['prompt' => 'Trường học'],
+                                'options' => ['prompt' => 'Trường học','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1057,7 +1078,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'trong1thang_tiepxuc_tcm_truonghoc')->widget(Select2::className(), [
                                 'data' => $categories['chonchuaxacdinh'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1069,7 +1090,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'tiepxuc_tcm')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1078,7 +1099,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'dinhatre_tcm')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1087,7 +1108,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'tiepxuc_nguoichamsoc_tcm')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1099,14 +1120,14 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'denkhudongnguoi_tcm')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_denkhudongnguoi'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_denkhudongnguoi','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-9" id="cabenh_tcm_chitiet_denkhudongnguoi">
-                            <?= $form->field($model, 'chitiet_denkhudongnguoi')->textInput() ?>
+                            <?= $form->field($model, 'chitiet_denkhudongnguoi')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1114,20 +1135,20 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'tiepxuc_tacnhan_gaynhiem_tcm')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_tiepxuctacnhan'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_tiepxuctacnhan','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-9" id="cabenh_tcm_chitiet_tiepxuctacnhan">
-                            <?= $form->field($model, 'chitiet_tacnhan_tiepxuc_tcm')->textInput() ?>
+                            <?= $form->field($model, 'chitiet_tacnhan_tiepxuc_tcm')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <?= $form->field($model, 'nguonnuoc_sudung_tcm')->textInput() ?>
+                            <?= $form->field($model, 'nguonnuoc_sudung_tcm')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1135,14 +1156,14 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'anchung_tre_nghingo_tcm')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_anchungtrenghingo'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_anchungtrenghingo','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-9" id="cabenh_tcm_chitiet_anchungtrenghingo">
-                            <?= $form->field($model, 'chitiet_anchung_tre_nghingo_tcm')->textInput() ?>
+                            <?= $form->field($model, 'chitiet_anchung_tre_nghingo_tcm')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1150,14 +1171,14 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'dungdochoi_chung_tre_nghingo_tcm')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_dungdochoichungtrenghingo'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_dungdochoichungtrenghingo','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-9" id="cabenh_tcm_chitiet_dungdochoichungtrenghingo">
-                            <?= $form->field($model, 'chitiet_dungdochoichung_tre_nghingo_tcm')->textInput() ?>
+                            <?= $form->field($model, 'chitiet_dungdochoichung_tre_nghingo_tcm')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1165,14 +1186,14 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'dungchung_vatdung_tre_nghingo_tcm')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_dungvatdungchungtrenghingo'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_dungvatdungchungtrenghingo','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-9" id="cabenh_tcm_chitiet_dungvatdungchungtrenghingo">
-                            <?= $form->field($model, 'chitiet_dungchung_vatdung_tre_nghingo_tcm')->textInput() ?>
+                            <?= $form->field($model, 'chitiet_dungchung_vatdung_tre_nghingo_tcm')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1180,26 +1201,26 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'trong1thang_tiepxuc_giadinh_tcm')->widget(Select2::className(), [
                                 'data' => $categories['chonchuaxacdinh'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'songuoi_bi_tcm_giadinh')->textInput() ?>
+                            <?= $form->field($model, 'songuoi_bi_tcm_giadinh')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'songuoi_bi_tcm_giadinh_duoi15')->textInput() ?>
+                            <?= $form->field($model, 'songuoi_bi_tcm_giadinh_duoi15')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'sotogiapranh_khaosat_tcm')->textInput() ?>
+                            <?= $form->field($model, 'sotogiapranh_khaosat_tcm')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'sotokhaosat_tcm')->textInput() ?>
+                            <?= $form->field($model, 'sotokhaosat_tcm')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1207,14 +1228,14 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'khaosat_tcm_cocabenh_sxh')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_khaosatcabenhsxh'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_tcm_khaosatcabenhsxh','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
                             ]) ?>
                         </div>
                         <div class="col-lg-3" id="cabenh_tcm_socakhaosatsxh">
-                            <?= $form->field($model, 'soca_khaosat_tcm_benhsxh')->textInput() ?>
+                            <?= $form->field($model, 'soca_khaosat_tcm_benhsxh')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
                         
@@ -1229,10 +1250,10 @@ $this->registerJs($script);
                     <p>Khảo sát nhà ca bệnh và 15 nhà chung quanh theo mẫu khảo sát lăng quăng.</p>
                     <div class="row">
                         <div class="col-lg-6" >
-                            <?= $form->field($model, 'bi_bandau')->textInput() ?>
+                            <?= $form->field($model, 'bi_bandau')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-6" >
-                            <?= $form->field($model, 'ci_bandau')->textInput() ?>
+                            <?= $form->field($model, 'ci_bandau')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1244,7 +1265,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'dietlangquang')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1253,7 +1274,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'giamsat_theodoi')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1262,7 +1283,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'xuly_odich_nho')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_xulyodich'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_xulyodich','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1271,7 +1292,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'xuly_odich_dienrong')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_xulyodich_dienrong'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_xulyodich_dienrong','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1283,7 +1304,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'odichmoi')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1292,7 +1313,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'odichcu')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1301,7 +1322,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'odichcu_xuly')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1310,7 +1331,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'xuly')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => ''],
+                                'options' => ['prompt' => '','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1318,6 +1339,9 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'xuly_ngay')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
@@ -1333,7 +1357,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'cabenhchidiem')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhchidiem'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhchidiem','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1342,7 +1366,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'cabenhthuphat')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhthuphat'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhthuphat','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1351,7 +1375,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'cadautien')->widget(Select2::className(), [
                                 'data' => $categories['chon'],
-                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhdautien'],
+                                'options' => ['prompt' => '', 'id' => 'cabenh_cabenhdautien','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1363,7 +1387,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ketluan_tinhtrang')->widget(Select2::className(), [
                                 'data' => $categories['ketluan'],
-                                'options' => ['prompt' => 'Chọn tình trạng kết luận', 'id' => 'cabenh_tinhtrangketluan'],
+                                'options' => ['prompt' => 'Chọn tình trạng kết luận', 'id' => 'cabenh_tinhtrangketluan','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1371,14 +1395,16 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-3" id = 'cabenh_ngayxuatvien'>
                             <?= $form->field($model, 'ketluan_ngayxuatvien')->widget(MaskedInput::className(), [
-                                
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
                             ]); ?>
                         </div>
                         <div class="col-lg-6" >
-                            <?= $form->field($model, 'ketluan_chandoan')->textInput() ?>
+                            <?= $form->field($model, 'ketluan_chandoan')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1386,7 +1412,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'loaiodich__id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map($categories['dm_loaiodich'], 'id', 'ten'),
-                                'options' => ['prompt' => 'Chọn kết luận loại ổ dịch'],
+                                'options' => ['prompt' => 'Chọn kết luận loại ổ dịch','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1401,18 +1427,18 @@ $this->registerJs($script);
 
                     <div class="row">
                         <div class="col-lg-6" >
-                            <?= $form->field($model, 'nguoi_dieutra_dichte')->textInput() ?>
+                            <?= $form->field($model, 'nguoi_dieutra_dichte')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-6" >
-                            <?= $form->field($model, 'sdt_nguoi_dieutra_dichte')->textInput() ?>
+                            <?= $form->field($model, 'sdt_nguoi_dieutra_dichte')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6" >
-                            <?= $form->field($model, 'donvi_dieutra')->textInput() ?>
+                            <?= $form->field($model, 'donvi_dieutra')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-6" >
-                            <?= $form->field($model, 'email_donvidieutra')->textInput() ?>
+                            <?= $form->field($model, 'email_donvidieutra')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
@@ -1420,31 +1446,34 @@ $this->registerJs($script);
 
                     <div class="row">
                         <div class="col-lg-12" >
-                            <?= $form->field($model, 'phandobenh')->textInput() ?>
+                            <?= $form->field($model, 'phandobenh')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12" >
-                            <?= $form->field($model, 'chandoan_bienchung')->textInput() ?>
+                            <?= $form->field($model, 'chandoan_bienchung')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12" >
-                            <?= $form->field($model, 'doanbenhkem')->textInput() ?>
+                            <?= $form->field($model, 'doanbenhkem')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12" >
-                            <?= $form->field($model, 'benhnen')->textInput() ?>
+                            <?= $form->field($model, 'benhnen')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngaykhoiphat')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
@@ -1452,61 +1481,67 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngay_xuatvien_chuyenvien_tuvong')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
                             ]); ?>
                         </div>
                         <div class="col-lg-6" >
-                            <?= $form->field($model, 'phanloai_chandoan')->textInput() ?>
+                            <?= $form->field($model, 'phanloai_chandoan')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-3" >
-                            <?= $form->field($model, 'tinhtrang_tiemchung')->textInput() ?>
+                            <?= $form->field($model, 'tinhtrang_tiemchung')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3" >
-                            <?= $form->field($model, 'somuitiem')->textInput() ?>
+                            <?= $form->field($model, 'somuitiem')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12" >
-                            <?= $form->field($model, 'tiensu_dichte')->textInput() ?>
+                            <?= $form->field($model, 'tiensu_dichte')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'donvi_baocao')->textInput() ?>
+                            <?= $form->field($model, 'donvi_baocao')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'nguoibaocao')->textInput() ?>
+                            <?= $form->field($model, 'nguoibaocao')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'sdt_nguoibaocao')->textInput() ?>
+                            <?= $form->field($model, 'sdt_nguoibaocao')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'email_nguoibaocao')->textInput() ?>
+                            <?= $form->field($model, 'email_nguoibaocao')->textInput(['disabled' => true]) ?>
                         </div>
                         <div class="col-lg-6">
-                            <?= $form->field($model, 'trangthai_baocao')->textInput() ?>
+                            <?= $form->field($model, 'trangthai_baocao')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12" >
-                            <?= $form->field($model, 'danhsach_coso_dieutri')->textarea(['rows' => 3]) ?>
+                            <?= $form->field($model, 'danhsach_coso_dieutri')->textarea(['rows' => 3, 'disabled' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngay_chinhsua_gannhat')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
@@ -1514,6 +1549,9 @@ $this->registerJs($script);
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngaycapnhat')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
@@ -1522,7 +1560,7 @@ $this->registerJs($script);
                         <div class="col-lg-3">
                             <?= $form->field($model, 'phanloai_cabenh')->widget(Select2::className(), [
                                 'data' => $categories['phanloaicabenh'],
-                                'options' => ['prompt' => 'Phân loại ca bệnh'],
+                                'options' => ['prompt' => 'Phân loại ca bệnh','disabled' => true,],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
@@ -1535,13 +1573,16 @@ $this->registerJs($script);
                     <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'ngaynhanve')->widget(MaskedInput::className(), [
+                                'options' => [
+                                    'disabled' => true,
+                                ],
                                 'clientOptions' => [
                                     'alias' => 'date'
                                 ],
                             ]); ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'namnhanve')->textInput() ?>
+                            <?= $form->field($model, 'namnhanve')->textInput(['disabled' => true]) ?>
                         </div>
                     </div>
 

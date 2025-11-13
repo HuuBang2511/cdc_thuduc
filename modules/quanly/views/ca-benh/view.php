@@ -151,6 +151,7 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
                             // $relationFormat('quanhuyen_noiohientai_id', 'quanhuyenNoiohientai'),
                             'diachi_noiohientai',
                             'so_nha',
+                            'ten_duong',
                             $relationGiaothongFormat('tenduong_id', 'tenduong'),
                             $relationPhuongFormat('phuongxa_noiohientai', 'phuongxaNoiohientai'),
                             $relationPhuongFormat('khupho_noiohientai_id', 'khuphoNoiohientai'),

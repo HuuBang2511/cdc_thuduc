@@ -13,6 +13,7 @@ use yii\helpers\Html;
 use app\modules\quanly\base\QuanlyBaseController;
 use app\modules\services\CategoriesService;
 use DateTime;
+use DateTimeZone;
 use app\modules\quanly\models\ImportUpload;
 use yii\web\UploadedFile;
 use app\modules\quanly\models\PhuongXa;
@@ -24,7 +25,10 @@ use app\modules\quanly\models\danhmuc\DmLoaicabenh;
 use app\modules\quanly\models\danhmuc\DmLoaiodich;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-
+use app\modules\quanly\models\OdichCabenh;
+use app\modules\quanly\models\Odich;
+use app\modules\services\UtilityService;
+use yii\helpers\ArrayHelper;
 /**
  * CaBenhController implements the CRUD actions for CaBenh model.
  */
@@ -37,6 +41,8 @@ class CaBenhController extends QuanlyBaseController
         'index' => 'Danh sách',
         'create' => 'Thêm mới',
         'update' => 'Cập nhật',
+        'update-tramyte' => 'Cập nhật',
+        'timodich-tcm' => 'Ca bệnh liên quan hình thành cảnh báo ổ dịch',
         'view' => 'Chi tiết',
         'delete' => 'Xóa',
     ];
@@ -54,25 +60,55 @@ class CaBenhController extends QuanlyBaseController
         //dd($searchModel);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        // if ($request->isPost && $searchModel->load($request->post())) {
-        //      $url = ['index'];
-        //     foreach ($request->post()['CaBenhSearch'] as $i => $item) {
-        //         $url = array_merge($url,["CaBenhSearch[$i]" => $item]);
-        //     }
-        //     return $this->redirect($url);
-        // }
-
-        // if (isset($request->post()['CaBenhSearch'])) {
-        //     foreach ($request->post()['CaBenhSearch'] as $i => $item) {
-        //         $url = array_merge($url, ["CaBenhSearch[$i]" => $item]);
-        //     }
-        // }
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'categories' => CategoriesService::getCategoriesCabenh(),
         ]);
+    }
+
+    public function actionTimodichTcm($id)
+    {
+
+        $format = 'd/m/Y'; 
+
+        $model = $this->findModel($id);
+        
+
+        if($model->ngaymacbenh != null){
+            $odich_tontai = OdichCabenh::find()->where(['status' => 1, 'cabenh_id' => $id])->all();
+
+            if($odich_tontai != null){
+                return $this->redirect(['odich/view', 'id' => $odich_tontai[0]->odich_id]);
+            }else{
+                $date = DateTime::createFromFormat($format, $model->ngaymacbenh,  new DateTimeZone('Asia/Ho_Chi_Minh')); 
+                $dateToi = clone $date;
+                $dateToi->modify('+7 days'); 
+                $dateLui = clone $date;
+                $dateLui->modify('-7 days'); 
+                //dd($dateToi);
+                if($model->loaicabenh_id = 2){
+                    $cabenh_lienquan = Cabenh::find()->select(['id', 'hoten', 'ngaybaocao', 'ngaymacbenh'])
+                    ->where(['status' => 1, 'loaibenh_id' => $model->loaibenh_id, 'loaicabenh_id' => $model->loaicabenh_id, 'status' => 1])
+                    ->andWhere(['truonghoc_id' => $model->truonghoc_id])
+                    ->andWhere(['between', 'ngaymacbenh', $dateLui->format('Y-m-d'), $dateToi->format('Y-m-d')])->asArray()->all();
+
+                    return $this->render('timodich-tcm', [
+                        'model' => $this->findModel($id),
+                        'cabenh_lienquan' => $cabenh_lienquan,
+                    ]);
+                }else{
+                    $cabenh_lienquan = Cabenh::find()->select(['id', 'hoten'])
+                    ->where(['status' => 1, 'loaibenh_id' => $model->loaibenh_id, 'loaicabenh_id' => $model->loaicabenh_id, 'status' => 1])
+                    ->andWhere(['phuongxa_noiohientai' => $model->phuongxa_noiohientai])
+                    ->andWhere(['khupho_noiohientai_id' => $model->khupho_noiohientai_id])
+                    ->andWhere(['ten_duong' => $model->ten_duong])
+                    ->andWhere(['between', 'ngaymacbenh', $dateLui->format('Y-m-d'), $dateToi->format('Y-m-d')])->asArray()->all();
+                }
+                
+            }
+
+        }
     }
 
 
@@ -103,11 +139,12 @@ class CaBenhController extends QuanlyBaseController
     {
         $request = Yii::$app->request;
         $model = new CaBenh();
+        $format = 'd/m/Y'; 
 
         if($model->load($request->post())){
             
             if($model->ngaybaocao != null){
-                $date = new DateTime($model->ngaybaocao); 
+                $date = DateTime::createFromFormat($format, $model->ngaybaocao,  new DateTimeZone('Asia/Ho_Chi_Minh'));
                 $date->modify('+2 days'); 
                 $model->ngayhandieutra = $date->format('d/m/Y'); 
                 //dd($model->ngayhandieutra);
@@ -128,6 +165,10 @@ class CaBenhController extends QuanlyBaseController
                 $model->tinhtrang_dieutra = 'CHƯA ĐIỀU TRA';
             }
 
+            if($model->ten_duong != null){
+                $model->ten_duong  = trim(mb_strtoupper($model->ten_duong));
+            }
+
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -146,6 +187,50 @@ class CaBenhController extends QuanlyBaseController
      * @return mixed
      */
     public function actionUpdate($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+        $format = 'd/m/Y';
+
+        if($model->load($request->post())){
+
+            if($model->ngaybaocao != null){
+                $date = DateTime::createFromFormat($format, $model->ngaybaocao,  new DateTimeZone('Asia/Ho_Chi_Minh'));
+                $date->modify('+2 days'); 
+                $model->ngayhandieutra = $date->format('d/m/Y'); 
+                //dd($model->ngayhandieutra);
+            }
+
+            if($model->is_dieutra == 1){
+                $model->tinhtrang_dieutra = 'ĐÃ ĐIỀU TRA';
+
+                if($model->ngay_dieutra_dichte != null){
+                    if($model->ngay_dieutra_dichte <= $model->ngayhandieutra){
+                        $model->tiendo_dieutra = 'ĐÚNG HẠN';
+                    }else{
+                        $model->tiendo_dieutra = 'QUÁ HẠN';
+                    }
+                }
+
+            }else{
+                $model->tinhtrang_dieutra = 'CHƯA ĐIỀU TRA';
+            }
+
+            if($model->ten_duong != null){
+                $model->ten_duong  = trim(mb_strtoupper($model->ten_duong));
+            }
+
+            $model->save();
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+            'categories' => CategoriesService::getCategoriesCabenh(),
+        ]);
+    }
+
+    public function actionUpdateTramyte($id)
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
@@ -178,7 +263,7 @@ class CaBenhController extends QuanlyBaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->render('update-tramyte', [
             'model' => $model,
             'categories' => CategoriesService::getCategoriesCabenh(),
         ]);
@@ -351,6 +436,9 @@ class CaBenhController extends QuanlyBaseController
 
                             $cabenh = new CaBenh(['loaibenh_id' => 2, 'is_dieutra' => 0]);
                             $cabenh->load($dataCabenh[$row]);
+                            if($model->phuongxa_noiohientai != null && $model->khupho_noiohientai_id != null && $model->so_nha != null && $model->ten_duong != null){
+                                $model->codiachi = true;
+                            }
                             $cabenh->save();
                             $themmoi += 1;
                         }

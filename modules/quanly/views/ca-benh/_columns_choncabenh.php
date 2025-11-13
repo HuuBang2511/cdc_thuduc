@@ -29,10 +29,6 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngayhandieutra',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_dieutra_dichte',
     ],
     [
@@ -575,7 +571,7 @@ return [
         'dropdown' => false,
         'vAlign'=>'middle',
         'width' => '180px',
-        'template' => '{view} {update-tramyte} {update} {delete}',
+        'template' => '{view}',
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },

@@ -256,7 +256,7 @@ class CaBenh extends QuanlyBaseModel
             [['lophoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lophoc::className(), 'targetAttribute' => ['lophoc_id' => 'id']],
             [['truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['truonghoc_id' => 'gid']],
             [['dieutra_tcm_truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['dieutra_tcm_truonghoc_id' => 'gid']],
-            [['loaibenh_id', 'is_dieutra', 'ngaybaocao'], 'required'],
+            [['loaibenh_id', 'is_dieutra', 'ngaybaocao', 'loaicabenh_id', 'codiachi'], 'required'],
             [['ngay_dieutra_dichte'], 'required',
                 'when' => function($model) {
                     return in_array($model->is_dieutra, [1, '1', true], true);
@@ -266,6 +266,28 @@ class CaBenh extends QuanlyBaseModel
                     return val == 1 || val == '1';
                 }",
                 'message' => 'Ngày điều tra bắt buộc nhập.'
+            ],
+
+            [['phuongxa_noiohientai', 'khupho_noiohientai_id', 'so_nha', 'ten_duong'], 'required',
+                'when' => function($model) {
+                    return in_array($model->codiachi, [1, '1', true], true);
+                },
+                'whenClient' => "function (attribute, value) {
+                    var val = $('#cb_codiachi').val();
+                    return val == 1 || val == '1';
+                }",
+                'message' => 'Thông tin bắt buộc nhập.'
+            ],
+
+            [['truonghoc_id'], 'required',
+                'when' => function($model) {
+                    return in_array($model->loaicabenh_id, [2, '2'], true);
+                },
+                'whenClient' => "function (attribute, value) {
+                    var val = $('#cabenh-loaicabenh_id').val();
+                    return val == 2 || val == '2';
+                }",
+                'message' => 'Trường học bắt buộc phải nhập'
             ],
         ];
     }
