@@ -11,13 +11,17 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'ca_benh',
+    // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'loaiodich_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ca_benh',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'loaiodich_id',
+        'attribute'=>'ngaytaoodich',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -27,10 +31,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngaykiemtra',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngaydukien_kiemta',
-    ],
+    
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'ngaybatdau_giamsat',
@@ -93,10 +94,10 @@ return [
         },
         'buttons' => [
             'view' => function ($url, $model, $key) {
-                return Html::a('<span class="fa fa-info"></span>',$url,['class' => 'btn btn-info btn-sm','role' => 'modal-remote','title'=>'Xem']);
+                return Html::a('<span class="fa fa-info"></span>',$url,['class' => 'btn btn-info btn-sm','title'=>'Xem']);
             },
             'update' => function ($url, $model, $key) {
-                return Html::a('<span class="fa fa-pen"></span>',$url,['class' => 'btn btn-warning btn-sm','role' => 'modal-remote','title'=>'Cập nhật']);
+                return Html::a('<span class="fa fa-pen"></span>',$url,['class' => 'btn btn-warning btn-sm','title'=>'Cập nhật']);
             },
             'delete' => function ($url, $model, $key) {
                 return Html::a('<span class="fa fa-trash"></span>',$url,['class' => 'btn btn-danger btn-sm','role' => 'modal-remote','title'=>'Xóa']);

@@ -16,6 +16,8 @@ use app\modules\quanly\models\OdichCabenh;
 use app\modules\quanly\models\Cabenh;
 use DateTime;
 use DateTimeZone;
+use yii\helpers\ArrayHelper;
+use app\modules\services\CategoriesService;
 /**
  * OdichController implements the CRUD actions for Odich model.
  */
@@ -37,14 +39,14 @@ class OdichController extends QuanlyBaseController
         $dateLui = clone $date;
         $dateLui->modify('-7 days'); 
         //dd($dateToi);
-        if($model->loaicabenh_id = 2){
+        if($model->loaicabenh_id == 2){
             $cabenh_lienquan = Cabenh::find()->select(['id', 'hoten', 'ngaybaocao', 'ngaymacbenh'])
             ->where(['status' => 1, 'loaibenh_id' => $model->loaibenh_id, 'loaicabenh_id' => $model->loaicabenh_id, 'status' => 1])
             ->andWhere(['truonghoc_id' => $model->truonghoc_id])
             ->andWhere(['between', 'ngaymacbenh', $dateLui->format('Y-m-d'), $dateToi->format('Y-m-d')])->asArray()->all();
            
         }else{
-            $cabenh_lienquan = Cabenh::find()->select(['id', 'hoten'])
+            $cabenh_lienquan = Cabenh::find()->select(['id', 'hoten', 'ngaybaocao', 'ngaymacbenh'])
             ->where(['status' => 1, 'loaibenh_id' => $model->loaibenh_id, 'loaicabenh_id' => $model->loaicabenh_id, 'status' => 1])
             ->andWhere(['phuongxa_noiohientai' => $model->phuongxa_noiohientai])
             ->andWhere(['khupho_noiohientai_id' => $model->khupho_noiohientai_id])
@@ -52,9 +54,22 @@ class OdichController extends QuanlyBaseController
             ->andWhere(['between', 'ngaymacbenh', $dateLui->format('Y-m-d'), $dateToi->format('Y-m-d')])->asArray()->all();
         }
 
+        //dd($cabenh_lienquan);
+
         $odich = new Odich();
         $odich->loaibenhdich_id = $model->loaibenh_id;
         $odich->ngaytaoodich = date('Y-m-d');
+
+        $odich->loaibenhdich_id = $model->loaibenh_id;
+
+        if($model->loaicabenh_id = 2 && $model->truonghoc_id != null){
+            $odich->truonghoc_id = $model->truonghoc_id;
+            $odich->xacdinhodich_id = 2;
+        }elseif( $model->loaicabenh_id = 2 && $model->phuongxa_noiohientai != null ){
+            $odich->xacdinhodich_id = 1;
+            $odich->phuongxa = $model->phuongxa_noiohientai;
+        }
+
         $odich->save();  
 
         foreach($cabenh_lienquan as $i => $item){
@@ -91,21 +106,22 @@ class OdichController extends QuanlyBaseController
     public function actionView($id)
     {
         $request = Yii::$app->request;
-        if($request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                    'title'=> "Odich #".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::a('Cập nhật',['update','id'=>$id],['class'=>'btn btn-primary float-start','role'=>'modal-remote']).
-                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
-                ];
-        }else{
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }
+
+        $cabenhOdich  = OdichCabenh::find()->select(['cabenh_id'])->where(['status' => 1, 'odich_id' => $id])->asArray()->all();
+
+        $cabenh_id = array_keys(ArrayHelper::map($cabenhOdich, 'cabenh_id', 'cabenh_id'));
+
+       
+        $cabenh = CaBenh::find()->select(['id', 'hoten', 'ngaysinh', 'phuongxa_noiohientai', 'ngaybaocao', 'ngaymacbenh'])->where(['status' => 1])
+        ->andWhere(['in', 'id', $cabenh_id])->all();
+
+        //dd($cabenh[0]->phuongxaNoiohientai->ten_dvhc);
+
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+            'cabenh' => $cabenh,
+        ]);
     }
 
     /**
@@ -119,51 +135,14 @@ class OdichController extends QuanlyBaseController
         $request = Yii::$app->request;
         $model = new Odich();
 
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Thêm mới Odich",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Lưu',['class'=>'btn btn-primary float-start','type'=>"submit"]).
-                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
-                ];
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới Odich",
-                    'content'=>'<span class="text-success">Thêm mới Odich thành công</span>',
-                    'footer'=> Html::a('Tiếp tục thêm mới',['create'],['class'=>'btn btn-primary float-start','role'=>'modal-remote']).
-                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
-                ];
-            }else{
-                return [
-                    'title'=> "Thêm mới Odich",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Lưu',['class'=>'btn btn-primary float-start','type'=>"submit"]).
-                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
-
-                ];
-            }
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }
+        if($model->load($request->post()) && $model->save()){
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            'categories' => CategoriesService::getCategoriesCabenh(),
+        ]);
 
     }
 
@@ -179,52 +158,14 @@ class OdichController extends QuanlyBaseController
         $request = Yii::$app->request;
         $model = $this->findModel($id);
 
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Cập nhật Odich #".$id,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Lưu',['class'=>'btn btn-primary float-start','type'=>"submit"]).
-                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
-                ];
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Odich #".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"]).
-                            Html::a('Cập nhật',['update','id'=>$id],['class'=>'btn btn-primary float-start','role'=>'modal-remote'])
-                ];
-            }else{
-                 return [
-                    'title'=> "Cập nhật Odich #".$id,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Lưu',['class'=>'btn btn-primary float-start','type'=>"submit"]).
-                            Html::button('Đóng',['class'=>'btn btn-light float-end','data-bs-dismiss'=>"modal"])
-                ];
-            }
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
+        if($model->load($request->post()) && $model->save()){
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+            'categories' => CategoriesService::getCategoriesCabenh(),
+        ]);
     }
 
     /**

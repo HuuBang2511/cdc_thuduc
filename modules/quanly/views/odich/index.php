@@ -11,7 +11,7 @@ use yii\web\View;
 /* @var $searchModel app\modules\quanly\models\OdichSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = (isset($const['title'])) ? $const['title'] : '';
+$this->title = (isset($const['title'])) ? $const['title'] : 'Ổ dịch';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -50,10 +50,10 @@ CrudAsset::register($this);
             'export' => false,
             'toolbar'=> [
                 $fullExportMenu,
-                ['content'=>
-                    Html::a('<i class="fa fa-plus"></i> Thêm mới', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Thêm mới ','class'=>'btn btn-success'])
-                ],
+                // ['content'=>
+                //     Html::a('<i class="fa fa-plus"></i> Thêm mới', ['create'],
+                //     ['role'=>'modal-remote','title'=> 'Thêm mới ','class'=>'btn btn-success'])
+                // ],
             ],          
             'striped' => true,
             'condensed' => true,

@@ -7,6 +7,8 @@ use app\modules\quanly\models\danhmuc\DmDantoc;
 use app\modules\quanly\models\danhmuc\DmLoaicabenh;
 use app\modules\quanly\models\danhmuc\DmLoaichandoan;
 use app\modules\quanly\models\danhmuc\DmLoaiodich;
+use app\modules\quanly\models\danhmuc\DmTinhtrangxuly;
+use app\modules\quanly\models\danhmuc\DmXacdinhodich;
 use Yii;
 
 /**
@@ -32,9 +34,15 @@ use Yii;
  * @property int|null $tinhtrangxuly_id
  * @property int|null $sauxuly
  * @property string|null $ngaytaoodich
+ * @property int|null $status
+ * @property string|null $created_at
+ * @property string|null $updated_at
+ * @property int|null $created_by
+ * @property int|null $updated_by
  *
  * @property DmLoaichandoan $loaibenhdich
  * @property DmLoaiodich $loaiodich
+ * @property DmTinhtrangxuly $tinhtrangxuly
  * @property Truonghoc $truonghoc
  */
 class Odich extends QuanlyBaseModel
@@ -53,13 +61,15 @@ class Odich extends QuanlyBaseModel
     public function rules()
     {
         return [
-            [['ca_benh', 'nguoithuchien', 'dienthoai', 'nhandinh_gs'], 'string'],
-            [['loaiodich_id', 'bi_bandau', 'ci_bandau', 'hi_bandau', 'truonghoc_id', 'loaibenhdich_id', 'lophoc_id', 'tinhtrangxuly_id', 'sauxuly'], 'default', 'value' => null],
-            [['loaiodich_id', 'bi_bandau', 'ci_bandau', 'hi_bandau', 'truonghoc_id', 'loaibenhdich_id', 'lophoc_id', 'tinhtrangxuly_id', 'sauxuly'], 'integer'],
-            [['ngayphathien', 'ngaykiemtra', 'ngaydukien_kiemta', 'ngaybatdau_giamsat', 'ngaytaoodich'], 'safe'],
+            [['ca_benh', 'nguoithuchien', 'dienthoai', 'nhandinh_gs', 'phuongxa'], 'string'],
+            [['loaiodich_id', 'bi_bandau', 'ci_bandau', 'hi_bandau', 'truonghoc_id', 'loaibenhdich_id', 'lophoc_id', 'tinhtrangxuly_id', 'sauxuly', 'status', 'created_by', 'updated_by', 'xacdinhodich_id'], 'default', 'value' => null],
+            [['loaiodich_id', 'bi_bandau', 'ci_bandau', 'hi_bandau', 'truonghoc_id', 'loaibenhdich_id', 'lophoc_id', 'tinhtrangxuly_id', 'sauxuly', 'status', 'created_by', 'updated_by', 'xacdinhodich_id'], 'integer'],
+            [['ngayphathien', 'ngaykiemtra', 'ngaydukien_kiemta', 'ngaybatdau_giamsat', 'ngaytaoodich', 'created_at', 'updated_at'], 'safe'],
             [['odichmoi'], 'boolean'],
             [['loaibenhdich_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaichandoan::className(), 'targetAttribute' => ['loaibenhdich_id' => 'id']],
+            [['xacdinhodich_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmXacdinhodich::className(), 'targetAttribute' => ['loaibenhdich_id' => 'id']],
             [['loaiodich_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaiodich::className(), 'targetAttribute' => ['loaiodich_id' => 'id']],
+            [['tinhtrangxuly_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmTinhtrangxuly::className(), 'targetAttribute' => ['tinhtrangxuly_id' => 'id']],
             [['truonghoc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Truonghoc::className(), 'targetAttribute' => ['truonghoc_id' => 'gid']],
         ];
     }
@@ -90,6 +100,13 @@ class Odich extends QuanlyBaseModel
             'tinhtrangxuly_id' => 'Tình trạng xử lý',
             'sauxuly' => 'Sau xử lý',
             'ngaytaoodich' => 'Ngày tạo ổ dịch',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
+            'phuongxa' => 'Phường xã',
+            'xacdinhodich_id' => 'Xác định loại ổ dịch',
         ];
     }
 
@@ -111,6 +128,21 @@ class Odich extends QuanlyBaseModel
     public function getLoaiodich()
     {
         return $this->hasOne(DmLoaiodich::className(), ['id' => 'loaiodich_id']);
+    }
+
+    /**
+     * Gets query for [[Tinhtrangxuly]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTinhtrangxuly()
+    {
+        return $this->hasOne(DmTinhtrangxuly::className(), ['id' => 'tinhtrangxuly_id']);
+    }
+
+    public function getXacdinhodich()
+    {
+        return $this->hasOne(DmXacdinhodich::className(), ['id' => 'xacdinhodich_id']);
     }
 
     /**

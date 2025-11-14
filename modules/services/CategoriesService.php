@@ -8,6 +8,8 @@ use app\modules\quanly\models\danhmuc\DmDantoc;
 use app\modules\quanly\models\danhmuc\DmLoaicabenh;
 use app\modules\quanly\models\danhmuc\DmLoaichandoan;
 use app\modules\quanly\models\danhmuc\DmLoaiodich;
+use app\modules\quanly\models\danhmuc\DmTinhtrangxuly;
+use app\modules\quanly\models\danhmuc\DmXacdinhodich;
 use app\modules\quanly\models\Truonghoc;
 use app\modules\quanly\models\Phuongxa;
 use app\modules\quanly\models\Khupho;
@@ -26,6 +28,8 @@ class CategoriesService
         $categories['dm_loaicabenh'] = DmLoaicabenh::find()->where(['status'=>1])->orderBy('ten')->asArray()->all();
         $categories['dm_loaichandoan'] = DmLoaichandoan::find()->where(['status'=>1])->orderBy('ten')->asArray()->all();
         $categories['dm_loaiodich'] = DmLoaiodich::find()->where(['status'=>1])->orderBy('ten')->asArray()->all();
+        $categories['dm_tinhtrangxuly'] = DmTinhtrangxuly::find()->where(['status'=>1])->orderBy('ten')->asArray()->all();
+        $categories['dm_xacdinhodich'] = DmXacdinhodich::find()->where(['status'=>1])->orderBy('ten')->asArray()->all();
         $categories['truonghoc'] = Truonghoc::find()->select(['gid', 'ten_dv'])->orderBy('ten_dv')->asArray()->all();
         $categories['khupho'] = Khupho::find()->select(['id', 'ten_dvhc'])->orderBy('ten_dvhc')->asArray()->all();
         $categories['benhvien'] = BenhVien::find()->select(['id', 'tenbenhvien'])->orderBy('tenbenhvien')->asArray()->all();

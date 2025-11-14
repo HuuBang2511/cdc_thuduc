@@ -67,6 +67,14 @@ $relationGiaothongFormat = function ($attribute, $relationName) use ($model) {
         <h1 class="h3 text-primary mb-0"><?= Html::encode($this->title) ?>: <span class="fw-normal text-secondary"><?= Html::encode($model->hoten) ?></span></h1>
         
     </div>
+    <div class="flex space-x-2 mb-4">
+        <?= Html::a('Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-warning bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded shadow-md transition duration-300']) ?>
+        <?php if($model->loaibenh_id = 2): ?>
+            <?= Html::a('Tìm ổ dịch', ['timodich-tcm', 'id' => $model->id], ['class' => 'btn btn-primary bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded shadow-md transition duration-300']) ?>
+        <?php endif; ?>
+    </div>
+
+    
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0"><i class="fas fa-user-tag me-2"></i> Thông tin cơ bản</h5>

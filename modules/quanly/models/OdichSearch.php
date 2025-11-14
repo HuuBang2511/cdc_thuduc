@@ -18,8 +18,8 @@ class OdichSearch extends Odich
     public function rules()
     {
         return [
-            [['id', 'loaiodich_id', 'bi_bandau', 'ci_bandau', 'hi_bandau', 'truonghoc_id', 'loaibenhdich_id', 'lophoc_id', 'tinhtrangxuly_id', 'sauxuly'], 'integer'],
-            [['ca_benh', 'ngayphathien', 'ngaykiemtra', 'ngaydukien_kiemta', 'ngaybatdau_giamsat', 'nguoithuchien', 'dienthoai', 'nhandinh_gs'], 'safe'],
+            [['id', 'loaiodich_id', 'bi_bandau', 'ci_bandau', 'hi_bandau', 'truonghoc_id', 'loaibenhdich_id', 'lophoc_id', 'tinhtrangxuly_id', 'sauxuly', 'status', 'created_by', 'updated_by'], 'integer'],
+            [['ca_benh', 'ngayphathien', 'ngaykiemtra', 'ngaydukien_kiemta', 'ngaybatdau_giamsat', 'nguoithuchien', 'dienthoai', 'nhandinh_gs', 'ngaytaoodich', 'created_at', 'updated_at', 'phuongxa'], 'safe'],
             [['odichmoi'], 'boolean'],
         ];
     }
@@ -72,12 +72,23 @@ class OdichSearch extends Odich
             'odichmoi' => $this->odichmoi,
             'tinhtrangxuly_id' => $this->tinhtrangxuly_id,
             'sauxuly' => $this->sauxuly,
+            'ngaytaoodich' => $this->ngaytaoodich,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
         ]);
 
         $query->andFilterWhere(['ilike', 'ca_benh', mb_strtoupper($this->ca_benh)])
             ->andFilterWhere(['ilike', 'nguoithuchien', mb_strtoupper($this->nguoithuchien)])
             ->andFilterWhere(['ilike', 'dienthoai', mb_strtoupper($this->dienthoai)])
-            ->andFilterWhere(['ilike', 'nhandinh_gs', mb_strtoupper($this->nhandinh_gs)]);
+            ->andFilterWhere(['ilike', 'nhandinh_gs', mb_strtoupper($this->nhandinh_gs)])
+            ->andFilterWhere(['ilike', 'phuongxa', mb_strtoupper($this->phuongxa)]);
+
+        if((Yii::$app->user->identity->phuongxa != null)){
+            $query->andFilterWhere(['ilike', 'phuongxa_noiohientai', mb_strtoupper(Yii::$app->user->identity->phuongxa)]);
+        }  
 
         return $dataProvider;
     }
@@ -106,7 +117,13 @@ class OdichSearch extends Odich
             'lophoc_id',
             'odichmoi',
             'tinhtrangxuly_id',
-            'sauxuly',        
+            'sauxuly',
+            'ngaytaoodich',
+            'status',
+            'created_at',
+            'updated_at',
+            'created_by',
+            'updated_by',        
                 ];
     }
 }

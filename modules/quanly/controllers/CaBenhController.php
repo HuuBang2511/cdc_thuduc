@@ -87,7 +87,7 @@ class CaBenhController extends QuanlyBaseController
                 $dateLui = clone $date;
                 $dateLui->modify('-7 days'); 
                 //dd($dateToi);
-                if($model->loaicabenh_id = 2){
+                if($model->loaicabenh_id == 2){
                     $cabenh_lienquan = Cabenh::find()->select(['id', 'hoten', 'ngaybaocao', 'ngaymacbenh'])
                     ->where(['status' => 1, 'loaibenh_id' => $model->loaibenh_id, 'loaicabenh_id' => $model->loaicabenh_id, 'status' => 1])
                     ->andWhere(['truonghoc_id' => $model->truonghoc_id])
@@ -98,19 +98,27 @@ class CaBenhController extends QuanlyBaseController
                         'cabenh_lienquan' => $cabenh_lienquan,
                     ]);
                 }else{
-                    $cabenh_lienquan = Cabenh::find()->select(['id', 'hoten'])
+                    $cabenh_lienquan = Cabenh::find()->select(['id', 'hoten', 'ngaybaocao', 'ngaymacbenh'])
                     ->where(['status' => 1, 'loaibenh_id' => $model->loaibenh_id, 'loaicabenh_id' => $model->loaicabenh_id, 'status' => 1])
                     ->andWhere(['phuongxa_noiohientai' => $model->phuongxa_noiohientai])
                     ->andWhere(['khupho_noiohientai_id' => $model->khupho_noiohientai_id])
                     ->andWhere(['ten_duong' => $model->ten_duong])
                     ->andWhere(['between', 'ngaymacbenh', $dateLui->format('Y-m-d'), $dateToi->format('Y-m-d')])->asArray()->all();
+
+                    //dd($cabenh_lienquan);
+
+                    return $this->render('timodich-tcm', [
+                        'model' => $this->findModel($id),
+                        'cabenh_lienquan' => $cabenh_lienquan,
+                    ]);
                 }
-                
             }
-
         }
-    }
 
+        return $this->render('thongbao-capnhat', [
+            'model' => $model
+        ]);
+    }
 
     /**
      * Displays a single CaBenh model.
