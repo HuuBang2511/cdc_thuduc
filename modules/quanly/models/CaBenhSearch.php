@@ -228,7 +228,7 @@ class CabenhSearch extends Cabenh
             ->andFilterWhere(['ilike', 'diachi_xacminh_cabenh', mb_strtoupper($this->diachi_xacminh_cabenh)])
             ->andFilterWhere(['ilike', 'noikhac_xacminh_cabenh', mb_strtoupper($this->noikhac_xacminh_cabenh)])
             ->andFilterWhere(['ilike', 'noichandoan', mb_strtoupper($this->noichandoan)])
-            ->andFilterWhere(['ilike', 'phuongxa_noiohientai', mb_strtoupper($this->phuongxa_noiohientai)])
+            //->andFilterWhere(['ilike', 'phuongxa_noiohientai', mb_strtoupper($this->phuongxa_noiohientai)])
             ->andFilterWhere(['ilike', 'phuongxa_noilamviec', mb_strtoupper($this->phuongxa_noilamviec)])
             ->andFilterWhere(['ilike', 'phuongxa_sausapnhap', mb_strtoupper($this->phuongxa_sausapnhap)])
             ->andFilterWhere(['ilike', 'phuongxa', mb_strtoupper($this->phuongxa)])
@@ -267,6 +267,10 @@ class CabenhSearch extends Cabenh
         if($this->date_from != null && $this->date_to != null){
             $query->andFilterWhere(['between', 'ngaybaocao', UtilityService::convertDateFromMaskedInput($this->date_from), UtilityService::convertDateFromMaskedInput($this->date_to)]);
         }
+
+        if((Yii::$app->user->identity->phuongxa != null)){
+            $query->andFilterWhere(['ilike', 'phuongxa_noiohientai', mb_strtoupper(Yii::$app->user->identity->phuongxa)]);
+        }   
         
         return $dataProvider;
     }

@@ -71,7 +71,7 @@ class Odich extends QuanlyBaseModel
     {
         return [
             'id' => 'ID',
-            'ca_benh' => 'Ca Benh',
+            'ca_benh' => 'Ca bệnh',
             'loaiodich_id' => 'Loại ổ dịch',
             'ngayphathien' => 'Ngày phát hiện',
             'ngaykiemtra' => 'Ngày kiểm tra',
@@ -83,12 +83,12 @@ class Odich extends QuanlyBaseModel
             'nguoithuchien' => 'Người thực hiện',
             'dienthoai' => 'Điện thoại',
             'nhandinh_gs' => 'Nhận định gs',
-            'truonghoc_id' => 'Truonghoc ID',
+            'truonghoc_id' => 'Trường học',
             'loaibenhdich_id' => 'Loại bệnh',
-            'lophoc_id' => 'Lophoc ID',
-            'odichmoi' => 'Odichmoi',
+            'lophoc_id' => 'Lớp học',
+            'odichmoi' => 'Ổ dịch mới',
             'tinhtrangxuly_id' => 'Tình trạng xử lý',
-            'sauxuly' => 'Sauxuly',
+            'sauxuly' => 'Sau xử lý',
             'ngaytaoodich' => 'Ngày tạo ổ dịch',
         ];
     }
